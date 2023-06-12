@@ -1,19 +1,7 @@
-import {Component} from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators
-} from '@angular/forms';
-import {ErrorStateMatcher} from "@angular/material/core";
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MyErrorStateMatcher } from '../app.component';
+import { LoginFormData } from '../../api/types/auth';
 
 @Component({
   selector: 'app-login',
@@ -21,18 +9,23 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  hidePassword: boolean = true;
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
   passwordFormControl = new FormControl('', [Validators.required]);
   loginForm = new FormGroup({
     email: this.emailFormControl,
-    password: this.passwordFormControl
+    password: this.passwordFormControl,
   });
 
   matcher = new MyErrorStateMatcher();
 
-  onSubmit() {
+  onSignIn() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      const loginData: LoginFormData = this.loginForm.value as LoginFormData;
+      console.log(loginData);
     }
   }
 }
