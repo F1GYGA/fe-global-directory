@@ -19,7 +19,7 @@
     position: center;
     margin: auto;
   }
-  
+
   .example-header-image {
     background-image: url('https://i.pinimg.com/originals/d5/b0/4c/d5b04cc3dcd8c17702549ebc5f1acf1a.png');
     background-size: cover;
@@ -29,7 +29,7 @@
     height: 64px;
   }
 
-  
+
   .container {
     position: fixed;
     width: 100vw;
@@ -41,7 +41,7 @@
       rgba(255, 255, 255, 0.9) -17.76%,
       rgba(62, 81, 181, 0.4) 82.24%
     ),
-    url('src/assets/corporate.jpg'), center, no-repeat;
+    url('src/assets/login.jpg'), center, no-repeat;
     background-size: cover;
   }
 
@@ -50,7 +50,7 @@
     height: 100%;
     backdrop-filter: blur(12px);
   }
-  
+
   .page-content {
     position: relative;
     width: 100%;
@@ -65,7 +65,7 @@
   .main-container {
     padding: 50px 25px;
   }
-  
+
   .about-container {
     width: 100%;
   }
@@ -84,7 +84,7 @@
     opacity: 0.7;
     text-transform: uppercase;
   }
-  
+
   .mat-card-avatar {
     height: 200px;
     width: 200px;
