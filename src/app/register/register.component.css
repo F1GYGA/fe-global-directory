@@ -7,16 +7,16 @@
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.9) -17.76%,
-    rgba(62, 81, 181, 0.4) 82.24%
+    rgba(62, 81, 181, 0.6) 82.24%
   ),
-  url('/assets/login.jpg'), center, no-repeat;
+  url('/assets/register.jpg'), center, no-repeat;
   background-size: cover;
 }
 
 .blur-container {
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
   display: flex;
 }
 
@@ -37,7 +37,7 @@
   padding: 50px 25px;
 }
 
-.login-container {
+.register-container {
   width: 100%;
 }
 
@@ -54,7 +54,7 @@
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(100px);
   margin: auto;
-  max-width: 400px;
+  max-width: 700px;
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
   display: flex;
   flex-direction: column;
@@ -75,26 +75,71 @@
   line-height: 16px;
 }
 
-.forgot-password-link {
-  margin-top: -10px;
-  text-align: right;
+.photo-container {
+  margin: 0 auto 10px auto;
+  width: 100px;
+  height: 100px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
 }
 
-.forgot-password-link a {
-  color: #3e51b5;
-  text-decoration: none;
+.image-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
 }
 
-.forgot-password-link a:hover {
-  text-decoration: underline;
+.img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-container:hover .overlay {
+  opacity: 1;
+}
+
+.row-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .submit-button {
   width: 100%;
+  margin-top: 20px;
 }
 
 .register-link {
-  margin-top: 12px;
+  margin-top: 10px;
   text-align: center;
 }
 
@@ -141,5 +186,11 @@
     max-width: 100%;
     border-radius: 0;
     box-shadow: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .row-container {
+    flex-direction: column;
   }
 }

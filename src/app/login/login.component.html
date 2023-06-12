@@ -1,9 +1,3 @@
-<header>
-  <mat-toolbar color="primary" class="navigation-container" role="heading">
-    <img width="40" height="40" src="../../assets/dblogo.png" alt="Global Directory Logo"/>
-    <span>Global Directory</span>
-  </mat-toolbar>
-</header>
 <div class="container">
   <div class="blur-container">
     <div class="page-content">
@@ -12,30 +6,39 @@
         <div class="login-container">
           <mat-card role="form">
             <mat-card-header>
-              <mat-card-title><h1>Login</h1></mat-card-title>
+              <mat-card-title><h1>Sign in</h1></mat-card-title>
             </mat-card-header>
             <mat-card-content>
-              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-container" aria-label="Login Form">
+              <form [formGroup]="loginForm" (ngSubmit)="onSignIn()" class="form-container" aria-label="Login Form">
                 <mat-form-field appearance="fill">
                   <mat-label>Email</mat-label>
                   <input type="email" aria-required="true" matInput [formControl]="emailFormControl"
                          [errorStateMatcher]="matcher">
                   <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                    Please enter a valid email address
+                    Please enter a valid email address.
                   </mat-error>
                   <mat-error *ngIf="emailFormControl.hasError('required')">
-                    Email is required
+                    Email is required.
                   </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                   <mat-label>Password</mat-label>
-                  <input type="password" aria-required="true" matInput [formControl]="passwordFormControl"
+                  <input [type]="hidePassword ? 'password' : 'text'" aria-required="true" matInput
+                         [formControl]="passwordFormControl"
                          [errorStateMatcher]="matcher">
+                  <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                          [attr.aria-pressed]="hidePassword">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
                   <mat-error *ngIf="passwordFormControl.hasError('required')">
-                    Password is required
+                    Password is required.
                   </mat-error>
                 </mat-form-field>
-                <button mat-flat-button color="primary" type="submit" aria-label="Log in">Login</button>
+                <p class="forgot-password-link"><a routerLink="/forgot-password">Forgot password?</a></p>
+                <button mat-flat-button color="primary" type="submit" aria-label="Sign in" class="submit-button">Sign
+                  in
+                </button>
+                <p class="register-link">Don't have an account? <a routerLink="/register">Sign up</a></p>
               </form>
             </mat-card-content>
           </mat-card>
