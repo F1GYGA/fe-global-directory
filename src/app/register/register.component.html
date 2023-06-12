@@ -9,31 +9,39 @@
               <mat-card-title><h1>Sign Up</h1></mat-card-title>
             </mat-card-header>
             <mat-card-content>
-              <form [formGroup]="registerForm" (ngSubmit)="onSignUp()" class="form-container"
-                    aria-label="Register Form">
+              <form
+                [formGroup]="registerForm"
+                (ngSubmit)="onSignUp()"
+                class="form-container"
+                aria-label="Register Form">
                 <div class="photo-container">
                   <div class="image-container" (click)="fileInput.click()">
-                    <img [src]="profilePhoto" alt="Profile Photo" [draggable]="false" class="img">
-                    <div class="overlay">
-                      Upload
-                    </div>
+                    <img
+                      [src]="profilePhoto"
+                      alt="Profile Photo"
+                      [draggable]="false"
+                      class="img" />
+                    <div class="overlay">Upload</div>
                   </div>
-                  <input type="file"
-                         aria-label="Profile photo"
-                         accept="image/*" hidden
-                         (change)="onFileUpload($event)"
-                         #fileInput>
+                  <input
+                    type="file"
+                    aria-label="Profile photo"
+                    accept="image/*"
+                    hidden
+                    (change)="onFileUpload($event)"
+                    #fileInput />
                 </div>
                 <div class="row-container">
                   <mat-form-field appearance="fill">
                     <mat-label>First name</mat-label>
-                    <input matInput
-                           type="text"
-                           aria-label="First name"
-                           aria-required="true"
-                           autocomplete="given-name"
-                           [formControl]="firstNameFormControl"
-                           [errorStateMatcher]="matcher">
+                    <input
+                      matInput
+                      type="text"
+                      aria-label="First name"
+                      aria-required="true"
+                      autocomplete="given-name"
+                      [formControl]="firstNameFormControl"
+                      [errorStateMatcher]="matcher" />
                     <mat-error
                       *ngIf="firstNameFormControl.hasError('required')">
                       First name is required
@@ -41,13 +49,14 @@
                   </mat-form-field>
                   <mat-form-field appearance="fill">
                     <mat-label>Last name</mat-label>
-                    <input matInput
-                           type="text"
-                           aria-label="Last name"
-                           aria-required="true"
-                           autocomplete="family-name"
-                           [formControl]="lastNameFormControl"
-                           [errorStateMatcher]="matcher">
+                    <input
+                      matInput
+                      type="text"
+                      aria-label="Last name"
+                      aria-required="true"
+                      autocomplete="family-name"
+                      [formControl]="lastNameFormControl"
+                      [errorStateMatcher]="matcher" />
                     <mat-error *ngIf="lastNameFormControl.hasError('required')">
                       Last name is required
                     </mat-error>
@@ -56,40 +65,46 @@
                 <div class="row-container">
                   <mat-form-field appearance="fill">
                     <mat-label>Department</mat-label>
-                    <input type="text"
-                           aria-label="Department"
-                           aria-required="true"
-                           matInput
-                           [formControl]="departmentFormControl"
-                           [matAutocomplete]="auto"
-                           [errorStateMatcher]="matcher">
+                    <input
+                      type="text"
+                      aria-label="Department"
+                      aria-required="true"
+                      matInput
+                      [formControl]="departmentFormControl"
+                      [matAutocomplete]="auto"
+                      [errorStateMatcher]="matcher" />
                     <mat-error
                       *ngIf="departmentFormControl.hasError('required')">
                       Department is required
                     </mat-error>
                     <mat-autocomplete #auto="matAutocomplete">
-                      <mat-option *ngFor="let department of filteredDepartments | async" [value]="department">
-                        {{department}}
+                      <mat-option
+                        *ngFor="let department of filteredDepartments | async"
+                        [value]="department">
+                        {{ department }}
                       </mat-option>
                     </mat-autocomplete>
                   </mat-form-field>
                   <mat-form-field appearance="fill">
                     <mat-label>Team</mat-label>
-                    <input type="text"
-                           aria-label="Team"
-                           aria-required="true"
-                           matInput
-                           [formControl]="teamFormControl"
-                           [matAutocomplete]="teamAuto"
-                           [errorStateMatcher]="matcher">
-                    <mat-error
-                      *ngIf="teamFormControl.hasError('required')">
+                    <input
+                      type="text"
+                      aria-label="Team"
+                      aria-required="true"
+                      matInput
+                      [formControl]="teamFormControl"
+                      [matAutocomplete]="teamAuto"
+                      [errorStateMatcher]="matcher" />
+                    <mat-error *ngIf="teamFormControl.hasError('required')">
                       Team is required
                     </mat-error>
                     <mat-autocomplete #teamAuto="matAutocomplete">
-                      <ng-container *ngIf="teamsByDepartment.length > 0; else noTeams">
-                        <mat-option *ngFor="let team of filteredTeams | async" [value]="team">
-                          {{team}}
+                      <ng-container
+                        *ngIf="teamsByDepartment.length > 0; else noTeams">
+                        <mat-option
+                          *ngFor="let team of filteredTeams | async"
+                          [value]="team">
+                          {{ team }}
                         </mat-option>
                       </ng-container>
                       <ng-template #noTeams>
@@ -101,21 +116,24 @@
                 <div class="row-container">
                   <mat-form-field appearance="fill">
                     <mat-label>Job title</mat-label>
-                    <input type="text"
-                           aria-label="Job title"
-                           aria-required="true"
-                           matInput
-                           [formControl]="jobTitleFormControl"
-                           [matAutocomplete]="jobTitleAuto"
-                           [errorStateMatcher]="matcher">
-                    <mat-error
-                      *ngIf="jobTitleFormControl.hasError('required')">
+                    <input
+                      type="text"
+                      aria-label="Job title"
+                      aria-required="true"
+                      matInput
+                      [formControl]="jobTitleFormControl"
+                      [matAutocomplete]="jobTitleAuto"
+                      [errorStateMatcher]="matcher" />
+                    <mat-error *ngIf="jobTitleFormControl.hasError('required')">
                       Job title is required
                     </mat-error>
                     <mat-autocomplete #jobTitleAuto="matAutocomplete">
-                      <ng-container *ngIf="jobTitlesByTeam.length > 0; else noJobTitles">
-                        <mat-option *ngFor="let jobTitle of filteredJobTitles | async" [value]="jobTitle">
-                          {{jobTitle}}
+                      <ng-container
+                        *ngIf="jobTitlesByTeam.length > 0; else noJobTitles">
+                        <mat-option
+                          *ngFor="let jobTitle of filteredJobTitles | async"
+                          [value]="jobTitle">
+                          {{ jobTitle }}
                         </mat-option>
                       </ng-container>
                       <ng-template #noJobTitles>
@@ -125,30 +143,41 @@
                   </mat-form-field>
                   <mat-form-field appearance="fill">
                     <mat-label>Employment date</mat-label>
-                    <input matInput
-                           aria-label="Employment date"
-                           aria-required="true"
-                           [matDatepicker]="employmentDatepicker"
-                           [formControl]="employmentDateFormControl"
-                           [errorStateMatcher]="matcher">
+                    <input
+                      matInput
+                      aria-label="Employment date"
+                      aria-required="true"
+                      [matDatepicker]="employmentDatepicker"
+                      [formControl]="employmentDateFormControl"
+                      [errorStateMatcher]="matcher" />
                     <mat-error
                       *ngIf="employmentDateFormControl.hasError('required')">
                       Employment date is required
                     </mat-error>
-                    <mat-datepicker-toggle matSuffix [for]="employmentDatepicker"></mat-datepicker-toggle>
-                    <mat-datepicker #employmentDatepicker disabled="false"></mat-datepicker>
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="employmentDatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker
+                      #employmentDatepicker
+                      disabled="false"></mat-datepicker>
                   </mat-form-field>
                 </div>
                 <div class="row-container">
                   <mat-form-field appearance="fill">
                     <mat-label>Email</mat-label>
-                    <input matInput
-                           type="email"
-                           aria-label="Email"
-                           aria-required="true"
-                           autocomplete="email"
-                           [formControl]="emailFormControl" [errorStateMatcher]="matcher">
-                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    <input
+                      matInput
+                      type="email"
+                      aria-label="Email"
+                      aria-required="true"
+                      autocomplete="email"
+                      [formControl]="emailFormControl"
+                      [errorStateMatcher]="matcher" />
+                    <mat-error
+                      *ngIf="
+                        emailFormControl.hasError('email') &&
+                        !emailFormControl.hasError('required')
+                      ">
                       Please enter a valid email address
                     </mat-error>
                     <mat-error *ngIf="emailFormControl.hasError('required')">
@@ -157,42 +186,65 @@
                   </mat-form-field>
                   <mat-form-field appearance="fill">
                     <mat-label>Password</mat-label>
-                    <input [type]="hidePassword ? 'password' : 'text'"
-                           aria-label="Password" aria-required="true" matInput
-                           [formControl]="passwordFormControl"
-                           [errorStateMatcher]="matcher">
-                    <button class="input-button-suffix" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
-                            [attr.aria-label]="'Hide password'"
-                            [attr.aria-pressed]="hidePassword">
-                      <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <input
+                      [type]="hidePassword ? 'password' : 'text'"
+                      aria-label="Password"
+                      aria-required="true"
+                      matInput
+                      [formControl]="passwordFormControl"
+                      [errorStateMatcher]="matcher" />
+                    <button
+                      class="input-button-suffix"
+                      mat-icon-button
+                      matSuffix
+                      (click)="hidePassword = !hidePassword"
+                      [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hidePassword">
+                      <mat-icon>{{
+                        hidePassword ? 'visibility_off' : 'visibility'
+                      }}</mat-icon>
                     </button>
                     <mat-error *ngIf="passwordFormControl.hasError('required')">
                       Password is required
                     </mat-error>
                     <mat-error
-                      *ngIf="passwordFormControl.hasError('passwordInvalid') && !passwordFormControl.hasError('required')">
-                      <span class="password-requirements-error"
-                            matTooltip="Password must be at least 8 characters, and include an uppercase letter, a lowercase letter, a number, and a special character."
-                            matTooltipPosition="right">
-                       See password requirements <mat-icon class="error-info-icon" aria-label="More information"
-                                                           tabindex="0">info</mat-icon>
+                      *ngIf="
+                        passwordFormControl.hasError('passwordInvalid') &&
+                        !passwordFormControl.hasError('required')
+                      ">
+                      <span
+                        class="password-requirements-error"
+                        matTooltip="Password must be at least 8 characters, and include an uppercase letter, a lowercase letter, a number, and a special character."
+                        matTooltipPosition="right">
+                        See password requirements
+                        <mat-icon
+                          class="error-info-icon"
+                          aria-label="More information"
+                          tabindex="0"
+                          >info</mat-icon
+                        >
                       </span>
                     </mat-error>
                   </mat-form-field>
                 </div>
-                <button mat-flat-button color="primary" type="submit" aria-label="Sign up" class="submit-button">Sign
-                  Up
+                <button
+                  mat-flat-button
+                  color="primary"
+                  type="submit"
+                  aria-label="Sign up"
+                  class="submit-button">
+                  Sign Up
                 </button>
-                <p class="login-link">Already have an account? <a routerLink="/login">Sign In</a></p>
+                <p class="login-link">
+                  Already have an account? <a routerLink="/login">Sign In</a>
+                </p>
               </form>
             </mat-card-content>
           </mat-card>
         </div>
       </main>
       <footer class="footer">
-        <div class="copyright">
-          &copy; 2023 Global Directory
-        </div>
+        <div class="copyright">&copy; 2023 Global Directory</div>
       </footer>
     </div>
   </div>

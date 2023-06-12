@@ -1,7 +1,7 @@
 export type LoginFormData = {
   email: string;
   password: string;
-}
+};
 
 export type RegisterFormData = {
   profilePhoto: File | null;
@@ -13,12 +13,12 @@ export type RegisterFormData = {
   employmentDate: string;
   email: string;
   password: string;
-}
+};
 
 export type ForgotPasswordFormData = {
   email: string;
-}
+};
 
 export type ResetPasswordFormData = {
   newPassword: string;
-}
+};

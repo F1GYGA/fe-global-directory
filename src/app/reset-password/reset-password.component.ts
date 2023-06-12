@@ -1,6 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {ForgotPasswordFormData, ResetPasswordFormData} from "../../api/types/auth";
+import { Component, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+import {
+  ForgotPasswordFormData,
+  ResetPasswordFormData,
+} from '../../api/types/auth';
 
 @Component({
   selector: 'app-reset-password',
@@ -12,16 +21,13 @@ export class ResetPasswordComponent implements OnInit {
   hideConfirmPassword: boolean = true;
   newPasswordFormControl = new FormControl('', [
     Validators.required,
-    this.passwordValidator
+    this.passwordValidator,
   ]);
-  confirmPasswordFormControl = new FormControl('', [
-    Validators.required,
-  ]);
+  confirmPasswordFormControl = new FormControl('', [Validators.required]);
   resetPasswordForm = new FormGroup({
-      newPassword: this.newPasswordFormControl,
-      confirmPassword: this.confirmPasswordFormControl,
-    },
-  );
+    newPassword: this.newPasswordFormControl,
+    confirmPassword: this.confirmPasswordFormControl,
+  });
 
   ngOnInit() {
     this.newPasswordFormControl.valueChanges.subscribe(() => {
@@ -38,7 +44,7 @@ export class ResetPasswordComponent implements OnInit {
     const confirmPassword = this.confirmPasswordFormControl.value;
 
     if (newPassword !== confirmPassword) {
-      this.confirmPasswordFormControl.setErrors({passwordsDoNotMatch: true});
+      this.confirmPasswordFormControl.setErrors({ passwordsDoNotMatch: true });
     } else {
       this.confirmPasswordFormControl.setErrors(null);
     }
@@ -51,16 +57,21 @@ export class ResetPasswordComponent implements OnInit {
     const hasNumeric = /[0-9]/.test(value);
     const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(value);
     const isLengthValid = value && value.length >= 8;
-    const passwordValid = hasUpperCase && hasLowerCase && hasNumeric && hasSpecialChar && isLengthValid;
+    const passwordValid =
+      hasUpperCase &&
+      hasLowerCase &&
+      hasNumeric &&
+      hasSpecialChar &&
+      isLengthValid;
 
-    return passwordValid ? null : {passwordInvalid: true};
+    return passwordValid ? null : { passwordInvalid: true };
   }
 
   onResetPassword() {
     if (this.resetPasswordForm.valid) {
       const newPasswordValue = this.resetPasswordForm.value.newPassword || '';
       const resetPasswordData: ResetPasswordFormData = {
-        newPassword: newPasswordValue
+        newPassword: newPasswordValue,
       };
       console.log(resetPasswordData);
     }

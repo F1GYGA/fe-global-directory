@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {MyErrorStateMatcher} from "../app.component";
-import {LoginFormData} from "../../api/types/auth";
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MyErrorStateMatcher } from '../app.component';
+import { LoginFormData } from '../../api/types/auth';
 
 @Component({
   selector: 'app-login',
@@ -10,11 +10,14 @@ import {LoginFormData} from "../../api/types/auth";
 })
 export class LoginComponent {
   hidePassword: boolean = true;
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
   passwordFormControl = new FormControl('', [Validators.required]);
   loginForm = new FormGroup({
     email: this.emailFormControl,
-    password: this.passwordFormControl
+    password: this.passwordFormControl,
   });
 
   matcher = new MyErrorStateMatcher();

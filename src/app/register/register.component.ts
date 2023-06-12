@@ -1,14 +1,20 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {MyErrorStateMatcher} from "../app.component";
-import {map, Observable, startWith} from "rxjs";
-import {RegisterFormData} from "../../api/types/auth";
-import {DEPARTMENTS_TEAMS_JOBS} from "../../helpers/constants/departmentsTeamsJobTitles";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+import { MyErrorStateMatcher } from '../app.component';
+import { map, Observable, startWith } from 'rxjs';
+import { RegisterFormData } from '../../api/types/auth';
+import { DEPARTMENTS_TEAMS_JOBS } from '../../helpers/constants/departmentsTeamsJobTitles';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
@@ -22,8 +28,14 @@ export class RegisterComponent implements OnInit {
   teamFormControl = new FormControl('', Validators.required);
   jobTitleFormControl = new FormControl('', Validators.required);
   employmentDateFormControl = new FormControl('', Validators.required);
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl = new FormControl('', [Validators.required, this.passwordValidator]);
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  passwordFormControl = new FormControl('', [
+    Validators.required,
+    this.passwordValidator,
+  ]);
 
   registerForm = new FormGroup({
     profilePhoto: this.profilePhotoFormControl,
@@ -54,30 +66,37 @@ export class RegisterComponent implements OnInit {
 
   private filterDepartments(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.departments.filter(department => department.toLowerCase().includes(filterValue));
+    return this.departments.filter(department =>
+      department.toLowerCase().includes(filterValue)
+    );
   }
 
   private filterTeams(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.teamsByDepartment.filter(team => team.toLowerCase().includes(filterValue));
+    return this.teamsByDepartment.filter(team =>
+      team.toLowerCase().includes(filterValue)
+    );
   }
 
   private filterJobTitles(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.jobTitlesByTeam.filter(jobTitle => jobTitle.toLowerCase().includes(filterValue));
+    return this.jobTitlesByTeam.filter(jobTitle =>
+      jobTitle.toLowerCase().includes(filterValue)
+    );
   }
 
   private initializeDepartments() {
     this.filteredDepartments = this.departmentFormControl.valueChanges.pipe(
       startWith(''),
-      map(value => this.filterDepartments(value || '')),
+      map(value => this.filterDepartments(value || ''))
     );
   }
 
   private initializeTeamsByDepartment() {
     this.departmentFormControl.valueChanges.subscribe(department => {
       if (department) {
-        this.teamsByDepartment = Object.keys(DEPARTMENTS_TEAMS_JOBS[department]) || [];
+        this.teamsByDepartment =
+          Object.keys(DEPARTMENTS_TEAMS_JOBS[department]) || [];
         this.teamFormControl.setValue('');
       } else {
         this.teamsByDepartment = [];
@@ -85,7 +104,7 @@ export class RegisterComponent implements OnInit {
       }
       this.filteredTeams = this.teamFormControl.valueChanges.pipe(
         startWith(''),
-        map(value => this.filterTeams(value || '')),
+        map(value => this.filterTeams(value || ''))
       );
     });
   }
@@ -102,7 +121,7 @@ export class RegisterComponent implements OnInit {
       }
       this.filteredJobTitles = this.jobTitleFormControl.valueChanges.pipe(
         startWith(''),
-        map(value => this.filterJobTitles(value || '')),
+        map(value => this.filterJobTitles(value || ''))
       );
     });
   }
@@ -114,9 +133,14 @@ export class RegisterComponent implements OnInit {
     const hasNumeric = /[0-9]/.test(value);
     const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(value);
     const isLengthValid = value && value.length >= 8;
-    const passwordValid = hasUpperCase && hasLowerCase && hasNumeric && hasSpecialChar && isLengthValid;
+    const passwordValid =
+      hasUpperCase &&
+      hasLowerCase &&
+      hasNumeric &&
+      hasSpecialChar &&
+      isLengthValid;
 
-    return passwordValid ? null : {passwordInvalid: true};
+    return passwordValid ? null : { passwordInvalid: true };
   }
 
   onFileUpload(event: Event) {
@@ -147,7 +171,8 @@ export class RegisterComponent implements OnInit {
 
   onSignUp() {
     if (this.registerForm.valid) {
-      const registerData: RegisterFormData = this.registerForm.value as RegisterFormData;
+      const registerData: RegisterFormData = this.registerForm
+        .value as RegisterFormData;
       const formData = this.convertToFormData(registerData);
       formData.forEach((value, key) => {
         console.log(`${key}: ${value}`);
