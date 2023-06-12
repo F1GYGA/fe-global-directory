@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from "../app.component";
-import {LoginFormData} from "../../api/types/user";
+import {LoginFormData} from "../../api/types/auth";
 
 @Component({
   selector: 'app-login',

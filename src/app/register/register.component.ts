@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {MyErrorStateMatcher} from "../app.component";
 import {map, Observable, startWith} from "rxjs";
-import {RegisterFormData} from "../../api/types/user";
+import {RegisterFormData} from "../../api/types/auth";
 import {DEPARTMENTS_TEAMS_JOBS} from "../../helpers/constants/departmentsTeamsJobTitles";
 
 @Component({
@@ -15,24 +15,24 @@ export class RegisterComponent implements OnInit {
   profilePhoto: string | ArrayBuffer = 'assets/profile-photo-placeholder.png';
   hidePassword: boolean = true;
 
-  profilePhotoControl = new FormControl();
-  firstNameControl = new FormControl('', Validators.required);
-  lastNameControl = new FormControl('', Validators.required);
-  departmentControl = new FormControl('', Validators.required);
-  teamControl = new FormControl('', Validators.required);
-  jobTitleControl = new FormControl('', Validators.required);
-  employmentDateControl = new FormControl('', Validators.required);
+  profilePhotoFormControl = new FormControl();
+  firstNameFormControl = new FormControl('', Validators.required);
+  lastNameFormControl = new FormControl('', Validators.required);
+  departmentFormControl = new FormControl('', Validators.required);
+  teamFormControl = new FormControl('', Validators.required);
+  jobTitleFormControl = new FormControl('', Validators.required);
+  employmentDateFormControl = new FormControl('', Validators.required);
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required, this.passwordValidator]);
 
   registerForm = new FormGroup({
-    profilePhoto: this.profilePhotoControl,
-    firstName: this.firstNameControl,
-    lastName: this.lastNameControl,
-    department: this.departmentControl,
-    team: this.teamControl,
-    jobTitle: this.jobTitleControl,
-    employmentDate: this.employmentDateControl,
+    profilePhoto: this.profilePhotoFormControl,
+    firstName: this.firstNameFormControl,
+    lastName: this.lastNameFormControl,
+    department: this.departmentFormControl,
+    team: this.teamFormControl,
+    jobTitle: this.jobTitleFormControl,
+    employmentDate: this.employmentDateFormControl,
     email: this.emailFormControl,
     password: this.passwordFormControl,
   });
@@ -68,22 +68,22 @@ export class RegisterComponent implements OnInit {
   }
 
   private initializeDepartments() {
-    this.filteredDepartments = this.departmentControl.valueChanges.pipe(
+    this.filteredDepartments = this.departmentFormControl.valueChanges.pipe(
       startWith(''),
       map(value => this.filterDepartments(value || '')),
     );
   }
 
   private initializeTeamsByDepartment() {
-    this.departmentControl.valueChanges.subscribe(department => {
+    this.departmentFormControl.valueChanges.subscribe(department => {
       if (department) {
         this.teamsByDepartment = Object.keys(DEPARTMENTS_TEAMS_JOBS[department]) || [];
-        this.teamControl.setValue('');  // Reset the team input
+        this.teamFormControl.setValue('');
       } else {
         this.teamsByDepartment = [];
-        this.teamControl.setValue('');
+        this.teamFormControl.setValue('');
       }
-      this.filteredTeams = this.teamControl.valueChanges.pipe(
+      this.filteredTeams = this.teamFormControl.valueChanges.pipe(
         startWith(''),
         map(value => this.filterTeams(value || '')),
       );
@@ -91,16 +91,16 @@ export class RegisterComponent implements OnInit {
   }
 
   private initializeJobTitlesByTeam() {
-    this.teamControl.valueChanges.subscribe(team => {
-      const department = this.departmentControl.value;
+    this.teamFormControl.valueChanges.subscribe(team => {
+      const department = this.departmentFormControl.value;
       if (team && department) {
         this.jobTitlesByTeam = DEPARTMENTS_TEAMS_JOBS[department][team] || [];
-        this.jobTitleControl.setValue('');  // Reset the job title input
+        this.jobTitleFormControl.setValue('');
       } else {
         this.jobTitlesByTeam = [];
-        this.jobTitleControl.setValue('');
+        this.jobTitleFormControl.setValue('');
       }
-      this.filteredJobTitles = this.jobTitleControl.valueChanges.pipe(
+      this.filteredJobTitles = this.jobTitleFormControl.valueChanges.pipe(
         startWith(''),
         map(value => this.filterJobTitles(value || '')),
       );
@@ -127,7 +127,7 @@ export class RegisterComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = () => {
         this.profilePhoto = reader.result as string | ArrayBuffer;
-        this.profilePhotoControl.setValue(file);
+        this.profilePhotoFormControl.setValue(file);
       };
       reader.readAsDataURL(file);
     }
