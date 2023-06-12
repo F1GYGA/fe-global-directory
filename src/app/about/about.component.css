@@ -16,7 +16,6 @@
 
 .example-card {
   max-width: 700px;
-  position: center;
   margin: auto;
 }
 
@@ -98,7 +97,6 @@ mat-toolbar {
 
 .main-container {
   padding: 50px 25px;
-  position: center;
 }
 
 mat-card {
