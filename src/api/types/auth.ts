@@ -1,9 +1,9 @@
-export interface LoginFormData {
+export type LoginFormData = {
   email: string;
   password: string;
 }
 
-export interface RegisterFormData {
+export type RegisterFormData = {
   profilePhoto: File | null;
   firstName: string;
   lastName: string;
@@ -15,10 +15,10 @@ export interface RegisterFormData {
   password: string;
 }
 
-export interface ForgotPasswordFormData {
+export type ForgotPasswordFormData = {
   email: string;
 }
 
-export interface ResetPasswordFormData {
+export type ResetPasswordFormData = {
   newPassword: string;
 }
