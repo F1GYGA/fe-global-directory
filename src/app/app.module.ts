@@ -22,6 +22,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AboutComponent } from './about/about.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatDividerModule } from '@angular/material/divider';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     AboutComponent,
+    NewsfeedComponent,
   ],
   imports: [
     BrowserModule,
