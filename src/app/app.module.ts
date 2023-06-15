@@ -23,6 +23,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AboutComponent } from './about/about.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { NewsfeedComponent } from './newsfeed/newsfeed.component';
     MatIconModule,
     MatDividerModule,
     MatTooltipModule,
+    MatExpansionModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent],
