@@ -22,6 +22,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AboutComponent } from './about/about.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { SearchColleaguesComponent } from './search-page/search-colleagues/search-colleagues.component';
+import { ColleagueCardComponent } from './search-page/colleague-card/colleague-card.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { MatDividerModule } from '@angular/material/divider';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     AboutComponent,
+    SearchColleaguesComponent,
+    ColleagueCardComponent,
   ],
   imports: [
     BrowserModule,
