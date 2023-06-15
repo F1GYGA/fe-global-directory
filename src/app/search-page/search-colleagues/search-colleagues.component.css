@@ -1,0 +1,160 @@
+.navigation-container {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 136, 1);
+}
+
+.search-card {
+    max-width: 700px;
+    margin: auto;
+}
+
+mat-toolbar {
+    height: 64px;
+}
+
+.mat-card-header-text {
+    margin: 0 0;
+}
+
+.container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    min-width: 320px;
+    overflow: hidden;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.9) -17.76%,
+            rgba(62, 81, 181, 0.4) 82.24%),
+        url('src/assets/login.jpg'), center, no-repeat;
+    background-size: cover;
+}
+
+.blur-container {
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(12px);
+}
+
+.page-content {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 64px);
+    overflow: auto;
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.main-container {
+    padding: 50px 25px;
+}
+
+.about-container {
+    width: 100%;
+}
+
+.footer {
+    background: rgba(0, 0, 136, 0.6);
+    padding: 10px 0;
+    text-align: center;
+}
+
+.copyright {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    color: #fff;
+    opacity: 0.7;
+    text-transform: uppercase;
+}
+
+.main-container {
+    padding: 50px 25px;
+}
+
+mat-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(100px);
+    margin: auto;
+    height: 700px;
+    max-height: 900px;
+    max-width: 400px;
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+section {
+    display: table;
+    margin: auto;
+}
+
+.mat-card-actions {
+    margin: auto;
+}
+
+.mat-card-header {
+    border-radius: 10px;
+    /* position: absolute; */
+    /* top: 5%; */
+    /* left: 50px; */
+    /* right: 50px; */
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    align-self: center;
+    padding-right: 100px;
+    padding-top: 30px;
+}
+
+.search-form-input {
+    width: 300px;
+    border-radius: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.search-form {
+  background-color: white;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  }
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.search-button {
+    margin-right: 10px;
+    /* Adjust this margin as needed */
+    border-radius: 10px
+}
+
+.colleague-list {
+  height: 550px; /* Set the desired height for the scrollable section */
+  overflow: auto;
+  display: flex;
+    flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-container {
+    align-items: center;
+    max-width: 300px;
+}

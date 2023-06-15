@@ -42,6 +42,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
 import { JwtInterceptor } from '../interceptors/jwt.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SearchColleaguesComponent } from './search-page/search-colleagues/search-colleagues.component';
+import { ColleagueCardComponent } from './search-page/colleague-card/colleague-card.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     UserRejectionDialogComponent,
     RegistrationRequestsTableComponent,
     NewsfeedComponent,
+    SearchColleaguesComponent,
+    ColleagueCardComponent,
   ],
   imports: [
     BrowserModule,
