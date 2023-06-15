@@ -22,6 +22,10 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AboutComponent } from './about/about.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { NavbarComponent } from './navbar/navbar.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { HttpClientModule } from '@angular/common/http';
+import { StandardNavbarComponent } from './standard-navbar/standard-navbar.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,8 @@ import { MatDividerModule } from '@angular/material/divider';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     AboutComponent,
+    NavbarComponent,
+    StandardNavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +59,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatDividerModule,
     MatTooltipModule,
+    MatMenuModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -10,38 +10,38 @@
             </mat-card-header>
             <mat-card-content>
               <form
-                [formGroup]="registerForm"
                 (ngSubmit)="onSignUp()"
-                class="form-container"
-                aria-label="Register Form">
+                [formGroup]="registerForm"
+                aria-label="Register Form"
+                class="form-container">
                 <div class="photo-container">
-                  <div class="image-container" (click)="fileInput.click()">
+                  <div (click)="fileInput.click()" class="image-container">
                     <img
+                      [draggable]="false"
                       [src]="profilePhoto"
                       alt="Profile Photo"
-                      [draggable]="false"
-                      class="img" />
+                      class="img"/>
                     <div class="overlay">Upload</div>
                   </div>
                   <input
-                    type="file"
-                    aria-label="Profile photo"
-                    accept="image/*"
-                    hidden
+                    #fileInput
                     (change)="onFileUpload($event)"
-                    #fileInput />
+                    accept="image/*"
+                    aria-label="Profile photo"
+                    hidden
+                    type="file"/>
                 </div>
                 <div class="row-container">
                   <mat-form-field appearance="fill">
                     <mat-label>First name</mat-label>
                     <input
-                      matInput
-                      type="text"
+                      [errorStateMatcher]="matcher"
+                      [formControl]="firstNameFormControl"
                       aria-label="First name"
                       aria-required="true"
                       autocomplete="given-name"
-                      [formControl]="firstNameFormControl"
-                      [errorStateMatcher]="matcher" />
+                      matInput
+                      type="text"/>
                     <mat-error
                       *ngIf="firstNameFormControl.hasError('required')">
                       First name is required
@@ -50,13 +50,13 @@
                   <mat-form-field appearance="fill">
                     <mat-label>Last name</mat-label>
                     <input
-                      matInput
-                      type="text"
+                      [errorStateMatcher]="matcher"
+                      [formControl]="lastNameFormControl"
                       aria-label="Last name"
                       aria-required="true"
                       autocomplete="family-name"
-                      [formControl]="lastNameFormControl"
-                      [errorStateMatcher]="matcher" />
+                      matInput
+                      type="text"/>
                     <mat-error *ngIf="lastNameFormControl.hasError('required')">
                       Last name is required
                     </mat-error>
@@ -66,13 +66,13 @@
                   <mat-form-field appearance="fill">
                     <mat-label>Department</mat-label>
                     <input
-                      type="text"
+                      [errorStateMatcher]="matcher"
+                      [formControl]="departmentFormControl"
+                      [matAutocomplete]="auto"
                       aria-label="Department"
                       aria-required="true"
                       matInput
-                      [formControl]="departmentFormControl"
-                      [matAutocomplete]="auto"
-                      [errorStateMatcher]="matcher" />
+                      type="text"/>
                     <mat-error
                       *ngIf="departmentFormControl.hasError('required')">
                       Department is required
@@ -88,13 +88,13 @@
                   <mat-form-field appearance="fill">
                     <mat-label>Team</mat-label>
                     <input
-                      type="text"
+                      [errorStateMatcher]="matcher"
+                      [formControl]="teamFormControl"
+                      [matAutocomplete]="teamAuto"
                       aria-label="Team"
                       aria-required="true"
                       matInput
-                      [formControl]="teamFormControl"
-                      [matAutocomplete]="teamAuto"
-                      [errorStateMatcher]="matcher" />
+                      type="text"/>
                     <mat-error *ngIf="teamFormControl.hasError('required')">
                       Team is required
                     </mat-error>
@@ -117,13 +117,13 @@
                   <mat-form-field appearance="fill">
                     <mat-label>Job title</mat-label>
                     <input
-                      type="text"
+                      [errorStateMatcher]="matcher"
+                      [formControl]="jobTitleFormControl"
+                      [matAutocomplete]="jobTitleAuto"
                       aria-label="Job title"
                       aria-required="true"
                       matInput
-                      [formControl]="jobTitleFormControl"
-                      [matAutocomplete]="jobTitleAuto"
-                      [errorStateMatcher]="matcher" />
+                      type="text"/>
                     <mat-error *ngIf="jobTitleFormControl.hasError('required')">
                       Job title is required
                     </mat-error>
@@ -144,19 +144,19 @@
                   <mat-form-field appearance="fill">
                     <mat-label>Employment date</mat-label>
                     <input
-                      matInput
+                      [errorStateMatcher]="matcher"
+                      [formControl]="employmentDateFormControl"
+                      [matDatepicker]="employmentDatepicker"
                       aria-label="Employment date"
                       aria-required="true"
-                      [matDatepicker]="employmentDatepicker"
-                      [formControl]="employmentDateFormControl"
-                      [errorStateMatcher]="matcher" />
+                      matInput/>
                     <mat-error
                       *ngIf="employmentDateFormControl.hasError('required')">
                       Employment date is required
                     </mat-error>
                     <mat-datepicker-toggle
-                      matSuffix
-                      [for]="employmentDatepicker"></mat-datepicker-toggle>
+                      [for]="employmentDatepicker"
+                      matSuffix></mat-datepicker-toggle>
                     <mat-datepicker
                       #employmentDatepicker
                       disabled="false"></mat-datepicker>
@@ -166,13 +166,13 @@
                   <mat-form-field appearance="fill">
                     <mat-label>Email</mat-label>
                     <input
-                      matInput
-                      type="email"
+                      [errorStateMatcher]="matcher"
+                      [formControl]="emailFormControl"
                       aria-label="Email"
                       aria-required="true"
                       autocomplete="email"
-                      [formControl]="emailFormControl"
-                      [errorStateMatcher]="matcher" />
+                      matInput
+                      type="email"/>
                     <mat-error
                       *ngIf="
                         emailFormControl.hasError('email') &&
@@ -187,22 +187,22 @@
                   <mat-form-field appearance="fill">
                     <mat-label>Password</mat-label>
                     <input
+                      [errorStateMatcher]="matcher"
+                      [formControl]="passwordFormControl"
                       [type]="hidePassword ? 'password' : 'text'"
                       aria-label="Password"
                       aria-required="true"
-                      matInput
-                      [formControl]="passwordFormControl"
-                      [errorStateMatcher]="matcher" />
+                      matInput/>
                     <button
-                      class="input-button-suffix"
-                      mat-icon-button
-                      matSuffix
                       (click)="hidePassword = !hidePassword"
                       [attr.aria-label]="'Hide password'"
-                      [attr.aria-pressed]="hidePassword">
+                      [attr.aria-pressed]="hidePassword"
+                      class="input-button-suffix"
+                      mat-icon-button
+                      matSuffix>
                       <mat-icon>{{
                         hidePassword ? 'visibility_off' : 'visibility'
-                      }}</mat-icon>
+                        }}</mat-icon>
                     </button>
                     <mat-error *ngIf="passwordFormControl.hasError('required')">
                       Password is required
@@ -218,21 +218,21 @@
                         matTooltipPosition="right">
                         See password requirements
                         <mat-icon
-                          class="error-info-icon"
                           aria-label="More information"
+                          class="error-info-icon"
                           tabindex="0"
-                          >info</mat-icon
+                        >info</mat-icon
                         >
                       </span>
                     </mat-error>
                   </mat-form-field>
                 </div>
                 <button
-                  mat-flat-button
-                  color="primary"
-                  type="submit"
                   aria-label="Sign up"
-                  class="submit-button">
+                  class="submit-button"
+                  color="primary"
+                  mat-flat-button
+                  type="submit">
                   Sign Up
                 </button>
                 <p class="login-link">

@@ -1,0 +1,57 @@
+<mat-toolbar class="navigation-container" role="heading">
+  <div class="left-side">
+    <ng-container *ngIf="canGoBack">
+      <button (click)="onGoBack()" aria-label="Go Back"
+              mat-icon-button
+              matTooltip="Go Back" matTooltipPosition="below">
+        <mat-icon class="go-back-icon">chevron_left</mat-icon>
+      </button>
+      <div class="vertical-divider"></div>
+    </ng-container>
+    <button (click)="onNavigateToNewsFeed()" aria-label="News Feed"
+            class="news-feed-icon-button" mat-icon-button>
+      <mat-icon svgIcon="globe-logo"></mat-icon>
+    </button>
+    <button (click)="onNavigateToNewsFeed()" aria-label="News Feed" class="news-feed-button"
+            mat-button>
+      <mat-icon svgIcon="globe-logo"></mat-icon>
+      <span
+        class="news-feed-button-text">Global Directory</span>
+    </button>
+  </div>
+  <div class="right-side">
+    <button (click)="onNavigateToSearchColleagues()" aria-label="View Colleagues"
+            mat-icon-button
+            matTooltip="View Colleagues" matTooltipPosition="below">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button [matMenuTriggerFor]="profileMenu" class="avatar-button" mat-icon-button matTooltip="Account"
+            matTooltipPosition="below">
+      <div class="profile-photo">
+        <img
+          [draggable]="false"
+          [src]="profilePhotoUrl"
+          alt="Profile Photo">
+        <div class="overlay"></div>
+      </div>
+    </button>
+    <mat-menu #profileMenu="matMenu" class="avatar-menu">
+      <div class="username">
+        email@email.com
+      </div>
+      <mat-divider></mat-divider>
+      <button (click)="onNavigateToAboutMe()" mat-menu-item>
+        <mat-icon class="mat-menu-item-icon">person</mat-icon>
+        <span>About Me</span>
+      </button>
+      <button (click)="onNavigateToAdminPanel()" aria-label="Admin Panel" mat-menu-item>
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>Admin Panel</span>
+      </button>
+      <button (click)="onLogOut()" mat-menu-item>
+        <mat-icon class="mat-menu-item-icon">exit_to_app</mat-icon>
+        <span>Log Out</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

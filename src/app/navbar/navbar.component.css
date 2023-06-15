@@ -1,0 +1,116 @@
+.navigation-container {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  position: fixed;
+  min-width: 320px;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 8px;
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+  color: #3e51b5;
+}
+
+mat-toolbar {
+  height: 58px;
+}
+
+.left-side {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.right-side {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.go-back-icon {
+  font-size: 32px;
+  width: 32px;
+}
+
+.vertical-divider {
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  height: 24px;
+}
+
+.mat-icon-button.news-feed-icon-button {
+  line-height: 14px;
+}
+
+.mat-button.news-feed-button {
+  height: 40px;
+  line-height: 14px;
+  padding: 0 8px;
+}
+
+.news-feed-button-text {
+  margin-left: 8px;
+}
+
+.avatar-button {
+  overflow: hidden;
+}
+
+.profile-photo img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  object-fit: cover;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile-photo:hover .overlay {
+  opacity: 1;
+}
+
+.username {
+  color: #3e51b5;
+  padding: 16px 16px;
+  font-weight: 500;
+}
+
+.mat-menu-item .mat-icon {
+  margin-right: 8px;
+}
+
+@media only screen and (min-width: 480px) {
+  .news-feed-icon-button {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .news-feed-button {
+    display: none;
+  }
+}
