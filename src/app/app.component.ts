@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -21,8 +23,32 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-
-
 export class AppComponent {
-  title = 'global-directory';
+  title = 'fe-global-directory';
+  isAuthenticated: boolean;
+  canGoBack: boolean;
+
+  constructor(
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.registerIcons();
+    this.isAuthenticated = this.checkIfAuthenticated();
+    this.canGoBack = this.checkIfCanGoBack();
+  }
+
+  private registerIcons(): void {
+    this.matIconRegistry.addSvgIcon(
+      'globe-logo',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/globe.svg')
+    );
+  }
+
+  private checkIfAuthenticated(): boolean {
+    return true;
+  }
+
+  private checkIfCanGoBack(): boolean {
+    return true;
+  }
 }

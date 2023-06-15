@@ -5,11 +5,11 @@
   min-width: 320px;
   overflow: hidden;
   background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.9) -17.76%,
-      rgba(62, 81, 181, 0.6) 82.24%
-    ),
-    url('/assets/register.jpg'), center, no-repeat;
+    180deg,
+    rgba(255, 255, 255, 0.9) -17.76%,
+    rgba(62, 81, 181, 0.6) 82.24%
+  ),
+  url('/assets/register.jpg'), center, no-repeat;
   background-size: cover;
 }
 
@@ -23,10 +23,10 @@
 .page-content {
   position: relative;
   width: 100%;
-  height: calc(100vh - 64px);
-  height: calc(100svh - 64px);
+  height: calc(100vh - 58px);
+  height: calc(100svh - 58px);
   overflow: auto;
-  margin-top: 64px;
+  margin-top: 58px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -182,21 +182,12 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .container {
-    background: #3e51b5;
-  }
-
-  .blur-container {
-    backdrop-filter: blur(0);
-  }
-
   .main-container {
     padding: 0;
     flex-grow: 1;
   }
 
   .mat-card {
-    background: rgba(255, 255, 255, 0.8);
     height: 100%;
     max-width: 100%;
     border-radius: 0;

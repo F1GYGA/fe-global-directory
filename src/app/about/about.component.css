@@ -25,7 +25,7 @@
 }
 
 mat-toolbar {
-  height: 64px;
+  height: 58px;
 }
 
 .container {
@@ -52,9 +52,9 @@ mat-toolbar {
 .page-content {
   position: relative;
   width: 100%;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 58px);
   overflow: auto;
-  margin-top: 64px;
+  margin-top: 58px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
