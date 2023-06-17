@@ -86,7 +86,7 @@
 }
 
 .forgot-password-link a {
-  color: #3e51b5;
+  color: rgba(63, 81, 181, 1);
   text-decoration: none;
 }
 
@@ -104,7 +104,7 @@
 }
 
 .register-link a {
-  color: #3e51b5;
+  color: rgba(63, 81, 181, 1);
   text-decoration: none;
 }
 
@@ -113,7 +113,7 @@
 }
 
 .footer {
-  background: #3e51b5;
+  background: rgba(63, 81, 181, 1);
   padding: 10px 0;
   text-align: center;
 }

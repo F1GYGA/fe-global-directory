@@ -1,12 +1,16 @@
 html,
 body {
-  background: #3e51b5;
+  background: rgba(63, 81, 181, 1);
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   margin: 0;
   padding: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.mat-form-field input {
+  font-size: 16px;
 }
 
 .avatar-menu.mat-menu-panel {
@@ -29,3 +33,8 @@ body {
 .main-menu.mat-menu-panel .mat-menu-content {
   padding: 0;
 }
+
+.mat-sort-header-content {
+  text-align: left !important;
+}
+

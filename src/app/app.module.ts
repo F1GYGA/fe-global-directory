@@ -26,6 +26,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { StandardNavbarComponent } from './standard-navbar/standard-navbar.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,7 @@ import { StandardNavbarComponent } from './standard-navbar/standard-navbar.compo
     AboutComponent,
     NavbarComponent,
     StandardNavbarComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +66,9 @@ import { StandardNavbarComponent } from './standard-navbar/standard-navbar.compo
     MatTooltipModule,
     MatMenuModule,
     HttpClientModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
