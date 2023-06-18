@@ -26,6 +26,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { StandardNavbarComponent } from './standard-navbar/standard-navbar.component';
+import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -54,6 +55,7 @@ import { RegistrationRequestsTableComponent } from './admin-panel/registration-r
     ActivateUserConfirmationDialogComponent,
     UserRejectionDialogComponent,
     RegistrationRequestsTableComponent,
+    NewsfeedComponent,
   ],
   imports: [
     BrowserModule,
