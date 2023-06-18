@@ -62,7 +62,6 @@ mat-toolbar {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(100px);
     margin: auto;
-    /* height: 700px; */
     max-height: 900px;
     max-width: 600px;
     box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
@@ -80,11 +79,21 @@ mat-toolbar {
   .mat-card-actions {
     margin: auto;
   }
+
+  .mat-card-avatar {
+    width: 80px;
+    height: 80px;
+  }
   
   .mat-card-title {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
+
+  .mat-card-subtitle {
+    padding-left: 16px;
+  }
+
 
   .example-card {
     max-width: 400px;
@@ -110,4 +119,21 @@ mat-toolbar {
 .comment-icon {
   color: #3e51b5;
   padding-right: 8px;
+}
+
+
+.about-button-text {
+  font-size: 20px;
+}
+
+.mat-card-image {
+  border-radius: 15px;
+  width: 400px;
+  margin: auto;
+  margin-top: 9px;
+  margin-bottom: 25px;
+}
+
+p {
+  text-align: center;
 }

@@ -20,4 +20,8 @@ export class NewsfeedComponent implements OnInit {
     alert('onComment clicked');
   }
 
+  onNavigateToAboutMe() {
+    alert('onNavigateToAboutMe clicked');
+  }
+
 }

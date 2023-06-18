@@ -12,8 +12,14 @@
               <mat-card class="example-card">
                 <mat-card-header>
                   <div mat-card-avatar class="example-header-image"></div>
-                  <mat-card-title>Person 1</mat-card-title>
-                  <mat-card-subtitle>Job / Department</mat-card-subtitle>
+                  <mat-card-title>
+                    <button (click)="onNavigateToAboutMe()" aria-label="About"
+                          mat-button
+                          matTooltip="About Card" matTooltipPosition="below">
+                    <span class="about-button-text">firstName lastName</span>
+                  </button>
+                  </mat-card-title>
+                  <mat-card-subtitle>Job Title</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
                   <p>
@@ -22,14 +28,14 @@
                 </mat-card-content>
                 <mat-card-actions>
                   <button (click)="onLike()" aria-label="Like"
-                          mat-icon-button
+                          mat-button
                           matTooltip="Like" matTooltipPosition="below">
                     <mat-icon class="like-icon">thumb_up</mat-icon>
                     <span class="like-button-text">LIKE</span>
                   </button>
 
                   <button (click)="onComment()" aria-label="Comment"
-                          mat-icon-button
+                          mat-button
                           matTooltip="Comment" matTooltipPosition="below">
                     <mat-icon class="comment-icon">comment</mat-icon>
                     <span class="comment-button-text">COMMENT</span>
@@ -39,10 +45,16 @@
               <mat-card class="example-card">
                 <mat-card-header>
                   <div mat-card-avatar class="example-header-image"></div>
-                  <mat-card-title>Person 2</mat-card-title>
-                  <mat-card-subtitle>Job / Department</mat-card-subtitle>
+                  <mat-card-title>
+                    <button (click)="onNavigateToAboutMe()" aria-label="About"
+                          mat-button
+                          matTooltip="About Card" matTooltipPosition="below">
+                    <span class="about-button-text">firstName lastName</span>
+                  </button>
+                  </mat-card-title>
+                  <mat-card-subtitle>Job Title</mat-card-subtitle>
                 </mat-card-header>
-                <img mat-card-image src="https://www.pcgamesn.com/wp-content/sites/pcgamesn/2020/08/microsoft-flight-simulator-windows-xp-bliss.jpg" alt="Photo of a Shiba Inu">
+                <img mat-card-image src="https://www.pcgamesn.com/wp-content/sites/pcgamesn/2020/08/microsoft-flight-simulator-windows-xp-bliss.jpg" alt="Test Photo">
                 <mat-card-content>
                   <p>
                     Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. 
