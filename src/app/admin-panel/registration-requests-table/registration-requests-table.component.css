@@ -1,60 +1,3 @@
-.container {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  min-width: 320px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.9) -17.76%,
-    rgba(62, 81, 181, 0.4) 82.24%
-  ),
-  url('/assets/admin-panel.jpg'), center, no-repeat;
-  background-size: cover;
-}
-
-.blur-container {
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(12px);
-  display: flex;
-}
-
-.page-content {
-  position: relative;
-  width: 100%;
-  height: calc(100vh - 58px);
-  height: calc(100svh - 58px);
-  margin-top: 58px;
-}
-
-.main-container {
-  height: calc(100vh - 198px);
-  height: calc(100svh - 198px);
-  padding: 50px 25px;
-
-}
-
-.admin-panel-container {
-  width: 100%;
-  height: 100%;
-}
-
-.mat-card {
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(100px);
-  margin: auto;
-  overflow: hidden;
-  max-width: 1200px;
-  width: 100%;
-  height: 100%;
-  padding: 16px 8px 0 16px;
-  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-}
-
 .mat-card-header {
   display: flex;
   flex-direction: column;
@@ -72,21 +15,6 @@
 .searchbar {
   max-width: 250px;
   width: 100%;
-}
-
-
-.footer {
-  background: rgba(63, 81, 181, 1);
-  padding: 10px 0;
-  text-align: center;
-}
-
-.copyright {
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  color: #fff;
-  opacity: 0.8;
 }
 
 .card-content {
@@ -143,6 +71,10 @@ tr.element-row:not(.expanded-row):hover {
 
 .mat-table {
   width: 100%;
+}
+
+.mat-cell {
+  overflow: hidden;
 }
 
 .table-wrapper {
@@ -264,17 +196,6 @@ tr.element-row:not(.expanded-row):hover {
 }
 
 @media only screen and (max-width: 768px) {
-  .main-container {
-    padding: 0;
-    height: calc(100vh - 98px);
-    height: calc(100svh - 98px);
-  }
-
-  .mat-card {
-    border-radius: 0;
-    box-shadow: none;
-  }
-
   .mat-column-email {
     width: 50%;
     flex: 50%;

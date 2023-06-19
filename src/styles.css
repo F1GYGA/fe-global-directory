@@ -38,3 +38,55 @@ body {
   text-align: left !important;
 }
 
+.mat-tab-group {
+  height: 100%;
+}
+
+.mat-tab {
+  height: 100%;
+}
+
+.mat-tab-header {
+  margin-right: 8px;
+  border-bottom: none;
+}
+
+.mat-tab-body-wrapper {
+  height: 100%;
+}
+
+.mat-tab-body-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.mat-tab-body-content::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.mat-tab-body-content::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.mat-tab-body-content::-webkit-scrollbar-thumb {
+  background: rgba(63, 81, 181, 0.75);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.mat-tab-body-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(63, 81, 181, 1);
+}
+
+.mat-dialog-container {
+  min-width: 256px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-radius: 10px !important;
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}

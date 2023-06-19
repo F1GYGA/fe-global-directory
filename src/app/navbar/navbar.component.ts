@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -7,29 +9,33 @@ import { Component, Input } from '@angular/core';
 })
 export class NavbarComponent {
   @Input() canGoBack: boolean = false;
+  isAdmin: boolean = true;
+  // isAdmin: boolean = false;
   profilePhotoUrl: string = 'assets/portrait.jpg';
 
+  constructor(private router: Router, private location: Location) {}
+
   onGoBack() {
-    alert('onGoBack clicked');
+    this.location.back();
   }
 
   onNavigateToNewsFeed() {
-    alert('onNavigateToNewsFeed clicked');
+    this.router.navigate(['/news-feed']);
   }
 
   onNavigateToSearchColleagues() {
-    alert('onNavigateToSearchColleagues clicked');
+    this.router.navigate(['/search-colleagues']);
   }
 
   onNavigateToAboutMe() {
-    alert('onNavigateToAboutMe clicked');
+    this.router.navigate(['/about']);
   }
 
   onNavigateToAdminPanel() {
-    alert('onNavigateToAdminPanel clicked');
+    this.router.navigate(['/admin-panel']);
   }
 
   onLogOut() {
-    alert('onLogOut clicked');
+    this.router.navigate(['/login']);
   }
 }

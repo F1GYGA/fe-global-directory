@@ -1,0 +1,30 @@
+.dialog-title {
+  text-align: center;
+  color: #3f3f3f;
+  margin-bottom: 8px;
+}
+
+.dialog-content {
+  font-size: 16px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.dialog-actions {
+  justify-content: center;
+  gap: 8px;
+}
+
+.cancel-button {
+  color: #3f3f3f;
+  font-weight: 600;
+}
+
+.confirm-button {
+  color: #f44336;
+  font-weight: 600;
+}
+
+.mat-dialog-actions .mat-button-base + .mat-button-base, .mat-dialog-actions .mat-mdc-button-base + .mat-mdc-button-base {
+  margin-left: 0;
+}

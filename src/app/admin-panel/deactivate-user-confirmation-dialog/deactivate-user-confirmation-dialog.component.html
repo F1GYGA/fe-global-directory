@@ -1,0 +1,6 @@
+<h2 class="dialog-title" mat-dialog-title>Deactivate Account</h2>
+<mat-dialog-content class="dialog-content">Are you sure you want to deactivate {{user}}?</mat-dialog-content>
+<mat-dialog-actions class="dialog-actions">
+  <button class="cancel-button" mat-button mat-dialog-close>CANCEL</button>
+  <button [mat-dialog-close]="true" class="confirm-button" mat-button>DEACTIVATE</button>
+</mat-dialog-actions>

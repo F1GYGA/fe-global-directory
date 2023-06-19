@@ -30,6 +30,13 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTabsModule } from '@angular/material/tabs';
+import { UsersTableComponent } from './admin-panel/users-table/users-table.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DeactivateUserConfirmationDialogComponent } from './admin-panel/deactivate-user-confirmation-dialog/deactivate-user-confirmation-dialog.component';
+import { ActivateUserConfirmationDialogComponent } from './admin-panel/activate-user-confirmation-dialog/activate-user-confirmation-dialog.component';
+import { UserRejectionDialogComponent } from './admin-panel/user-rejection-dialog/user-rejection-dialog.component';
+import { RegistrationRequestsTableComponent } from './admin-panel/registration-requests-table/registration-requests-table.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +49,11 @@ import { MatSortModule } from '@angular/material/sort';
     NavbarComponent,
     StandardNavbarComponent,
     AdminPanelComponent,
+    UsersTableComponent,
+    DeactivateUserConfirmationDialogComponent,
+    ActivateUserConfirmationDialogComponent,
+    UserRejectionDialogComponent,
+    RegistrationRequestsTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +81,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatTabsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

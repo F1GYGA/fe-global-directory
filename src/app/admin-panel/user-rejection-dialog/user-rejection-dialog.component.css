@@ -1,0 +1,67 @@
+.dialog-title {
+  text-align: center;
+  color: #3f3f3f;
+  margin-bottom: 8px;
+}
+
+.dialog-content {
+  font-size: 16px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.dialog-actions {
+  justify-content: center;
+  gap: 8px;
+}
+
+.cancel-button {
+  color: #3f3f3f;
+  font-weight: 600;
+}
+
+.confirm-button {
+  font-weight: 600;
+}
+
+.mat-dialog-actions .mat-button-base + .mat-button-base, .mat-dialog-actions .mat-mdc-button-base + .mat-mdc-button-base {
+  margin-left: 0;
+}
+
+mat-dialog-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+mat-dialog-content::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+mat-dialog-content::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+mat-dialog-content::-webkit-scrollbar-thumb {
+  background: rgba(63, 81, 181, 0.75);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+mat-dialog-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(63, 81, 181, 1);
+}
+
+.wrapper {
+  padding-right: 12px;
+}
+
+.mat-dialog-content {
+  padding-right: 12px;
+}
