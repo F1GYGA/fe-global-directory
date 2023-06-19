@@ -26,6 +26,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { StandardNavbarComponent } from './standard-navbar/standard-navbar.component';
+import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -37,6 +38,7 @@ import { DeactivateUserConfirmationDialogComponent } from './admin-panel/deactiv
 import { ActivateUserConfirmationDialogComponent } from './admin-panel/activate-user-confirmation-dialog/activate-user-confirmation-dialog.component';
 import { UserRejectionDialogComponent } from './admin-panel/user-rejection-dialog/user-rejection-dialog.component';
 import { RegistrationRequestsTableComponent } from './admin-panel/registration-requests-table/registration-requests-table.component';
+
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { RegistrationRequestsTableComponent } from './admin-panel/registration-r
     ActivateUserConfirmationDialogComponent,
     UserRejectionDialogComponent,
     RegistrationRequestsTableComponent,
+    NewsfeedComponent
   ],
   imports: [
     BrowserModule,

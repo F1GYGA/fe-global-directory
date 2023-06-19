@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'about', component: AboutComponent },
   { path: 'admin-panel', component: AdminPanelComponent },
+  {path: 'newsfeed', component: NewsfeedComponent},
   { path: '**', redirectTo: 'login' },
 ];
 

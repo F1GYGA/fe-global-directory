@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="blur-container">
+    <div class="page-content">
+      <div class="empty-container"></div>
+      <main class="main-container" role="main">
+        <div class="newsfeed-container">
+          <mat-card>
+            <mat-card>
+              <mat-card-content>What's New?</mat-card-content>
+            </mat-card>
+            <mat-card-content>
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>
+                  <button (click)="onNavigateToAboutMe()" aria-label="About"
+                        mat-button
+                        matTooltip="About Card" matTooltipPosition="below">
+                  <span class="about-button-text">firstName lastName</span>
+                </button>
+                </mat-card-title>
+                <mat-card-subtitle>Job Title</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p>
+                  Post content 1 Post content 1 Post content 1 Post content 1 Post content 1 Post content 1 Post content 1.
+                </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button (click)="onLike()" aria-label="Like"
+                        mat-button
+                        matTooltip="Like" matTooltipPosition="below">
+                  <mat-icon class="like-icon">thumb_up</mat-icon>
+                  <span class="like-button-text">LIKE</span>
+                </button>
+
+                <button (click)="onComment()" aria-label="Comment"
+                        mat-button
+                        matTooltip="Comment" matTooltipPosition="below">
+                  <mat-icon class="comment-icon">comment</mat-icon>
+                  <span class="comment-button-text">COMMENT</span>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>
+                  <button (click)="onNavigateToAboutMe()" aria-label="About"
+                        mat-button
+                        matTooltip="About Card" matTooltipPosition="below">
+                  <span class="about-button-text">firstName lastName</span>
+                </button>
+                </mat-card-title>
+                <mat-card-subtitle>Job Title</mat-card-subtitle>
+              </mat-card-header>
+              <img mat-card-image src="https://www.pcgamesn.com/wp-content/sites/pcgamesn/2020/08/microsoft-flight-simulator-windows-xp-bliss.jpg" alt="Test Photo">
+              <mat-card-content>
+                <p>
+                  Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. Post content 2. 
+                </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button (click)="onLike()" aria-label="Like"
+                        mat-icon-button
+                        matTooltip="Like" matTooltipPosition="below">
+                  <mat-icon class="like-icon">thumb_up</mat-icon>
+                  <span class="like-button-text">LIKE</span>
+                </button>
+
+                <button (click)="onComment()" aria-label="Comment"
+                        mat-icon-button
+                        matTooltip="Comment" matTooltipPosition="below">
+                  <mat-icon class="comment-icon">comment</mat-icon>
+                  <span class="comment-button-text">COMMENT</span>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </mat-card-content>
+        </mat-card>
+            
+        </div>
+      </main>
+      <footer class="footer">
+        <div class="copyright">&copy; 2023 Global Directory</div>
+      </footer>
+    </div>
+  </div>
+</div>

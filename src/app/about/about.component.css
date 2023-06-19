@@ -120,3 +120,7 @@ section {
 .mat-card-actions {
   margin: auto;
 }
+
+.mat-card-title {
+  padding-bottom: 10px;
+}
