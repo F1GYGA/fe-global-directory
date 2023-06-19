@@ -20,6 +20,7 @@ export class RegisterComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
   profilePhoto: string | ArrayBuffer = 'assets/profile-photo-placeholder.png';
   hidePassword: boolean = true;
+  maxEmploymentDate: Date;
 
   profilePhotoFormControl = new FormControl();
   firstNameFormControl = new FormControl('', Validators.required);
@@ -27,7 +28,10 @@ export class RegisterComponent implements OnInit {
   departmentFormControl = new FormControl('', Validators.required);
   teamFormControl = new FormControl('', Validators.required);
   jobTitleFormControl = new FormControl('', Validators.required);
-  employmentDateFormControl = new FormControl('', Validators.required);
+  employmentDateFormControl = new FormControl('', [
+    Validators.required,
+    this.maxEmploymentDateValidator,
+  ]);
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -58,10 +62,39 @@ export class RegisterComponent implements OnInit {
   filteredTeams!: Observable<string[]>;
   filteredJobTitles!: Observable<string[]>;
 
+  constructor() {
+    this.maxEmploymentDate = new Date();
+  }
+
   ngOnInit() {
     this.initializeDepartments();
     this.initializeTeamsByDepartment();
     this.initializeJobTitlesByTeam();
+  }
+
+  onFileUpload(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (input && input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.profilePhoto = reader.result as string | ArrayBuffer;
+        this.profilePhotoFormControl.setValue(file);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onSignUp() {
+    if (this.registerForm.valid) {
+      const registerData: RegisterFormData = this.registerForm
+        .value as RegisterFormData;
+      const formData = this.convertToFormData(registerData);
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+    }
   }
 
   private filterDepartments(value: string): string[] {
@@ -143,18 +176,14 @@ export class RegisterComponent implements OnInit {
     return passwordValid ? null : { passwordInvalid: true };
   }
 
-  onFileUpload(event: Event) {
-    const input = event.target as HTMLInputElement;
+  private maxEmploymentDateValidator(
+    control: AbstractControl
+  ): ValidationErrors | null {
+    const selectedDate = new Date(control.value);
+    const currentDate = new Date();
+    const isDateValid = selectedDate <= currentDate;
 
-    if (input && input.files && input.files.length > 0) {
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.profilePhoto = reader.result as string | ArrayBuffer;
-        this.profilePhotoFormControl.setValue(file);
-      };
-      reader.readAsDataURL(file);
-    }
+    return isDateValid ? null : { dateTooHigh: true };
   }
 
   private convertToFormData(registerData: RegisterFormData): FormData {
@@ -167,16 +196,5 @@ export class RegisterComponent implements OnInit {
     });
 
     return formData;
-  }
-
-  onSignUp() {
-    if (this.registerForm.valid) {
-      const registerData: RegisterFormData = this.registerForm
-        .value as RegisterFormData;
-      const formData = this.convertToFormData(registerData);
-      formData.forEach((value, key) => {
-        console.log(`${key}: ${value}`);
-      });
-    }
   }
 }

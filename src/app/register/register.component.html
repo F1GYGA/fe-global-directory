@@ -146,7 +146,8 @@
                     <input
                       [errorStateMatcher]="matcher"
                       [formControl]="employmentDateFormControl"
-                      [matDatepicker]="employmentDatepicker"
+                      [matDatepicker]="employmentDatePicker"
+                      [max]="maxEmploymentDate"
                       aria-label="Employment date"
                       aria-required="true"
                       matInput/>
@@ -154,11 +155,15 @@
                       *ngIf="employmentDateFormControl.hasError('required')">
                       Employment date is required
                     </mat-error>
+                    <mat-error *ngIf="employmentDateFormControl.hasError('dateTooHigh') &&
+                        !employmentDateFormControl.hasError('required')">
+                      Employment date cannot be in the future
+                    </mat-error>
                     <mat-datepicker-toggle
-                      [for]="employmentDatepicker"
+                      [for]="employmentDatePicker"
                       matSuffix></mat-datepicker-toggle>
                     <mat-datepicker
-                      #employmentDatepicker
+                      #employmentDatePicker
                       disabled="false"></mat-datepicker>
                   </mat-form-field>
                 </div>
