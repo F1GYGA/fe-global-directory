@@ -1,0 +1,142 @@
+<div class="tab-upper-content">
+  <mat-card-header>
+    <mat-form-field class="searchbar">
+      <input (keyup)="applyRegistrationRequestsSearch($event)" matInput placeholder="Search...">
+    </mat-form-field>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="card-content">
+      <div class="table-container">
+        <table #registrationRequestsSort="matSort" (matSortChange)="announceSortChange($event)"
+               [dataSource]="usersDataSource"
+               class="users-table"
+               mat-table matSort multiTemplateDataRows>
+          <ng-container matColumnDef="profilePhotoUrl">
+            <th *matHeaderCellDef aria-label="Profile Photo" mat-header-cell>Profile Photo</th>
+            <td *matCellDef="let user" mat-cell>
+              <div class="avatar-container">
+                <img [draggable]="false" [src]="user.profilePhotoUrl" alt="Profile Photo" height="30"
+                     width="30">
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="firstName">
+            <th *matHeaderCellDef aria-label="First Name" class="first-name-column" mat-header-cell
+                mat-sort-header>First Name
+            </th>
+            <td *matCellDef="let user" class="first-name-column" mat-cell>{{ user.firstName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="lastName">
+            <th *matHeaderCellDef aria-label="Last Name" class="last-name-column" mat-header-cell
+                mat-sort-header>Last Name
+            </th>
+            <td *matCellDef="let user" class="last-name-column" mat-cell>{{ user.lastName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th *matHeaderCellDef aria-label="Email" mat-header-cell mat-sort-header>Email</th>
+            <td *matCellDef="let user" mat-cell>{{ user.email }}</td>
+          </ng-container>
+          <ng-container matColumnDef="expand">
+            <th *matHeaderCellDef aria-label="Expand Action" mat-header-cell>&nbsp;</th>
+            <td *matCellDef="let user" class="expand-button-container" mat-cell>
+              <button
+                (click)="toggleRow(user); $event.stopPropagation()"
+                aria-label="expand row"
+                mat-icon-button>
+                <mat-icon *ngIf="expandedElement !== user">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedElement === user">keyboard_arrow_up</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="expandedDetail">
+            <td *matCellDef="let user" [attr.colspan]="userColumns.length"
+                mat-cell>
+              <div
+                [@detailExpand]="user == expandedElement ? 'expanded' : 'collapsed'"
+                class="expanded-details">
+                <div class="expanded-details-responsive">
+                  <div class="expanded-details-content-desktop">
+                    <div class="categories-desktop">
+                      <div class="category-desktop firstName-category">
+                        <div class="category-title">First Name:</div>
+                        <div class="category-value">{{user.firstName}}</div>
+                      </div>
+                      <div class="category-desktop lastName-category">
+                        <div class="category-title">Last Name:</div>
+                        <div class="category-value">{{user.lastName}}</div>
+                      </div>
+                      <div class="category-desktop">
+                        <div class="category-title">Department:</div>
+                        <div class="category-value">{{user.department}}</div>
+                      </div>
+                      <div class="category-desktop">
+                        <div class="category-title">Team:</div>
+                        <div class="category-value">{{user.team}}</div>
+                      </div>
+                      <div class="category-desktop">
+                        <div class="category-title">Job Title:</div>
+                        <div class="category-value">{{user.jobTitle}}</div>
+                      </div>
+                      <div class="category-desktop">
+                        <div class="category-title"> Date of Employment:</div>
+                        <div class="category-value">{{user.dateOfEmployment}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="expanded-details-content-mobile">
+                    <div class="description-categories-content-mobile">
+                      <div class="categories-wrapper-mobile">
+                        <div class="category-names-mobile">
+                          <div>First Name:</div>
+                          <div>Last Name:</div>
+                          <div>Department:</div>
+                          <div>Team:</div>
+                          <div>Job Title:</div>
+                          <div>Date of Employment:</div>
+                        </div>
+                        <div class="category-values-mobile">
+                          <div class="category-value">{{user.firstName}}</div>
+                          <div class="category-value">{{user.lastName}}</div>
+                          <div class="category-value">{{user.department}}</div>
+                          <div class="category-value">{{user.team}}</div>
+                          <div class="category-value">{{user.jobTitle}}</div>
+                          <div class="category-value">{{user.dateOfEmployment}}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="description-actions-content">
+                  <div class="description-actions-wrapper">
+                    <button (click)="approveUser(user); $event.stopPropagation()" color="primary"
+                            mat-button>
+                      <mat-icon>check</mat-icon>
+                      Approve
+                    </button>
+                    <button (click)="rejectUser(user); $event.stopPropagation()" color="warn"
+                            mat-button>
+                      <mat-icon>clear</mat-icon>
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <tr *matHeaderRowDef="userColumns" mat-header-row></tr>
+          <tr (click)="toggleRow(user)"
+              *matRowDef="let user; columns: userColumns;"
+              [class.expanded-row]="expandedElement === user"
+              class="element-row"
+              mat-row>
+          </tr>
+          <tr *matRowDef="let user; columns: ['expandedDetail']" class="detail-row" mat-row></tr>
+        </table>
+      </div>
+    </div>
+  </mat-card-content>
+</div>
+<mat-paginator #registrationRequestsPaginator [pageSizeOptions]="[5, 25, 50, 100]"
+               class="tab-lower-content"
+               showFirstLastButtons></mat-paginator>
+

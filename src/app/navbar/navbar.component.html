@@ -25,6 +25,7 @@
             matTooltip="View Colleagues" matTooltipPosition="below">
       <mat-icon>search</mat-icon>
     </button>
+
     <button [matMenuTriggerFor]="profileMenu" class="avatar-button" mat-icon-button matTooltip="Account"
             matTooltipPosition="below">
       <div class="profile-photo">
@@ -44,7 +45,7 @@
         <mat-icon class="mat-menu-item-icon">person</mat-icon>
         <span>About Me</span>
       </button>
-      <button (click)="onNavigateToAdminPanel()" aria-label="Admin Panel" mat-menu-item>
+      <button (click)="onNavigateToAdminPanel()" *ngIf="isAdmin" aria-label="Admin Panel" mat-menu-item>
         <mat-icon>admin_panel_settings</mat-icon>
         <span>Admin Panel</span>
       </button>

@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="blur-container">
+    <div class="page-content">
+      <div class="empty-container"></div>
+      <main class="main-container" role="main">
+        <div class="admin-panel-container">
+          <mat-card role="table">
+            <mat-tab-group mat-align-tabs="center">
+              <mat-tab>
+                <ng-template mat-tab-label>Registration Requests</ng-template>
+                <app-registration-requests-table [userColumns]="registrationRequestsColumns"
+                                                 [usersDataSource]="registrationRequestsDataSource"
+                                                 class="table-wrapper">
+
+                </app-registration-requests-table>
+              </mat-tab>
+              <mat-tab>
+                <ng-template mat-tab-label>Active Users</ng-template>
+                <app-users-table
+                  [activeUsers]="true"
+                  [userColumns]="userColumns"
+                  [usersDataSource]="activeUsersDataSource"
+                  class="table-wrapper">
+                </app-users-table>
+              </mat-tab>
+              <mat-tab>
+                <ng-template mat-tab-label>Inactive Users</ng-template>
+                <app-users-table
+                  [activeUsers]="false"
+                  [userColumns]="userColumns"
+                  [usersDataSource]="inactiveUsersDataSource"
+                  class="table-wrapper">
+                </app-users-table>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card>
+        </div>
+      </main>
+      <footer class="footer">
+        <div class="copyright">&copy; 2023 Global Directory</div>
+      </footer>
+    </div>
+  </div>
+</div>

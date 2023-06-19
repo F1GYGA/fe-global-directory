@@ -1,0 +1,57 @@
+<div class="tab-upper-content">
+  <mat-card-header>
+    <mat-form-field class="searchbar">
+      <input (keyup)="applyUsersSearch($event)" matInput placeholder="Search...">
+    </mat-form-field>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="card-content">
+      <div class="table-container">
+        <table #usersSort="matSort" (matSortChange)="announceSortChange($event)"
+               [dataSource]="usersDataSource"
+               class="users-table"
+               mat-table matSort multiTemplateDataRows>
+          <ng-container matColumnDef="profilePhotoUrl">
+            <th *matHeaderCellDef mat-header-cell>Profile Photo</th>
+            <td *matCellDef="let user" mat-cell>
+              <div class="avatar-container">
+                <img [draggable]="false" [src]="user.profilePhotoUrl" alt="Profile Photo" height="30"
+                     width="30">
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="firstName">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>First Name</th>
+            <td *matCellDef="let user" mat-cell>{{ user.firstName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="lastName">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Last Name</th>
+            <td *matCellDef="let user" mat-cell>{{ user.lastName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th *matHeaderCellDef class="email-column" mat-header-cell mat-sort-header>Email</th>
+            <td *matCellDef="let user" class="email-column" mat-cell>{{ user.email }}</td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th *matHeaderCellDef mat-header-cell>Actions</th>
+            <td *matCellDef="let user" mat-cell>
+              <button (click)="viewUser(user)" mat-icon-button>
+                <mat-icon class="view-icon">visibility</mat-icon>
+              </button>
+              <button (click)="deactivateUser(user)" *ngIf="activeUsers" color="warn" mat-icon-button>
+                <mat-icon>block</mat-icon>
+              </button>
+              <button (click)="activateUser(user)" *ngIf="!activeUsers" color="primary" mat-icon-button>
+                <mat-icon>check_circle</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr *matHeaderRowDef="userColumns" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: userColumns;" mat-row></tr>
+        </table>
+      </div>
+    </div>
+  </mat-card-content>
+</div>
+<mat-paginator #usersPaginator [pageSizeOptions]="[5, 25, 50, 100]" class="tab-lower-content"
+               showFirstLastButtons></mat-paginator>
