@@ -39,6 +39,7 @@ import { ActivateUserConfirmationDialogComponent } from './admin-panel/activate-
 import { UserRejectionDialogComponent } from './admin-panel/user-rejection-dialog/user-rejection-dialog.component';
 import { RegistrationRequestsTableComponent } from './admin-panel/registration-requests-table/registration-requests-table.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +56,7 @@ import { RegistrationRequestsTableComponent } from './admin-panel/registration-r
     ActivateUserConfirmationDialogComponent,
     UserRejectionDialogComponent,
     RegistrationRequestsTableComponent,
-    NewsfeedComponent,
+    NewsfeedComponent
   ],
   imports: [
     BrowserModule,
