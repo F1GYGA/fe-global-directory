@@ -10,7 +10,7 @@ import { MyErrorStateMatcher } from '../app.component';
 import { map, Observable, startWith } from 'rxjs';
 import { RegisterFormData } from '../../api/types/auth';
 import { DEPARTMENTS_TEAMS_JOBS } from '../../helpers/constants/departmentsTeamsJobTitles';
-import { AuthService } from '../../api/services/auth.service';
+import { AuthService } from '../../api/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';

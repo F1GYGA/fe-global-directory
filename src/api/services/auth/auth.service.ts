@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
-import { RegisterFormData, RegisterPayloadData } from '../types/auth';
-import { JwtService } from '../../app/jwt.service';
+import { RegisterFormData, RegisterPayloadData } from '../../types/auth';
+import { JwtService } from '../jwt/jwt.service';
 
 interface LoginResponse {
   token: string;

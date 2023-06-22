@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../app.component';
 import { LoginFormData, RegisterFormData } from '../../api/types/auth';
-import { AuthService } from '../../api/services/auth.service';
+import { AuthService } from '../../api/services/auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
