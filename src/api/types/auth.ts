@@ -10,7 +10,25 @@ export type RegisterFormData = {
   department: string;
   team: string;
   jobTitle: string;
-  employmentDate: string;
+  dateOfEmployment: string;
+  email: string;
+  password: string;
+};
+
+type ProfilePhoto = {
+  name: string;
+  type: string;
+  base64Img: string | ArrayBuffer;
+};
+
+export type RegisterPayloadData = {
+  image?: ProfilePhoto;
+  firstName: string;
+  lastName: string;
+  department: string;
+  team: string;
+  jobTitle: string;
+  dateOfEmployment: string;
   email: string;
   password: string;
 };

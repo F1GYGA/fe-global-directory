@@ -7,15 +7,34 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
+import { AuthGuard } from '../guards/auth.guard';
+import { NoAuthGuard } from '../guards/no-auth.guard';
+import { AdminRoleGuard } from '../guards/admin-role.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'admin-panel', component: AdminPanelComponent },
-  {path: 'newsfeed', component: NewsfeedComponent},
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [NoAuthGuard],
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    canActivate: [NoAuthGuard],
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+    canActivate: [NoAuthGuard],
+  },
+  { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
+  {
+    path: 'admin-panel',
+    component: AdminPanelComponent,
+    canActivate: [AdminRoleGuard],
+  },
+  { path: '', component: NewsfeedComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login' },
 ];
 

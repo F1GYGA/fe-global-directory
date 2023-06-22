@@ -24,7 +24,7 @@ import { AboutComponent } from './about/about.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatMenuModule } from '@angular/material/menu';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StandardNavbarComponent } from './standard-navbar/standard-navbar.component';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
@@ -38,7 +38,9 @@ import { DeactivateUserConfirmationDialogComponent } from './admin-panel/deactiv
 import { ActivateUserConfirmationDialogComponent } from './admin-panel/activate-user-confirmation-dialog/activate-user-confirmation-dialog.component';
 import { UserRejectionDialogComponent } from './admin-panel/user-rejection-dialog/user-rejection-dialog.component';
 import { RegistrationRequestsTableComponent } from './admin-panel/registration-requests-table/registration-requests-table.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DatePipe } from '@angular/common';
+import { JwtInterceptor } from '../interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,7 @@ import { RegistrationRequestsTableComponent } from './admin-panel/registration-r
     ActivateUserConfirmationDialogComponent,
     UserRejectionDialogComponent,
     RegistrationRequestsTableComponent,
-    NewsfeedComponent
+    NewsfeedComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,8 +88,12 @@ import { RegistrationRequestsTableComponent } from './admin-panel/registration-r
     MatSortModule,
     MatTabsModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    DatePipe,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

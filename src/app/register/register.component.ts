@@ -10,6 +10,10 @@ import { MyErrorStateMatcher } from '../app.component';
 import { map, Observable, startWith } from 'rxjs';
 import { RegisterFormData } from '../../api/types/auth';
 import { DEPARTMENTS_TEAMS_JOBS } from '../../helpers/constants/departmentsTeamsJobTitles';
+import { AuthService } from '../../api/services/auth.service';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -18,9 +22,17 @@ import { DEPARTMENTS_TEAMS_JOBS } from '../../helpers/constants/departmentsTeams
 })
 export class RegisterComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
-  profilePhoto: string | ArrayBuffer = 'assets/profile-photo-placeholder.png';
+
+  profilePhoto: string = 'assets/profile-photo-placeholder.png';
   hidePassword: boolean = true;
   maxEmploymentDate: Date;
+  departments: string[] = Object.keys(DEPARTMENTS_TEAMS_JOBS);
+  teamsByDepartment: string[] = [];
+  jobTitlesByTeam: string[] = [];
+  filteredDepartments!: Observable<string[]>;
+  filteredTeams!: Observable<string[]>;
+  filteredJobTitles!: Observable<string[]>;
+  matcher = new MyErrorStateMatcher();
 
   profilePhotoFormControl = new FormControl();
   firstNameFormControl = new FormControl('', Validators.required);
@@ -48,21 +60,17 @@ export class RegisterComponent implements OnInit {
     department: this.departmentFormControl,
     team: this.teamFormControl,
     jobTitle: this.jobTitleFormControl,
-    employmentDate: this.employmentDateFormControl,
+    dateOfEmployment: this.employmentDateFormControl,
     email: this.emailFormControl,
     password: this.passwordFormControl,
   });
 
-  matcher = new MyErrorStateMatcher();
-
-  departments: string[] = Object.keys(DEPARTMENTS_TEAMS_JOBS);
-  teamsByDepartment: string[] = [];
-  jobTitlesByTeam: string[] = [];
-  filteredDepartments!: Observable<string[]>;
-  filteredTeams!: Observable<string[]>;
-  filteredJobTitles!: Observable<string[]>;
-
-  constructor() {
+  constructor(
+    private datePipe: DatePipe,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.maxEmploymentDate = new Date();
   }
 
@@ -79,7 +87,7 @@ export class RegisterComponent implements OnInit {
       const file = input.files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        this.profilePhoto = reader.result as string | ArrayBuffer;
+        this.profilePhoto = reader.result as string;
         this.profilePhotoFormControl.setValue(file);
       };
       reader.readAsDataURL(file);
@@ -88,11 +96,44 @@ export class RegisterComponent implements OnInit {
 
   onSignUp() {
     if (this.registerForm.valid) {
-      const registerData: RegisterFormData = this.registerForm
-        .value as RegisterFormData;
-      const formData = this.convertToFormData(registerData);
-      formData.forEach((value, key) => {
-        console.log(`${key}: ${value}`);
+      const formData: RegisterFormData = {
+        profilePhoto: this.profilePhotoFormControl.value,
+        firstName: this.firstNameFormControl.value || '',
+        lastName: this.lastNameFormControl.value || '',
+        department: this.departmentFormControl.value || '',
+        team: this.teamFormControl.value || '',
+        jobTitle: this.jobTitleFormControl.value || '',
+        dateOfEmployment:
+          this.datePipe.transform(
+            this.employmentDateFormControl.value,
+            'yyyy-MM-dd'
+          ) || '',
+        email: this.emailFormControl.value || '',
+        password: this.passwordFormControl.value || '',
+      };
+
+      this.authService.register(formData).subscribe({
+        next: () => {
+          this.router.navigate(['/login']);
+          this.snackBar.open('Registration successful.', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: 'success-snackbar',
+          });
+        },
+        error: (): void => {
+          this.snackBar.open(
+            `Registration failed. Please try again.`,
+            'Close',
+            {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              panelClass: 'error-snackbar',
+            }
+          );
+        },
       });
     }
   }
@@ -184,17 +225,5 @@ export class RegisterComponent implements OnInit {
     const isDateValid = selectedDate <= currentDate;
 
     return isDateValid ? null : { dateTooHigh: true };
-  }
-
-  private convertToFormData(registerData: RegisterFormData): FormData {
-    const formData = new FormData();
-
-    Object.entries(registerData).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        formData.append(key, value);
-      }
-    });
-
-    return formData;
   }
 }
