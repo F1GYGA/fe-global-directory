@@ -4,19 +4,11 @@ import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
 import { RegisterFormData, RegisterPayloadData } from '../types/auth';
+import { JwtService } from '../../app/jwt.service';
 
 interface LoginResponse {
   token: string;
   userId: number;
-}
-
-interface DecodedToken {
-  authorities: string[];
-  sub: string;
-  iat: number;
-  exp: number;
-
-  [key: string]: any;
 }
 
 @Injectable({
@@ -30,7 +22,7 @@ export class AuthService {
   );
   public authStatus = this.authStatusSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private jwtService: JwtService) {}
 
   getToken(): string | null {
     return localStorage.getItem('token');
@@ -42,13 +34,13 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    return token !== null && !this.isTokenExpired(token);
+    return token !== null && !this.jwtService.isTokenExpired(token);
   }
 
   getUserRoles(): string[] | null {
     const token = this.getToken();
     if (token) {
-      const decodedToken: DecodedToken = jwt_decode(token);
+      const decodedToken = this.jwtService.decodeToken(token);
       return decodedToken.authorities;
     }
     return null;
@@ -114,10 +106,5 @@ export class AuthService {
     } else {
       return this.http.post(`${this.apiUrl}/register`, payload);
     }
-  }
-
-  private isTokenExpired(token: string): boolean {
-    const decodedToken: DecodedToken = jwt_decode(token);
-    return decodedToken.exp < Date.now() / 1000;
   }
 }
