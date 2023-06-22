@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthService } from '../api/services/auth.service';
+import { Subscription } from 'rxjs';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -23,18 +25,26 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   title = 'fe-global-directory';
-  isAuthenticated: boolean;
-  canGoBack: boolean;
+  isAuthenticated: boolean = false;
+  private authSubscription: Subscription;
 
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private authService: AuthService
   ) {
     this.registerIcons();
-    this.isAuthenticated = this.checkIfAuthenticated();
-    this.canGoBack = this.checkIfCanGoBack();
+    this.authSubscription = this.authService.authStatus.subscribe(
+      isAuthenticated => {
+        this.isAuthenticated = isAuthenticated;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.authSubscription.unsubscribe();
   }
 
   private registerIcons(): void {
@@ -42,13 +52,5 @@ export class AppComponent {
       'globe-logo',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/globe.svg')
     );
-  }
-
-  private checkIfAuthenticated(): boolean {
-    return true;
-  }
-
-  private checkIfCanGoBack(): boolean {
-    return true;
   }
 }

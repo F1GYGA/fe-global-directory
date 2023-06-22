@@ -9,20 +9,21 @@
               <mat-card-title><h1>Sign In</h1></mat-card-title>
             </mat-card-header>
             <mat-card-content>
-              <form
-                [formGroup]="loginForm"
-                (ngSubmit)="onSignIn()"
-                class="form-container"
-                aria-label="Login Form">
+              <form (ngSubmit)="onSignIn()"
+                    [formGroup]="loginForm"
+                    aria-label="Login Form"
+                    autocomplete="on"
+                    class="form-container">
                 <mat-form-field appearance="fill">
                   <mat-label>Email</mat-label>
                   <input
-                    type="email"
+                    [errorStateMatcher]="matcher"
+                    [formControl]="emailFormControl"
                     aria-label="Email"
                     aria-required="true"
+                    autocomplete="email"
                     matInput
-                    [formControl]="emailFormControl"
-                    [errorStateMatcher]="matcher" />
+                    type="email"/>
                   <mat-error
                     *ngIf="
                       emailFormControl.hasError('email') &&
@@ -37,21 +38,23 @@
                 <mat-form-field appearance="fill">
                   <mat-label>Password</mat-label>
                   <input
+                    [errorStateMatcher]="matcher"
+                    [formControl]="passwordFormControl"
                     [type]="hidePassword ? 'password' : 'text'"
                     aria-label="Password"
                     aria-required="true"
-                    matInput
-                    [formControl]="passwordFormControl"
-                    [errorStateMatcher]="matcher" />
+                    autocomplete="current-password"
+                    matInput/>
                   <button
-                    mat-icon-button
-                    matSuffix
                     (click)="hidePassword = !hidePassword"
                     [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hidePassword">
+                    [attr.aria-pressed]="hidePassword"
+                    mat-icon-button
+                    matSuffix
+                    type="button">
                     <mat-icon>{{
                       hidePassword ? 'visibility_off' : 'visibility'
-                    }}</mat-icon>
+                      }}</mat-icon>
                   </button>
                   <mat-error *ngIf="passwordFormControl.hasError('required')">
                     Password is required
@@ -61,11 +64,11 @@
                   <a routerLink="/forgot-password">Forgot password?</a>
                 </p>
                 <button
-                  mat-flat-button
-                  color="primary"
-                  type="submit"
                   aria-label="Sign in"
-                  class="submit-button">
+                  class="submit-button"
+                  color="primary"
+                  mat-flat-button
+                  type="submit">
                   Sign In
                 </button>
                 <p class="register-link">

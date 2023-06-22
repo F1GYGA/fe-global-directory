@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { AuthService } from '../../api/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,19 +9,33 @@ import { Location } from '@angular/common';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-  @Input() canGoBack: boolean = false;
-  isAdmin: boolean = true;
-  // isAdmin: boolean = false;
+  @Input() isOnDashboardPage: boolean = false;
+  isAdmin: boolean;
   profilePhotoUrl: string = 'assets/portrait.jpg';
 
-  constructor(private router: Router, private location: Location) {}
+  constructor(
+    private router: Router,
+    private location: Location,
+    private authService: AuthService
+  ) {
+    this.isAdmin = Boolean(
+      this.authService.isAuthenticated() &&
+        this.authService.getUserRoles()?.includes('ADMIN')
+    );
+  }
+
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      this.isOnDashboardPage = this.router.url === '/';
+    });
+  }
 
   onGoBack() {
     this.location.back();
   }
 
   onNavigateToNewsFeed() {
-    this.router.navigate(['/news-feed']);
+    this.router.navigate(['']);
   }
 
   onNavigateToSearchColleagues() {
@@ -35,7 +50,12 @@ export class NavbarComponent {
     this.router.navigate(['/admin-panel']);
   }
 
-  onLogOut() {
-    this.router.navigate(['/login']);
+  onLogout() {
+    this.authService.logout().subscribe({
+      next: () => {},
+      complete: (): void => {
+        this.router.navigate(['/login']);
+      },
+    });
   }
 }
