@@ -49,6 +49,9 @@ export class AdminPanelComponent implements OnInit {
 
   setLoadingState(state: boolean) {
     this.isLoading = state;
+    if (!state) {
+      this.loadDataBasedOnTab(this.selectedTabIndex);
+    }
   }
 
   loadRegistrationRequests() {

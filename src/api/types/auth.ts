@@ -73,5 +73,6 @@ export type ForgotPasswordFormData = {
 };
 
 export type ResetPasswordFormData = {
-  newPassword: string;
+  password: string;
+  confirmPassword: string;
 };

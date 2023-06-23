@@ -6,10 +6,10 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import {
-  ForgotPasswordFormData,
-  ResetPasswordFormData,
-} from '../../api/types/auth';
+import { ResetPasswordFormData } from '../../api/types/auth';
+import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../api/services/auth/auth.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -17,6 +17,7 @@ import {
   styleUrls: ['./reset-password.component.css'],
 })
 export class ResetPasswordComponent implements OnInit {
+  token: string | null = null;
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
   newPasswordFormControl = new FormControl('', [
@@ -29,7 +30,17 @@ export class ResetPasswordComponent implements OnInit {
     confirmPassword: this.confirmPasswordFormControl,
   });
 
+  constructor(
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private snackBar: MatSnackBar
+  ) {}
+
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.token = params['token'];
+      console.log(this.token);
+    });
     this.newPasswordFormControl.valueChanges.subscribe(() => {
       this.validateMatchingPasswords();
     });
@@ -37,6 +48,44 @@ export class ResetPasswordComponent implements OnInit {
     this.confirmPasswordFormControl.valueChanges.subscribe(() => {
       this.validateMatchingPasswords();
     });
+  }
+
+  onResetPassword() {
+    if (this.resetPasswordForm.valid && this.token) {
+      console.log('onResetPassword method called');
+      const passwordValue = this.resetPasswordForm.value.newPassword || '';
+      const confirmPasswordValue =
+        this.resetPasswordForm.value.confirmPassword || '';
+      const resetPasswordData: ResetPasswordFormData = {
+        password: passwordValue,
+        confirmPassword: confirmPasswordValue,
+      };
+      console.log(resetPasswordData);
+
+      this.authService.resetPassword(resetPasswordData, this.token).subscribe({
+        next: () => {
+          this.resetPasswordForm.reset();
+          this.snackBar.open('Password reset successfully.', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: 'success-snackbar',
+          });
+        },
+        error: (): void => {
+          this.snackBar.open(
+            `Something went wrong. Please try again.`,
+            'Close',
+            {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              panelClass: 'error-snackbar',
+            }
+          );
+        },
+      });
+    }
   }
 
   private validateMatchingPasswords() {
@@ -65,15 +114,5 @@ export class ResetPasswordComponent implements OnInit {
       isLengthValid;
 
     return passwordValid ? null : { passwordInvalid: true };
-  }
-
-  onResetPassword() {
-    if (this.resetPasswordForm.valid) {
-      const newPasswordValue = this.resetPasswordForm.value.newPassword || '';
-      const resetPasswordData: ResetPasswordFormData = {
-        newPassword: newPasswordValue,
-      };
-      console.log(resetPasswordData);
-    }
   }
 }
