@@ -10,6 +10,8 @@ import {
   ForgotPasswordFormData,
   ResetPasswordFormData,
 } from '../../api/types/auth';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-reset-password',
@@ -29,7 +31,16 @@ export class ResetPasswordComponent implements OnInit {
     confirmPassword: this.confirmPasswordFormControl,
   });
 
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient
+    ) {}
+
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const token = params['token'];
+      console.log(token);
+    });
     this.newPasswordFormControl.valueChanges.subscribe(() => {
       this.validateMatchingPasswords();
     });
@@ -69,11 +80,24 @@ export class ResetPasswordComponent implements OnInit {
 
   onResetPassword() {
     if (this.resetPasswordForm.valid) {
+      console.log('onResetPassword method called');
       const newPasswordValue = this.resetPasswordForm.value.newPassword || '';
       const resetPasswordData: ResetPasswordFormData = {
         newPassword: newPasswordValue,
+        token: this.route.snapshot.queryParams['token']
       };
       console.log(resetPasswordData);
+
+      this.http.post('http://localhost:8080/reset', resetPasswordData)
+        .subscribe(
+          response => {
+            console.log('Password reset successful:', response);
+          },
+          error => {
+            console.error('Password reset failed:', error);
+
+          }
+        );
     }
   }
 }
