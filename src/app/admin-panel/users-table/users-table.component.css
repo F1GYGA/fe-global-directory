@@ -48,6 +48,10 @@
 }
 
 .avatar-container img {
+  object-fit: cover;
+}
+
+.avatar-container img {
   border-radius: 50%;
   margin: auto 0;
 }
@@ -64,7 +68,7 @@ th.mat-header-cell:last-child {
   text-align: right;
 }
 
-.mat-column-profilePhotoUrl {
+.mat-column-profilePhoto {
   white-space: unset;
 }
 
@@ -153,4 +157,11 @@ div.table-container::-webkit-scrollbar-thumb {
 
 div.table-container::-webkit-scrollbar-thumb:hover {
   background: rgba(63, 81, 181, 1);
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }

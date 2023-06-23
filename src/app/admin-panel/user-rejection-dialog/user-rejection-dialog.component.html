@@ -1,24 +1,26 @@
 <h2 class="dialog-title" mat-dialog-title>Reject Registration Request</h2>
-<div class="wrapper">
+<div [formGroup]="registrationRequestRejectionForm" class="wrapper">
   <mat-dialog-content class="dialog-content">
     <mat-form-field appearance="legacy">
       <mat-label>Select reason</mat-label>
-      <mat-select [(value)]="selectedReason">
+      <mat-select formControlName="reason">
         <mat-option *ngFor="let reason of rejectionReasons" [value]="reason">
           {{reason}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="reasonFormControl.hasError('required')">
+        Reason is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="legacy">
       <mat-label>Additional details</mat-label>
-      <textarea [(ngModel)]="additionalDetails" cdkTextareaAutosize matInput></textarea>
+      <textarea cdkTextareaAutosize formControlName="description" matInput></textarea>
     </mat-form-field>
-
   </mat-dialog-content>
 </div>
 <mat-dialog-actions class="dialog-actions">
-  <button (click)="onCancel()" class="cancel-button" mat-button>Cancel</button>
-  <button (click)="onConfirm()" [mat-dialog-close]="true" class="confirm-button" color="warn" mat-button>Reject
+  <button (click)="onCancel()" class="cancel-button" mat-button>CANCEL</button>
+  <button (click)="onConfirm()" [disabled]="!registrationRequestRejectionForm.valid" class="confirm-button" color="warn"
+          mat-button>REJECT
   </button>
 </mat-dialog-actions>
-

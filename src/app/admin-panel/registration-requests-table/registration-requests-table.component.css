@@ -48,6 +48,10 @@
 }
 
 .avatar-container img {
+  object-fit: cover;
+}
+
+.avatar-container img {
   border-radius: 50%;
   margin: auto 0;
 }
@@ -88,7 +92,7 @@ tr.element-row:not(.expanded-row):hover {
   white-space: nowrap;
 }
 
-.mat-column-profilePhotoUrl {
+.mat-column-profilePhoto {
   white-space: unset;
 }
 
@@ -344,4 +348,11 @@ div.expanded-details-responsive::-webkit-scrollbar-thumb {
 
 div.expanded-details-responsive::-webkit-scrollbar-thumb:hover {
   background: rgba(63, 81, 181, 1);
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }

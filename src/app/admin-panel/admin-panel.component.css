@@ -94,6 +94,7 @@
   overflow: hidden;
 }
 
+
 .table-container {
   height: 100%;
   overflow: auto;
@@ -103,6 +104,13 @@
 .users-table {
   width: 100%;
   table-layout: fixed;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .mat-table {
@@ -156,7 +164,7 @@ tr.element-row:not(.expanded-row):hover {
   white-space: nowrap;
 }
 
-.mat-column-profilePhotoUrl {
+.mat-column-profilePhoto {
   white-space: unset;
 }
 

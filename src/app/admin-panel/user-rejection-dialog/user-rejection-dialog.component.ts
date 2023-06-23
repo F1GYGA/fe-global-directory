@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-rejection-dialog',
@@ -12,9 +13,12 @@ export class UserRejectionDialogComponent {
     'Unverifiable Information',
     'Restricted Domain Email',
   ];
-
-  selectedReason: string = '';
-  additionalDetails: string = '';
+  reasonFormControl = new FormControl('', [Validators.required]);
+  descriptionFormControl = new FormControl('', []);
+  registrationRequestRejectionForm = new FormGroup({
+    reason: this.reasonFormControl,
+    description: this.descriptionFormControl,
+  });
 
   constructor(
     public dialogRef: MatDialogRef<UserRejectionDialogComponent>,
@@ -22,10 +26,9 @@ export class UserRejectionDialogComponent {
   ) {}
 
   onConfirm(): void {
-    this.dialogRef.close({
-      selectedReason: this.selectedReason,
-      additionalDetails: this.additionalDetails,
-    });
+    if (this.registrationRequestRejectionForm.valid) {
+      this.dialogRef.close(this.registrationRequestRejectionForm.value);
+    }
   }
 
   onCancel(): void {
