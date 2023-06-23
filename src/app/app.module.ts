@@ -41,6 +41,7 @@ import { RegistrationRequestsTableComponent } from './admin-panel/registration-r
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
 import { JwtInterceptor } from '../interceptors/jwt.interceptor';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { JwtInterceptor } from '../interceptors/jwt.interceptor';
     MatTabsModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

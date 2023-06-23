@@ -1,8 +1,10 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -13,6 +15,8 @@ import { User } from '../../../api/types/user';
 import { MatDialog } from '@angular/material/dialog';
 import { DeactivateUserConfirmationDialogComponent } from '../deactivate-user-confirmation-dialog/deactivate-user-confirmation-dialog.component';
 import { ActivateUserConfirmationDialogComponent } from '../activate-user-confirmation-dialog/activate-user-confirmation-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../../../api/services/user/user.service';
 
 @Component({
   selector: 'app-users-table',
@@ -24,12 +28,18 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   @Input() usersDataSource: MatTableDataSource<User> =
     new MatTableDataSource<User>();
   @Input() userColumns: string[] = [];
+  @Output() refreshData = new EventEmitter<void>();
   @ViewChild('usersPaginator') usersPaginator!: MatPaginator;
   @ViewChild('usersSort') usersSort!: MatSort;
 
+  isLoading: boolean = false;
+  profilePhotoPlaceholder: string = '/assets/profile-photo-placeholder.png';
+
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
-    private dialog: MatDialog
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {}
@@ -60,20 +70,6 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     alert(`View ${user.email}`);
   }
 
-  deactivateUser(user: User) {
-    const dialogRef = this.dialog.open(
-      DeactivateUserConfirmationDialogComponent,
-      {
-        data: { user: user.email },
-      }
-    );
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        alert(`${user.email} deactivated`);
-      }
-    });
-  }
-
   activateUser(user: User) {
     const dialogRef = this.dialog.open(
       ActivateUserConfirmationDialogComponent,
@@ -83,7 +79,73 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     );
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        alert(`${user.email} activated`);
+        this.isLoading = true;
+        this.userService.activateUser(user.id).subscribe({
+          next: (): void => {
+            this.refreshData.emit();
+            this.snackBar.open('User activated successfully!', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              panelClass: 'success-snackbar',
+            });
+          },
+          error: (): void => {
+            this.snackBar.open(
+              'Something went wrong. Please try again.',
+              'Close',
+              {
+                duration: 3000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                panelClass: 'error-snackbar',
+              }
+            );
+          },
+          complete: (): void => {
+            this.isLoading = false;
+          },
+        });
+      }
+    });
+  }
+
+  deactivateUser(user: User) {
+    const dialogRef = this.dialog.open(
+      DeactivateUserConfirmationDialogComponent,
+      {
+        data: { user: user.email },
+      }
+    );
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.isLoading = true;
+        this.userService.inactivateUser(user.id).subscribe({
+          next: (): void => {
+            this.refreshData.emit();
+            this.snackBar.open('User deactivated successfully!', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              panelClass: 'success-snackbar',
+            });
+          },
+          error: (): void => {
+            this.snackBar.open(
+              'Something went wrong. Please try again.',
+              'Close',
+              {
+                duration: 3000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                panelClass: 'error-snackbar',
+              }
+            );
+          },
+          complete: (): void => {
+            this.isLoading = false;
+          },
+        });
       }
     });
   }

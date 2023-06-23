@@ -11,7 +11,7 @@ import { AuthService } from '../../api/services/auth/auth.service';
 export class NavbarComponent {
   @Input() isOnDashboardPage: boolean = false;
   isAdmin: boolean;
-  profilePhotoUrl: string = 'assets/portrait.jpg';
+  profilePhotoPlaceholder: string = 'assets/portrait.jpg';
 
   constructor(
     private router: Router,
