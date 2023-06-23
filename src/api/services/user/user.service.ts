@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { RegistrationRequest, User } from '../../types/user';
 
 @Injectable({
   providedIn: 'root',
@@ -10,47 +11,53 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getRegistrationRequests(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/registerRequests`);
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
-  getActiveUsers(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/active`);
+  getRegistrationRequests(): Observable<RegistrationRequest[]> {
+    return this.http.get<RegistrationRequest[]>(
+      `${this.apiUrl}/registerRequests`
+    );
   }
 
-  getInactiveUsers(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/inactive`);
+  getActiveUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/active`);
   }
 
-  approveUser(uid: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/approve`, null, {
-      params: { uid: uid.toString() },
+  getInactiveUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/inactive`);
+  }
+
+  approveUser(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/approve`, null, {
+      params: { uid: id.toString() },
     });
   }
 
   rejectUser(
-    uid: number,
+    id: number,
     reason: string,
     description: string
-  ): Observable<any> {
-    return this.http.put(
+  ): Observable<void> {
+    return this.http.put<void>(
       `${this.apiUrl}/reject`,
       { reason, description },
       {
-        params: { uid: uid.toString() },
+        params: { uid: id.toString() },
       }
     );
   }
 
-  activateUser(uid: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/activate`, null, {
-      params: { uid: uid.toString() },
+  activateUser(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/activate`, null, {
+      params: { uid: id.toString() },
     });
   }
 
-  inactivateUser(uid: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/inactivate`, null, {
-      params: { uid: uid.toString() },
+  inactivateUser(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/inactivate`, null, {
+      params: { uid: id.toString() },
     });
   }
 }

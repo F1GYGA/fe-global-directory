@@ -31,14 +31,14 @@
       <div class="profile-photo">
         <img
           [draggable]="false"
-          [src]="profilePhotoPlaceholder"
+          [src]="user?.profileImage ? user?.profileImage?.imageEncoded : profilePhotoPlaceholder"
           alt="Profile Photo">
         <div class="overlay"></div>
       </div>
     </button>
     <mat-menu #profileMenu="matMenu" class="avatar-menu">
       <div class="username">
-        email@email.com
+        {{ user?.email ? user?.email : "N/A" }}
       </div>
       <mat-divider></mat-divider>
       <button (click)="onNavigateToAboutMe()" mat-menu-item>

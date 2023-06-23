@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService } from '../../api/services/auth/auth.service';
+import { User } from '../../api/types/user';
+import { UserService } from '../../api/services/user/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,24 +12,29 @@ import { AuthService } from '../../api/services/auth/auth.service';
 })
 export class NavbarComponent {
   @Input() isOnDashboardPage: boolean = false;
-  isAdmin: boolean;
-  profilePhotoPlaceholder: string = 'assets/portrait.jpg';
+  profilePhotoPlaceholder: string = 'assets/profile-photo-placeholder.png';
+  user: User | null = null;
+  isAdmin: boolean = false;
 
   constructor(
     private router: Router,
     private location: Location,
-    private authService: AuthService
-  ) {
-    this.isAdmin = Boolean(
-      this.authService.isAuthenticated() &&
-        this.authService.getUserRoles()?.includes('ADMIN')
-    );
-  }
+    private authService: AuthService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.router.events.subscribe(event => {
       this.isOnDashboardPage = this.router.url === '/';
     });
+
+    const userId = this.authService.getUserId();
+    if (userId !== null) {
+      this.userService.getUserById(userId).subscribe(user => {
+        this.user = user;
+        this.isAdmin = this.user?.role === 'ADMIN';
+      });
+    }
   }
 
   onGoBack() {

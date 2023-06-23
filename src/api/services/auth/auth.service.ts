@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import jwt_decode from 'jwt-decode';
-import { RegisterFormData, RegisterPayloadData } from '../../types/auth';
+import {
+  RegisterFormData,
+  RegisterPayloadData,
+  RegistrationResponse,
+} from '../../types/auth';
 import { JwtService } from '../jwt/jwt.service';
 
 interface LoginResponse {
@@ -32,6 +35,15 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
+  setUserId(userId: number): void {
+    localStorage.setItem('userId', userId.toString());
+  }
+
+  getUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : null;
+  }
+
   isAuthenticated(): boolean {
     const token = this.getToken();
     return token !== null && !this.jwtService.isTokenExpired(token);
@@ -52,21 +64,23 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.setToken(response.token);
+          this.setUserId(response.userId);
           this.authStatusSubject.next(true);
         })
       );
   }
 
-  logout(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/logout`, {}).pipe(
+  logout(): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/logout`, {}).pipe(
       tap(() => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
         this.authStatusSubject.next(false);
       })
     );
   }
 
-  register(formData: RegisterFormData): Observable<any> {
+  register(formData: RegisterFormData): Observable<RegistrationResponse> {
     const payload: RegisterPayloadData = {
       email: formData.email,
       password: formData.password,
@@ -89,9 +103,9 @@ export class AuthService {
             base64Img: reader.result || '',
           };
           this.http
-            .post(`${this.apiUrl}/register`, payload)
+            .post<RegistrationResponse>(`${this.apiUrl}/register`, payload)
             .pipe(
-              tap(response => {
+              tap((response: RegistrationResponse) => {
                 observer.next(response);
                 observer.complete();
               }),
@@ -104,7 +118,10 @@ export class AuthService {
         };
       });
     } else {
-      return this.http.post(`${this.apiUrl}/register`, payload);
+      return this.http.post<RegistrationResponse>(
+        `${this.apiUrl}/register`,
+        payload
+      );
     }
   }
 }
