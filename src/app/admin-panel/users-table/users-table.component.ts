@@ -28,11 +28,11 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   @Input() usersDataSource: MatTableDataSource<User> =
     new MatTableDataSource<User>();
   @Input() userColumns: string[] = [];
+  @Input() setLoadingState?: (state: boolean) => void;
   @Output() refreshData = new EventEmitter<void>();
   @ViewChild('usersPaginator') usersPaginator!: MatPaginator;
   @ViewChild('usersSort') usersSort!: MatSort;
 
-  isLoading: boolean = false;
   profilePhotoPlaceholder: string = '/assets/profile-photo-placeholder.png';
 
   constructor(
@@ -79,7 +79,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     );
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.isLoading = true;
+        this.setLoadingState?.(true);
         this.userService.activateUser(user.id).subscribe({
           next: (): void => {
             this.refreshData.emit();
@@ -103,7 +103,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
             );
           },
           complete: (): void => {
-            this.isLoading = false;
+            this.setLoadingState?.(false);
           },
         });
       }
@@ -119,7 +119,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     );
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.isLoading = true;
+        this.setLoadingState?.(true);
         this.userService.inactivateUser(user.id).subscribe({
           next: (): void => {
             this.refreshData.emit();
@@ -143,7 +143,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
             );
           },
           complete: (): void => {
-            this.isLoading = false;
+            this.setLoadingState?.(false);
           },
         });
       }

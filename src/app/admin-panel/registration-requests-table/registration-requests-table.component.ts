@@ -47,12 +47,12 @@ export class RegistrationRequestsTableComponent
   @Input() usersDataSource: MatTableDataSource<RegistrationRequest> =
     new MatTableDataSource<RegistrationRequest>();
   @Input() userColumns: string[] = [];
+  @Input() setLoadingState?: (state: boolean) => void;
   @Output() refreshData = new EventEmitter<void>();
   @ViewChild('registrationRequestsPaginator')
   registrationRequestsPaginator!: MatPaginator;
   @ViewChild('registrationRequestsSort') registrationRequestsSort!: MatSort;
 
-  isLoading: boolean = false;
   expandedElement: RegistrationRequest | null = null;
   profilePhotoPlaceholder: string = '/assets/profile-photo-placeholder.png';
 
@@ -102,7 +102,7 @@ export class RegistrationRequestsTableComponent
   }
 
   approveUser(user: RegistrationRequest) {
-    this.isLoading = true;
+    this.setLoadingState?.(true);
     this.userService.approveUser(user.id).subscribe({
       next: (): void => {
         this.refreshData.emit();
@@ -122,7 +122,7 @@ export class RegistrationRequestsTableComponent
         });
       },
       complete: (): void => {
-        this.isLoading = false;
+        this.setLoadingState?.(false);
       },
     });
   }
@@ -132,7 +132,7 @@ export class RegistrationRequestsTableComponent
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.isLoading = true;
+        this.setLoadingState?.(true);
         const reason = result.reason;
         const description = result.description;
         this.userService.rejectUser(user.id, reason, description).subscribe({
@@ -164,7 +164,7 @@ export class RegistrationRequestsTableComponent
             );
           },
           complete: (): void => {
-            this.isLoading = false;
+            this.setLoadingState?.(false);
           },
         });
       }

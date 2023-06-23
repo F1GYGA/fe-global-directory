@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserService } from '../../api/services/user/user.service';
@@ -35,7 +35,6 @@ export class AdminPanelComponent implements OnInit {
 
   isLoading: boolean = false;
   selectedTabIndex = TabIndexes.REGISTRATION_REQUESTS;
-
   registrationRequestsDataSource = new MatTableDataSource<RegistrationRequest>(
     []
   );
@@ -47,6 +46,10 @@ export class AdminPanelComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private snackBar: MatSnackBar
   ) {}
+
+  setLoadingState(state: boolean) {
+    this.isLoading = state;
+  }
 
   loadRegistrationRequests() {
     this.isLoading = true;

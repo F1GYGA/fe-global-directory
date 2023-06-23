@@ -11,6 +11,7 @@
                 <ng-template matTabContent>
                   <app-registration-requests-table (refreshData)="loadDataBasedOnTab(selectedTabIndex)"
                                                    *ngIf="!isLoading"
+                                                   [setLoadingState]="setLoadingState.bind(this)"
                                                    [userColumns]="registrationRequestsColumns"
                                                    [usersDataSource]="registrationRequestsDataSource"
                                                    class="table-wrapper">
@@ -23,12 +24,14 @@
               <mat-tab>
                 <ng-template mat-tab-label>Active Users</ng-template>
                 <ng-template matTabContent>
-                  <app-users-table (refreshData)="loadDataBasedOnTab(selectedTabIndex)"
-                                   *ngIf="!isLoading"
-                                   [activeUsers]="true"
-                                   [userColumns]="userColumns"
-                                   [usersDataSource]="activeUsersDataSource"
-                                   class="table-wrapper">
+                  <app-users-table
+                    (refreshData)="loadDataBasedOnTab(selectedTabIndex)"
+                    *ngIf="!isLoading"
+                    [activeUsers]="true"
+                    [setLoadingState]="setLoadingState.bind(this)"
+                    [userColumns]="userColumns"
+                    [usersDataSource]="activeUsersDataSource"
+                    class="table-wrapper">
                   </app-users-table>
                   <div *ngIf="isLoading" class="loading-container">
                     <mat-spinner></mat-spinner>
@@ -41,6 +44,7 @@
                   <app-users-table (refreshData)="loadDataBasedOnTab(selectedTabIndex)"
                                    *ngIf="!isLoading"
                                    [activeUsers]="false"
+                                   [setLoadingState]="setLoadingState.bind(this)"
                                    [userColumns]="userColumns"
                                    [usersDataSource]="inactiveUsersDataSource"
                                    class="table-wrapper">
