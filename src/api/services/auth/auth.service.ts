@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {
   RegisterFormData,
   RegisterPayloadData,
   RegistrationResponse,
+  ResetPasswordFormData,
 } from '../../types/auth';
 import { JwtService } from '../jwt/jwt.service';
 
@@ -123,5 +124,21 @@ export class AuthService {
         payload
       );
     }
+  }
+
+  sendResetPasswordEmail(email: string): Observable<any> {
+    return this.http.post<any>(`http://localhost:8080/sendEmail`, { email });
+  }
+
+  resetPassword(
+    resetPasswordData: ResetPasswordFormData,
+    token: string
+  ): Observable<void> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<void>(
+      `http://localhost:8080/reset`,
+      { resetPasswordData },
+      { headers }
+    );
   }
 }
