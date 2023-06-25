@@ -60,7 +60,7 @@ export class ResetPasswordComponent implements OnInit {
         password: passwordValue,
         confirmPassword: confirmPasswordValue,
       };
-      console.log(resetPasswordData);
+      console.log('resetPasswordData:', resetPasswordData);
 
       this.authService.resetPassword(resetPasswordData, this.token).subscribe({
         next: () => {

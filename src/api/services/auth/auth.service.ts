@@ -130,14 +130,12 @@ export class AuthService {
     return this.http.post<any>(`http://localhost:8080/sendEmail`, { email });
   }
 
-  resetPassword(
-    resetPasswordData: ResetPasswordFormData,
-    token: string
-  ): Observable<void> {
+  resetPassword(resetPasswordData: ResetPasswordFormData, token: string): Observable<void> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post<void>(
+    console.log(headers);
+    return this.http.patch<void>(
       `http://localhost:8080/reset`,
-      { resetPasswordData },
+      resetPasswordData,
       { headers }
     );
   }
