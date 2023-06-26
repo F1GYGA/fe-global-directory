@@ -4,33 +4,27 @@
       <div class="empty-container"></div>
       <main class="main-container" role="main">
         <div class="about-container">
-          <mat-card class="example-card">
+          <mat-card class="example-card" *ngIf="currentUser">
             <mat-card-header>
-              <div mat-card-avatar class="example-header-image"></div>
-              <mat-card-title>firstName lastName</mat-card-title>
-              <mat-card-subtitle>Department</mat-card-subtitle>
-              <mat-card-subtitle>Team</mat-card-subtitle>
-              <mat-card-subtitle>Job Title</mat-card-subtitle>
-              <mat-card-subtitle>Email</mat-card-subtitle>
-              <mat-card-subtitle> Description Description Description Description Description Description Description
-                Description Description Description Description Description Description Description Description
-                Description Description Description Description Description Description Description Description
-                Description
-              </mat-card-subtitle>
+              <div mat-card-avatar class="example-header-image">
+                <img [src]="currentUser.profileImage ? currentUser.profileImage.imageEncoded : profilePhotoPlaceholder" alt="Profile Photo">
+              </div>
+              <mat-card-title>{{ currentUser.firstName }} {{ currentUser.lastName }}</mat-card-title>
+              <mat-card-subtitle>{{ currentUser.department }}</mat-card-subtitle>
+              <mat-card-subtitle>{{ currentUser.team }}</mat-card-subtitle>
+              <mat-card-subtitle>{{ currentUser.jobTitle }}</mat-card-subtitle>
+              <mat-card-subtitle>{{ currentUser.email }}</mat-card-subtitle>
+              <!-- <mat-card-subtitle>
+                {{ currentUser.description }}
+              </mat-card-subtitle> -->
             </mat-card-header>
             <mat-card-content>
-              <h2>This should be the seciton where additional information about a person is provided. This should be the
-                seciton where additional information about a person is provided. This should be the seciton where
-                additional information about a person is provided. This should be the seciton where additional
-                information about a person is provided. Test test test test section section. </h2>
-              <h2>Skills</h2>
+              <!-- ... -->
             </mat-card-content>
             <mat-card-actions>
-              <button (click)="onNavigateToLinkedIn()" aria-label="LinkedIn"
-                          mat-button
-                          matTooltip="LinkedIn" matTooltipPosition="below">
-                    <span class="linkedin-button-text">LinkedIn </span>
-                  </button>
+              <button (click)="onNavigateToLinkedIn()" aria-label="LinkedIn" mat-button matTooltip="LinkedIn" matTooltipPosition="below">
+                <span class="linkedin-button-text">LinkedIn</span>
+              </button>
               <button mat-button>Git</button>
               <button mat-button>Mail</button>
               <button mat-button>Phone</button>

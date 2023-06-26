@@ -124,3 +124,11 @@ section {
 .mat-card-title {
   padding-bottom: 10px;
 }
+
+img {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
