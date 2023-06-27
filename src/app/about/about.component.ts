@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../api/services/auth/auth.service';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-about',
@@ -15,8 +14,9 @@ import { tap } from 'rxjs/operators';
 export class AboutComponent implements OnInit {
   isLoading: boolean = false;
   user!: User;
-  isLoggedInUser: boolean = false;
-  profilePhotoPlaceholder = 'assets/profile-photo-placeholder.png';
+  isAdmin: boolean = false;
+  isAuthenticatedUser: boolean = false;
+  profilePhotoPlaceholder: string = 'assets/profile-photo-placeholder.png';
 
   constructor(
     private datePipe: DatePipe,
@@ -35,17 +35,25 @@ export class AboutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.paramMap
-      .pipe(
-        tap(params => {
-          const userId: string | null = params.get('id');
-          this.isLoggedInUser = this.authService.getUserId() === Number(userId);
-          if (userId) {
-            this.loadUserData(userId);
-          }
-        })
-      )
-      .subscribe();
+    this.route.paramMap.subscribe({
+      next: params => {
+        const userId: string | null = params.get('id');
+        const authenticatedUserId: number | null = this.authService.getUserId();
+
+        if (authenticatedUserId !== null) {
+          this.isAuthenticatedUser = authenticatedUserId === Number(userId);
+          this.userService.getUserById(authenticatedUserId).subscribe({
+            next: (user: User): void => {
+              this.isAdmin = user?.role === 'ADMIN';
+            },
+          });
+        }
+
+        if (userId) {
+          this.loadUserData(userId);
+        }
+      },
+    });
   }
 
   loadUserData(id: string): void {
