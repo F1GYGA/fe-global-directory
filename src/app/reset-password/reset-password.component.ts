@@ -39,7 +39,6 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.token = params['token'];
-      console.log(this.token);
     });
     this.newPasswordFormControl.valueChanges.subscribe(() => {
       this.validateMatchingPasswords();
@@ -52,7 +51,6 @@ export class ResetPasswordComponent implements OnInit {
 
   onResetPassword() {
     if (this.resetPasswordForm.valid && this.token) {
-      console.log('onResetPassword method called');
       const passwordValue = this.resetPasswordForm.value.newPassword || '';
       const confirmPasswordValue =
         this.resetPasswordForm.value.confirmPassword || '';
@@ -60,7 +58,6 @@ export class ResetPasswordComponent implements OnInit {
         password: passwordValue,
         confirmPassword: confirmPasswordValue,
       };
-      console.log('resetPasswordData:', resetPasswordData);
 
       this.authService.resetPassword(resetPasswordData, this.token).subscribe({
         next: () => {

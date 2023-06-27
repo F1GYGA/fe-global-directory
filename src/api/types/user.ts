@@ -19,6 +19,8 @@ export type RegistrationRequest = {
 export type User = {
   id: number;
   role: string;
+  active: boolean;
+  approved: boolean;
   email: string;
   firstName: string;
   lastName: string;

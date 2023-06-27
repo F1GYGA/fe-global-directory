@@ -28,7 +28,7 @@ const routes: Routes = [
     component: ResetPasswordComponent,
     canActivate: [NoAuthGuard],
   },
-  { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
+  { path: 'about/:id', component: AboutComponent, canActivate: [AuthGuard] },
   {
     path: 'admin-panel',
     component: AdminPanelComponent,

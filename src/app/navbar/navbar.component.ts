@@ -23,9 +23,13 @@ export class NavbarComponent {
     private userService: UserService
   ) {}
 
-  ngOnInit() {
-    this.router.events.subscribe(event => {
-      this.isOnDashboardPage = this.router.url === '/';
+  ngOnInit(): void {
+    this.isOnDashboardPage = this.router.url === '/';
+
+    this.router.events.subscribe({
+      next: (): void => {
+        this.isOnDashboardPage = this.router.url === '/';
+      },
     });
 
     const userId = this.authService.getUserId();
@@ -37,29 +41,29 @@ export class NavbarComponent {
     }
   }
 
-  onGoBack() {
+  onGoBack(): void {
     this.location.back();
   }
 
-  onNavigateToNewsFeed() {
+  onNavigateToNewsFeed(): void {
     this.router.navigate(['']);
   }
 
-  onNavigateToSearchColleagues() {
+  onNavigateToSearchColleagues(): void {
     this.router.navigate(['/search-colleagues']);
   }
 
-  onNavigateToAboutMe() {
-    this.router.navigate(['/about']);
+  onNavigateToAboutMe(): void {
+    this.router.navigate(['about', this.authService.getUserId()]);
   }
 
-  onNavigateToAdminPanel() {
+  onNavigateToAdminPanel(): void {
     this.router.navigate(['/admin-panel']);
   }
 
-  onLogout() {
+  onLogout(): void {
     this.authService.logout().subscribe({
-      next: () => {},
+      next: (): void => {},
       complete: (): void => {
         this.router.navigate(['/login']);
       },
