@@ -1,5 +1,79 @@
 <div class="container">
     <div class="blur-container">
+      <div class="page-content">
+        <div class="empty-container"></div>
+        <main class="main-container" role="main">
+          <div class="login-container">
+            <mat-card role="table">
+              <mat-card-header>
+                <mat-card-title><h1>Search a colleague!</h1></mat-card-title>
+                <mat-form-field class="filter" class="filter-field">
+                  <input  [formControl]="searchKeywordFilter" (keyup)="applyFilter($event)" matInput placeholder="You can search by name, department, team...">
+                </mat-form-field>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="card-content">
+                  <div class="table-container">
+                    <table (matSortChange)="announceSortChange($event)" [dataSource]="dataSource" mat-table matSort>
+                      <ng-container matColumnDef="profilePhotoUrl">
+                        <th *matHeaderCellDef mat-header-cell>Profile Photo</th>
+                        <td *matCellDef="let user" mat-cell>
+                          <div class="avatar-container">
+                            <img [src]="user.profilePhotoUrl" alt="Profile Photo" height="40" width="40">
+                          </div>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="firstName">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>First Name</th>
+                        <td *matCellDef="let user" mat-cell>{{ user.firstName }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="lastName">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Last Name</th>
+                        <td *matCellDef="let user" mat-cell>{{ user.lastName }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="email">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Email</th>
+                        <td *matCellDef="let user" mat-cell>{{ user.email }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="department">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Department</th>
+                        <td *matCellDef="let user" mat-cell>{{ user.department }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="team">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Team</th>
+                        <td *matCellDef="let user" mat-cell>{{ user.team }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="jobTitle">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Job Title</th>
+                        <td *matCellDef="let user" mat-cell>{{ user.jobTitle }}</td>
+                      </ng-container>  
+                      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                      <!--                    <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>-->
+                      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+  
+  
+                    </table>
+  
+                  </div>
+  
+                </div>
+              </mat-card-content>
+              <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+            </mat-card>
+          </div>
+        </main>
+        <footer class="footer">
+          <div class="copyright">&copy; 2023 Global Directory</div>
+        </footer>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+
+<!-- <div class="container">
+    <div class="blur-container">
         <div class="page-content">
             <div class="empty-container"></div>
             <main class="main-container" role="main">
@@ -8,14 +82,17 @@
                         <mat-card-header>
                             <form [formGroup]="searchForm" class="search-form">
                                 <div class="search-input-wrapper">
-                                    <input placeholder="Search a colleague" class="search-form-input">
-                                    <button class="search-button">
-                                        <mat-icon>search</mat-icon>
-                                    </button>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Search a colleague</mat-label>
+                                        <input formControlName="searchedColleague" matInput placeholder="You can also use filter">
+                                      </mat-form-field>
+                                      <button (click)="search()" mat-fab color="primary" aria-label="Example icon button with a delete icon">
+                                        <mat-icon class="search-colleague-button">search</mat-icon>
+                                      </button>
                                 </div>
                                 <div class="filter-container">
                                     <div class="filter-options">
-                                        <mat-label>Filter by:</mat-label>
+                                        <mat-label class="filter-label">Filter by:</mat-label>
                                         <mat-select [formControl]="categoryControl">
                                             <mat-option>-- None --</mat-option>
                                             <mat-optgroup *ngFor="let group of categoryGroup" [label]="group.category"
@@ -30,8 +107,8 @@
                             </form>
                         </mat-card-header>
                         <mat-card-content>
-                            <div class="colleague-list">
-                                <div class="colleague-card" *ngFor="let colleague of colleagues">
+                            <div *ngIf="searchResults.length > 0" class="colleague-list">
+                                <div class="colleague-card" *ngFor="let colleague of searchResults">
                                     <app-colleague-card [colleague]="colleague"></app-colleague-card>
                                   </div>
                             </div>
@@ -48,4 +125,4 @@
             </footer>
         </div>
     </div>
-</div>
+</div> -->
