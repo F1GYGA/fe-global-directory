@@ -1,4 +1,216 @@
-.navigation-container {
+
+.container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    min-width: 320px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.9) -17.76%,
+      rgba(62, 81, 181, 0.4) 82.24%
+    ),
+    url('/assets/admin.jpg'), center, no-repeat;
+    background-size: cover;
+  }
+  
+  .blur-container {
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(12px);
+    display: flex;
+  }
+  
+  .page-content {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 58px);
+    height: calc(100svh - 58px);
+    margin-top: 58px;
+  }
+  
+  .main-container {
+    height: calc(100vh - 198px);
+    height: calc(100svh - 198px);
+    padding: 50px 25px;
+  
+  }
+  
+  .login-container {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .mat-card {
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(100px);
+    margin: auto;
+    overflow: hidden;
+    max-width: 1400px;
+    width: 100%;
+    height: 100%;
+    padding: 16px 8px 16px 16px;
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+  }
+  
+  
+  .mat-card-header .mat-card-title {
+    text-align: center;
+  }
+  
+  .mat-card-header {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .mat-card-header h1 {
+  
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  
+  .footer {
+    background: rgba(63, 81, 181, 1);
+    padding: 10px 0;
+    text-align: center;
+  }
+  
+  .copyright {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    color: #fff;
+    opacity: 0.8;
+  }
+  
+  /*@media only screen and (max-width: 480px) {*/
+  /*  .main-container {*/
+  /*    padding: 0;*/
+  /*    flex-grow: 1;*/
+  /*  }*/
+  
+  /*  .mat-card {*/
+  /*    height: 100%;*/
+  /*    max-width: 100%;*/
+  /*    border-radius: 0;*/
+  /*    box-shadow: none;*/
+  /*    justify-content: center;*/
+  /*  }*/
+  /*}*/
+  
+  
+  .mat-card-content {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .card-content {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .table-container {
+    height: 100%;
+    overflow: auto;
+    padding-right: 8px;
+  }
+  
+  div.table-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+    border-radius: 10px;
+  }
+  
+  div.table-container::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+  }
+  
+  div.table-container::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+  
+  div.table-container::-webkit-scrollbar-thumb {
+    background: rgba(63, 81, 181, 0.75);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+  }
+  
+  div.table-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(63, 81, 181, 1);
+  }
+  
+  
+  .mat-table {
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+  }
+  
+  /*.mat-table th,*/
+  /*.mat-table td {*/
+  /*  text-align: center;*/
+  /*  padding: 8px;*/
+  /*}*/
+  
+  .mat-table th {
+    /*padding-top: 56px;*/
+    /*background-color: rgba(63, 81, 181, 1);*/
+    /*color: white;*/
+  }
+  
+  /*button.mat-button {*/
+  /*  margin-right: 8px;*/
+  /*}*/
+  
+  .filter {
+    display: flex;
+    width: 100%;
+    justify-content :center;
+  }
+
+  
+  .filter-field {
+    width: 20%;
+    align-self: center;
+    justify-content :center;
+  }
+  
+  .mat-paginator {
+    background: transparent;
+  }
+  
+  .avatar-container {
+    display: flex;
+  }
+  
+  .avatar-container img {
+    border-radius: 50%;
+    margin: auto 0;
+  }
+  
+  /*.mat-header-row {*/
+  /*  background: rgba(63, 81, 181, 1);*/
+  /*  color: white;*/
+  /*  height: 30px;*/
+  /*}*/
+  
+  
+  .element-detail {
+    padding: 16px;
+  }
+  
+  .example-detail-row {
+    border-bottom-width: 0;
+  }
+  
+/* .navigation-container {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
     position: fixed;
@@ -25,6 +237,10 @@ mat-toolbar {
 
 .mat-card-header-text {
     margin: 0 0;
+}
+
+.mat-card-header{
+    padding-bottom: 30px;
 }
 
 .container {
@@ -82,9 +298,9 @@ mat-toolbar {
 
 .main-container {
     padding: 50px 25px;
-}
+} */
 
-mat-card {
+/* mat-card {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(100px);
     margin: auto;
@@ -104,23 +320,19 @@ section {
 
 .mat-card-actions {
     margin: auto;
-}
+} */
 
-.mat-card-header {
+/* .mat-card-header {
     border-radius: 10px;
-    /* position: absolute; */
-    /* top: 5%; */
-    /* left: 50px; */
-    /* right: 50px; */
     display: flex;
     flex-direction: row;
     width: 300px;
     align-self: center;
     padding-right: 100px;
     padding-top: 30px;
-}
+} */
 
-.search-form-input {
+/* .search-form-input {
     width: 300px;
     border-radius: 10px;
     padding-top: 6px;
@@ -128,33 +340,49 @@ section {
 }
 
 .search-form {
-  background-color: white;
-  border-radius: 10px;
-  padding-top: 10px;
-  padding-left: 10px;
-  }
+    background-color: white;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 20px;
+}
 
 .search-input-wrapper {
     display: flex;
-    align-items: center;
-}
-
+} */
+/* 
 .search-button {
     margin-right: 10px;
-    /* Adjust this margin as needed */
     border-radius: 10px
-}
+} */
 
-.colleague-list {
-  height: 550px; /* Set the desired height for the scrollable section */
-  overflow: auto;
-  display: flex;
+/* .colleague-list {
+    height: 550px;
+    overflow: auto;
+    display: flex;
     flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    align-items: center;
+    justify-content: center;
+} */
+
+/* .filter-container {
+    display: flex;
 }
 
-.filter-container {
-    align-items: center;
-    max-width: 300px;
+.filter-options {
+    display: flex;
+    flex-direction: row;
 }
+
+.filter-label {
+    width: 100px;
+}
+
+.mat-form-field {
+    padding-right: 10px
+}
+.mat-fab{
+    transform: scale(0.85);
+} */
+
