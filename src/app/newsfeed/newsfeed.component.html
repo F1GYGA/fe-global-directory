@@ -5,20 +5,58 @@
       <main class="main-container" role="main">
         <div class="newsfeed-container">
           <div class="create-post-button-container">
-            <button mat-raised-button color="primary" class="create-post-button" (click)="openPostModal()">Create Post</button>
+            <button (click)="openPostModal()" class="create-post-button" color="primary" mat-raised-button>Create Post
+            </button>
           </div>
-          <div class="post-modal" *ngIf="showPostModal">
+          <div *ngIf="showPostModal" class="post-modal">
             <mat-card>
               <mat-card-content>
-                <mat-form-field appearance="fill">
-                  <textarea matInput [(ngModel)]="newPostContent" name="postContent" required></textarea>
-                </mat-form-field>
-                <div class="post-modal-buttons">
-                  <button mat-raised-button color="primary" (click)="imageInput.click()">Add an Image</button>
-                  <input #imageInput type="file" accept="image/*" style="display: none" (change)="onImageSelected($event)">
-                  <button mat-raised-button color="warn" (click)="cancelPost()">Cancel</button>
-                  <button mat-raised-button color="primary" (click)="sharePost()">Share Post</button>
-                </div>
+                <form
+                  (ngSubmit)="sharePost()"
+                  [formGroup]="newPostForm"
+                  aria-label="Register Form"
+                  class="form-container">
+                  <div class="photo-container">
+                    <div (click)="fileInput.click()" class="image-container">
+                      <img
+                        [draggable]="false"
+                        [src]="postImage"
+                        alt="Post Image"
+                        class="img"/>
+                    </div>
+                    <input
+                      #fileInput
+                      (change)="onFileUpload($event)"
+                      accept="image/*"
+                      aria-label="Profile photo"
+                      hidden
+                      type="file"/>
+                  </div>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Text</mat-label>
+                    <textarea
+                      [formControl]="textFormControl"
+                      aria-label="Text"
+                      aria-required="true"
+                      matInput
+                      rows="5"></textarea>
+                    <mat-error
+                      *ngIf="textFormControl.hasError('required')">
+                      Text is required
+                    </mat-error>
+                  </mat-form-field>
+                  <div class="post-modal-buttons">
+                    <button (click)="cancelPost()" color="warn" mat-flat-button>Cancel</button>
+                    <button
+                      aria-label="Share Post"
+                      class="submit-button"
+                      color="primary"
+                      mat-flat-button
+                      type="submit">
+                      Share
+                    </button>
+                  </div>
+                </form>
               </mat-card-content>
             </mat-card>
           </div>
@@ -29,26 +67,31 @@
           </mat-card>
           <div *ngFor="let post of posts" class="example-card">
             <mat-card-header>
-              <div mat-card-avatar class="example-header-image"></div>
+              <div class="example-header-image" mat-card-avatar></div>
               <mat-card-title>
-                <button (click)="onNavigateToAboutMe(post.userId)" aria-label="About" mat-button matTooltip="About Card" matTooltipPosition="below">
+                <button (click)="onNavigateToAboutMe(post.userId)" aria-label="About" mat-button matTooltip="About Card"
+                        matTooltipPosition="below">
                   <span class="about-button-text">{{ post.userFullName }}</span>
                 </button>
               </mat-card-title>
               <mat-card-subtitle>{{ post.timePeriod }}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image src="https://www.pcgamesn.com/wp-content/sites/pcgamesn/2020/08/microsoft-flight-simulator-windows-xp-bliss.jpg" alt="Test Photo">
+            <img alt="Test Photo"
+                 mat-card-image
+                 src="https://www.pcgamesn.com/wp-content/sites/pcgamesn/2020/08/microsoft-flight-simulator-windows-xp-bliss.jpg">
             <mat-card-content>
               <p>
                 {{ post.content }}
               </p>
             </mat-card-content>
             <mat-card-actions>
-              <button (click)="onLike(post.postId)" aria-label="Like" mat-icon-button matTooltip="Like" matTooltipPosition="below">
+              <button (click)="onLike(post.postId)" aria-label="Like" mat-icon-button matTooltip="Like"
+                      matTooltipPosition="below">
                 <mat-icon class="like-icon">thumb_up</mat-icon>
                 <span class="like-button-text">LIKE ({{ post.nrOfLikes }})</span>
               </button>
-              <button (click)="onComment(post.postId)" aria-label="Comment" mat-icon-button matTooltip="Comment" matTooltipPosition="below">
+              <button (click)="onComment(post.postId)" aria-label="Comment" mat-icon-button matTooltip="Comment"
+                      matTooltipPosition="below">
                 <mat-icon class="comment-icon">comment</mat-icon>
                 <span class="comment-button-text">COMMENT ({{ post.nrOfComments }})</span>
               </button>

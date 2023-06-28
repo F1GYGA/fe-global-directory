@@ -1,20 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Post } from 'src/api/types/post';
+import { Post, PostFormData } from 'src/api/types/post';
 import { PostService } from 'src/api/services/post/post.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MyErrorStateMatcher } from '../app.component';
 
 @Component({
   selector: 'app-newsfeed',
   templateUrl: './newsfeed.component.html',
-  styleUrls: ['./newsfeed.component.css']
+  styleUrls: ['./newsfeed.component.css'],
 })
 export class NewsfeedComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  postImage: string = 'assets/new-post-placeholder.jpeg';
   posts: Post[] = [];
-  newPostContent: string = '';
   showPostModal: boolean = false;
-  selectedImage: File | null = null;
+  matcher = new MyErrorStateMatcher();
 
-  constructor(private postService: PostService, private snackBar: MatSnackBar) {}
+  textFormControl = new FormControl('', Validators.required);
+  postImageFormControl = new FormControl();
+
+  newPostForm = new FormGroup({
+    text: this.textFormControl,
+    postImage: this.postImageFormControl,
+  });
+
+  constructor(
+    private postService: PostService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.getPosts();
@@ -30,43 +44,42 @@ export class NewsfeedComponent implements OnInit {
     this.showPostModal = true;
   }
 
-  openImageUploader(): void {
-    const fileInput = document.getElementById('imageInput');
-    if (fileInput) {
-      fileInput.click();
-    }
-  }
-
-  onImageSelected(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement.files && inputElement.files.length > 0) {
-      this.selectedImage = inputElement.files[0];
-    }
-  }
-  
   cancelPost(): void {
-    this.newPostContent = '';
+    this.textFormControl.setValue('');
     this.showPostModal = false;
   }
 
   sharePost(): void {
-    this.postService.createPost(this.newPostContent, this.selectedImage).subscribe(
-      response => {
-        console.log(response);
-        this.snackBar.open('Post created successfully', 'Close', {
-          duration: 3000
-        });
-        this.newPostContent = '';
-        this.showPostModal = false;
-        this.getPosts();
-      },
-      error => {
-        console.error(error);
-        this.snackBar.open('Failed to create post', 'Close', {
-          duration: 3000
-        });
-      }
-    );
+    if (this.newPostForm.valid) {
+      const formData: PostFormData = {
+        text: this.textFormControl.value || '',
+        postImage: this.postImageFormControl.value,
+      };
+      this.postService.createPost(formData).subscribe({
+        next: () => {
+          this.getPosts();
+          this.showPostModal = false;
+          this.snackBar.open('Post created successfully.', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: 'success-snackbar',
+          });
+        },
+        error: (): void => {
+          this.snackBar.open(
+            `Failed to create post. Please try again.`,
+            'Close',
+            {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              panelClass: 'error-snackbar',
+            }
+          );
+        },
+      });
+    }
   }
 
   onLike(postId: number): void {
@@ -79,5 +92,19 @@ export class NewsfeedComponent implements OnInit {
 
   onNavigateToAboutMe(userId: number): void {
     alert('Navigate to About Me clicked for user ID: ' + userId);
+  }
+
+  onFileUpload(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (input && input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.postImage = reader.result as string;
+        this.postImageFormControl.setValue(file);
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }

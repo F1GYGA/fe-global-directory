@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Post } from '../../types/post';
-import { JwtService } from '../jwt/jwt.service';
+import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of } from 'rxjs';
+import { Post, PostFormData, PostPayloadData } from '../../types/post';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -12,37 +12,42 @@ export class PostService {
 
   constructor(private http: HttpClient) {}
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.apiUrl}`);
   }
 
-  createPost(content: string, image: File | null): Observable<any> {
-    const formData: FormData = new FormData();
-  
-    const createPostDTO = {
-      text: content,
-      postImage: image as File | null 
+  createPost(formData: PostFormData): Observable<any> {
+    const payload: PostPayloadData = {
+      text: formData.text,
     };
-  
-    if (image) {
-      formData.append('postImage', image, image.name);
+
+    if (formData.postImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(formData.postImage);
+      return new Observable(observer => {
+        reader.onload = () => {
+          payload['postImage'] = {
+            name: formData.postImage?.name || '',
+            type: formData.postImage?.type || '',
+            base64Img: reader.result || '',
+          };
+          this.http
+            .post<any>(`${this.apiUrl}`, payload)
+            .pipe(
+              tap((response: any) => {
+                observer.next(response);
+                observer.complete();
+              }),
+              catchError(error => {
+                observer.error(error);
+                return of(error);
+              })
+            )
+            .subscribe();
+        };
+      });
+    } else {
+      return this.http.post<any>(`${this.apiUrl}`, payload);
     }
-  
-    formData.append('createPostDTO', JSON.stringify(createPostDTO));
-  
-    const headers = new HttpHeaders()
-      .set('Authorization', `Bearer ${this.getToken()}`)
-      .set('Content-Type', 'multipart/form-data');
-  
-    return this.http.post(`${this.apiUrl}/createPost`, formData, { headers });
   }
-  
-  
-  
-  
-  
 }
