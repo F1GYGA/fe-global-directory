@@ -44,8 +44,10 @@ export class NewsfeedComponent implements OnInit {
     this.showPostModal = true;
   }
 
-  cancelPost(): void {
+  clearPostForm(): void {
     this.textFormControl.setValue('');
+    this.postImageFormControl.setValue(null);
+    this.postImage = 'assets/new-post-placeholder.jpeg';
     this.showPostModal = false;
   }
 
@@ -58,7 +60,7 @@ export class NewsfeedComponent implements OnInit {
       this.postService.createPost(formData).subscribe({
         next: () => {
           this.getPosts();
-          this.showPostModal = false;
+          this.clearPostForm();
           this.snackBar.open('Post created successfully.', 'Close', {
             duration: 3000,
             horizontalPosition: 'center',
