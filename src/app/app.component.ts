@@ -52,5 +52,9 @@ export class AppComponent implements OnDestroy {
       'globe-logo',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/globe.svg')
     );
+    this.matIconRegistry.addSvgIcon(
+      'nodata',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/nodata.svg')
+    );
   }
 }

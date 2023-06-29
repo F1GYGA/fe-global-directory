@@ -32,7 +32,7 @@ export class PostService {
             base64Img: reader.result || '',
           };
           this.http
-            .post<any>(`${this.apiUrl}`, payload)
+            .post<any>(`${this.apiUrl}/new`, payload)
             .pipe(
               tap((response: any) => {
                 observer.next(response);
@@ -47,7 +47,7 @@ export class PostService {
         };
       });
     } else {
-      return this.http.post<any>(`${this.apiUrl}`, payload);
+      return this.http.post<any>(`${this.apiUrl}/new`, payload);
     }
   }
 }

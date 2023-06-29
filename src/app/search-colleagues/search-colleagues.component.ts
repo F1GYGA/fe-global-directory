@@ -34,6 +34,7 @@ export class SearchColleaguesComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   data: User[] = [];
+  profilePhotoPlaceholder: string = '/assets/profile-photo-placeholder.png';
   searchKeywordFilter = new FormControl();
   pageSizes = [10, 30, 50];
   resultsLength = 0;
