@@ -78,8 +78,14 @@
             </mat-card-header>
             <mat-card-content>
               <p>
-                {{ post.content }}
+                {{ post.text }}
               </p>
+              <img
+                [src]="post.postImage?.base64Img"
+                alt="Post Image"
+                class="img"
+                *ngIf="post.postImage"
+              />
             </mat-card-content>
             <mat-card-actions>
               <button (click)="onLike(post.postId)" aria-label="Like" mat-icon-button matTooltip="Like"
