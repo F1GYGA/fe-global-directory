@@ -121,6 +121,7 @@ section {
   justify-content: center;
   height: 200px;
   overflow: hidden;
+  position: relative;
 }
 
 .example-card .post-image-container img {
@@ -130,6 +131,10 @@ section {
   border-radius: 5px;
 }
 
+.example-card .card-actions {
+  /* Stil pt like si comment to be implement */
+  /* margin-top: 10px;  */
+}
 
 .example-header-image {
   background-image: url('https://as1.ftcdn.net/v2/jpg/03/64/88/42/1000_F_364884228_JIux2brVPuxvpm7wmgShdUMWkOAQCsXM.jpg');
