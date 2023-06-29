@@ -33,3 +33,47 @@ export type User = {
   previousExperience: string[];
   profileImage: Image | null;
 };
+
+export type UserProfile = {
+  profileImage: Image | null;
+  email: string;
+  firstName: string;
+  lastName: string;
+  department: string;
+  team: string;
+  jobTitle: string;
+  dateOfEmployment: string;
+  skills: string[];
+  hobbies: string[];
+  previousExperience: string[];
+};
+
+export type EditProfileFormData = {
+  profilePhoto: File | null;
+  firstName: string;
+  lastName: string;
+  department: string;
+  team: string;
+  jobTitle: string;
+  email: string;
+  previousExperience: string[];
+  skills: string[];
+  hobbies: string[];
+};
+
+export type UpdateProfilePayloadData = {
+  profileImage?: {
+    name: string;
+    type: string;
+    base64Img: string | ArrayBuffer;
+  };
+  firstName: string;
+  lastName: string;
+  department: string;
+  team: string;
+  jobTitle: string;
+  email: string;
+  previousExperience: string[];
+  skills: string[];
+  hobbies: string[];
+};

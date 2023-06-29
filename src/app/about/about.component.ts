@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../api/services/auth/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditProfileDialogComponent } from './edit-profile-dialog/edit-profile-dialog.component';
 
 @Component({
   selector: 'app-about',
@@ -23,7 +25,8 @@ export class AboutComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   formatDate(date: string | null): string {
@@ -82,6 +85,20 @@ export class AboutComponent implements OnInit {
   }
 
   onEdit(): void {
-    alert('onEdit clicked');
+    const dialogRef = this.dialog.open(EditProfileDialogComponent, {
+      maxHeight: '768px',
+      width: '100%',
+      maxWidth: '768px',
+      data: { user: this.user },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result === true) {
+          this.loadUserData(this.user.id.toString());
+        }
+      }
+    });
   }
 }

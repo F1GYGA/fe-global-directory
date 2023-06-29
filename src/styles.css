@@ -91,7 +91,6 @@ body {
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
 }
 
-
 .success-snackbar {
   background-color: rgba(63, 81, 181, 1);
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
@@ -113,3 +112,4 @@ body {
   background-color: transparent;
   color: #fff;
 }
+

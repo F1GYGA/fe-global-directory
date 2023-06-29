@@ -4,11 +4,11 @@
       <div class="empty-container"></div>
       <main class="main-container" role="main">
         <div class="about-container">
-          <mat-card *ngIf="user">
+          <mat-card>
             <mat-card-content>
               <ng-container *ngIf="!isLoading">
                 <div class="edit-content">
-                  <ng-container *ngIf="isAuthenticatedUser || isAdmin">
+                  <ng-container *ngIf="isAuthenticatedUser">
                     <button (click)="onEdit()" aria-label="Edit Profile"
                             class="edit-icon-button" mat-icon-button>
                       <mat-icon>edit</mat-icon>

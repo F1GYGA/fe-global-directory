@@ -47,7 +47,12 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    return token !== null && !this.jwtService.isTokenExpired(token);
+    if (token && this.jwtService.isTokenExpired(token)) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      return false;
+    }
+    return token !== null;
   }
 
   getUserRoles(): string[] | null {

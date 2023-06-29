@@ -40,8 +40,9 @@ import { UserRejectionDialogComponent } from './admin-panel/user-rejection-dialo
 import { RegistrationRequestsTableComponent } from './admin-panel/registration-requests-table/registration-requests-table.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
-import { JwtInterceptor } from '../interceptors/jwt.interceptor';
+import { JwtInterceptor } from '../interceptors/jwt/jwt.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EditProfileDialogComponent } from './about/edit-profile-dialog/edit-profile-dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     UserRejectionDialogComponent,
     RegistrationRequestsTableComponent,
     NewsfeedComponent,
+    EditProfileDialogComponent,
   ],
   imports: [
     BrowserModule,
