@@ -98,16 +98,17 @@ section {
 
 .example-card {
   max-width: 400px;
-margin: auto;
+  margin: auto;
   margin-bottom: 10px;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(100px);
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
   display: flex;
   flex-direction: column;
-  border-radius: 10px;}
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-  
 .example-card .card-content {
   flex: 1;
   display: flex;
@@ -118,13 +119,17 @@ margin: auto;
   margin: 10px 0;
   display: flex;
   justify-content: center;
+  height: 200px;
+  overflow: hidden;
 }
 
 .example-card .post-image-container img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
+  object-fit: cover; 
   border-radius: 5px;
 }
+
 
 .example-header-image {
   background-image: url('https://as1.ftcdn.net/v2/jpg/03/64/88/42/1000_F_364884228_JIux2brVPuxvpm7wmgShdUMWkOAQCsXM.jpg');
