@@ -34,25 +34,32 @@ export class Post {
   userId: number;
   userFullName: string;
   timePeriod: string;
-  content: string;
+  text: string;
   nrOfLikes: number;
   nrOfComments: number;
+  postImage?: {
+    base64Img: string;
+  };
 
   constructor(
     postId: number,
     userId: number,
     userFullName: string,
     timePeriod: string,
-    content: string,
+    text: string,
     nrOfLikes: number,
-    nrOfComments: number
+    nrOfComments: number,
+    postImage?: {
+      base64Img: string;
+    }
   ) {
     this.postId = postId;
     this.userId = userId;
     this.userFullName = userFullName;
     this.timePeriod = timePeriod;
-    this.content = content;
+    this.text = text;
     this.nrOfLikes = nrOfLikes;
     this.nrOfComments = nrOfComments;
+    this.postImage = postImage;
   }
 }

@@ -77,9 +77,10 @@
               <mat-card-subtitle>{{ post.timePeriod }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-              <p>
-                {{ post.content }}
-              </p>
+              <p>{{ post.text }}</p>
+              <div class="post-image-container" *ngIf="post.postImage">
+                <img [src]="post.postImage?.base64Img" alt="Post Image" class="img" />
+              </div>
             </mat-card-content>
             <mat-card-actions>
               <button (click)="onLike(post.postId)" aria-label="Like" mat-icon-button matTooltip="Like"
@@ -94,6 +95,7 @@
               </button>
             </mat-card-actions>
           </div>
+          
         </div>
       </main>
       <footer class="footer">
