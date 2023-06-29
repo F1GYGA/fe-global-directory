@@ -24,6 +24,10 @@ const routes: Routes = [
     component: ForgotPasswordComponent,
     canActivate: [NoAuthGuard],
   },
+  { path: 'search-colleagues',
+   component: SearchColleaguesComponent, 
+   canActivate: [AuthGuard] 
+  },
   {
     path: 'reset-password',
     component: ResetPasswordComponent,
@@ -37,6 +41,7 @@ const routes: Routes = [
   },
   { path: '', component: NewsfeedComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login' },
+
 ];
 
 @NgModule({

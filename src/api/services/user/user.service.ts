@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RegistrationRequest, User } from '../../types/user';
+import { UserFilterResult } from 'src/app/search-page/search-colleagues/search-colleagues.component';
+
 
 @Injectable({
   providedIn: 'root',
@@ -60,4 +62,17 @@ export class UserService {
       params: { uid: id.toString() },
     });
   }
+
+  getFilteredUsers(filter:string,size:number,offset:number):Observable<UserFilterResult>{
+
+      const params = new HttpParams()
+      .set('dataSearch', filter)
+      .set('size', size.toString())
+      .set('offset', offset.toString());
+
+      return this.http.get<UserFilterResult>(`${this.apiUrl}/getSearch`,{ params });
+      
+  } 
+
 }
+
