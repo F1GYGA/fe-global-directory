@@ -5,7 +5,7 @@
         <input (keyup)="applyUsersSearch($event)" matInput placeholder="Search...">
       </mat-form-field>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content *ngIf="!isLoading">
       <div class="card-content">
         <div class="table-container">
           <table #usersSort="matSort" (matSortChange)="announceSortChange($event)"
@@ -55,6 +55,14 @@
         </div>
       </div>
     </mat-card-content>
+    <div *ngIf="isLoading" class="table-center-container">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading && usersDataSource.data.length === 0" class="table-center-container">
+      <mat-icon class="no-data-icon" svgIcon="no-data"></mat-icon>
+      <div class="no-data-text">No data found!</div>
+    </div>
+    <div></div>
   </div>
   <mat-paginator #usersPaginator (page)="onPaginatorChange($event); onPageChange($event);"
                  [pageIndex]="pageIndex"

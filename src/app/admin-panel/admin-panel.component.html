@@ -10,16 +10,13 @@
               <mat-tab>
                 <ng-template mat-tab-label>Registration Requests</ng-template>
                 <ng-template matTabContent>
-                  <app-registration-requests-table (refreshData)="loadDataBasedOnTab(selectedTabIndex)"
-                                                   *ngIf="!isLoading"
-                                                   [setLoadingState]="setLoadingState.bind(this)"
-                                                   [userColumns]="registrationRequestsColumns"
-                                                   [usersDataSource]="registrationRequestsDataSource"
-                                                   class="table-wrapper" identifier="registrationRequests">
+                  <app-registration-requests-table
+                    (refreshData)="loadDataBasedOnTab(selectedTabIndex)"
+                    [isLoading]="isLoading"
+                    [userColumns]="registrationRequestsColumns"
+                    [usersDataSource]="registrationRequestsDataSource"
+                    class="table-wrapper" identifier="registrationRequests">
                   </app-registration-requests-table>
-                  <div *ngIf="isLoading" class="loading-container">
-                    <mat-spinner></mat-spinner>
-                  </div>
                 </ng-template>
               </mat-tab>
               <mat-tab>
@@ -27,32 +24,25 @@
                 <ng-template matTabContent>
                   <app-users-table
                     (refreshData)="loadDataBasedOnTab(selectedTabIndex)"
-                    *ngIf="!isLoading"
                     [activeUsers]="true"
-                    [setLoadingState]="setLoadingState.bind(this)"
+                    [isLoading]="isLoading"
                     [userColumns]="userColumns"
                     [usersDataSource]="activeUsersDataSource"
                     class="table-wrapper" identifier="activeUsers">
                   </app-users-table>
-                  <div *ngIf="isLoading" class="loading-container">
-                    <mat-spinner></mat-spinner>
-                  </div>
                 </ng-template>
               </mat-tab>
               <mat-tab>
                 <ng-template mat-tab-label>Inactive Users</ng-template>
                 <ng-template matTabContent>
-                  <app-users-table (refreshData)="loadDataBasedOnTab(selectedTabIndex)"
-                                   *ngIf="!isLoading"
-                                   [activeUsers]="false"
-                                   [setLoadingState]="setLoadingState.bind(this)"
-                                   [userColumns]="userColumns"
-                                   [usersDataSource]="inactiveUsersDataSource"
-                                   class="table-wrapper" identifier="inactiveUsers">
+                  <app-users-table
+                    (refreshData)="loadDataBasedOnTab(selectedTabIndex)"
+                    [activeUsers]="false"
+                    [isLoading]="isLoading"
+                    [userColumns]="userColumns"
+                    [usersDataSource]="inactiveUsersDataSource"
+                    class="table-wrapper" identifier="inactiveUsers">
                   </app-users-table>
-                  <div *ngIf="isLoading" class="loading-container">
-                    <mat-spinner></mat-spinner>
-                  </div>
                 </ng-template>
               </mat-tab>
             </mat-tab-group>

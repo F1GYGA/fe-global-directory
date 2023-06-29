@@ -47,13 +47,6 @@ export class AdminPanelComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  setLoadingState(state: boolean) {
-    this.isLoading = state;
-    if (!state) {
-      this.loadDataBasedOnTab(this.selectedTabIndex);
-    }
-  }
-
   loadRegistrationRequests() {
     this.isLoading = true;
     this.userService.getRegistrationRequests().subscribe({

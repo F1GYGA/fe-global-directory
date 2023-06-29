@@ -53,8 +53,8 @@ export class AppComponent implements OnDestroy {
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/globe.svg')
     );
     this.matIconRegistry.addSvgIcon(
-      'nodata',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/nodata.svg')
+      'no-data',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/no-data.svg')
     );
   }
 }

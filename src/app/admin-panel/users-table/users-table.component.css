@@ -159,31 +159,33 @@ div.table-container::-webkit-scrollbar-thumb:hover {
   background: rgba(63, 81, 181, 1);
 }
 
-.no-data-container {
+.table-center-container {
+  margin: auto;
+}
+
+.tab-upper-content {
   height: 100%;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+}
+
+.table-center-container .no-data {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
 }
 
 .no-data-icon {
-  width: 200px;
-  height: 215px;
+  width: 150px;
+  height: 138px;
+  filter: grayscale(50%);
 }
 
 .no-data-text {
   font-family: "Roboto", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
   text-align: center;
   color: rgba(0, 0, 0, 0.3);
-}
-
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
 }

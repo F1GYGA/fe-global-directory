@@ -30,7 +30,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   @Input() usersDataSource: MatTableDataSource<User> =
     new MatTableDataSource<User>();
   @Input() userColumns: string[] = [];
-  @Input() setLoadingState?: (state: boolean) => void;
+  @Input() isLoading: boolean = false;
   @Output() refreshData = new EventEmitter<void>();
   @ViewChild('usersPaginator') usersPaginator!: MatPaginator;
   @ViewChild('usersSort') usersSort!: MatSort;
@@ -111,7 +111,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     );
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.setLoadingState?.(true);
+        this.isLoading = true;
         this.userService.activateUser(user.id).subscribe({
           next: (): void => {
             this.refreshData.emit();
@@ -135,7 +135,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
             );
           },
           complete: (): void => {
-            this.setLoadingState?.(false);
+            this.isLoading = false;
           },
         });
       }
@@ -151,7 +151,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     );
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.setLoadingState?.(true);
+        this.isLoading = true;
         this.userService.inactivateUser(user.id).subscribe({
           next: (): void => {
             this.refreshData.emit();
@@ -175,7 +175,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
             );
           },
           complete: (): void => {
-            this.setLoadingState?.(false);
+            this.isLoading = false;
           },
         });
       }
