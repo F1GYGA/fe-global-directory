@@ -97,7 +97,8 @@ section {
 
 
 .example-card {
-  max-width: 400px;
+  width: 1500px;
+  height: 1000px;
   margin: auto;
   margin-bottom: 10px;
   background: rgba(255, 255, 255, 0.7);
@@ -119,7 +120,7 @@ section {
   margin: 10px 0;
   display: flex;
   justify-content: center;
-  height: 200px;
+  height: 700px;
   overflow: hidden;
   position: relative;
 }
@@ -273,4 +274,9 @@ p {
   height: 100%;
   position: absolute;
   object-fit: cover;
+}
+
+.post-text{
+  font-size: 70px;
+  padding-bottom: 20px;
 }
