@@ -10,6 +10,7 @@ import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { NoAuthGuard } from '../guards/no-auth.guard';
 import { AdminRoleGuard } from '../guards/admin-role.guard';
+import { SearchColleaguesComponent } from './search-colleagues/search-colleagues.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -35,6 +36,11 @@ const routes: Routes = [
     canActivate: [AdminRoleGuard],
   },
   { path: '', component: NewsfeedComponent, canActivate: [AuthGuard] },
+  {
+    path: 'search-colleagues',
+    component: SearchColleaguesComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '**', redirectTo: 'login' },
 ];
 

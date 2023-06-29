@@ -43,6 +43,7 @@ import { DatePipe } from '@angular/common';
 import { JwtInterceptor } from '../interceptors/jwt/jwt.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EditProfileDialogComponent } from './about/edit-profile-dialog/edit-profile-dialog.component';
+import { SearchColleaguesComponent } from './search-colleagues/search-colleagues.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { EditProfileDialogComponent } from './about/edit-profile-dialog/edit-pro
     RegistrationRequestsTableComponent,
     NewsfeedComponent,
     EditProfileDialogComponent,
+    SearchColleaguesComponent,
   ],
   imports: [
     BrowserModule,
