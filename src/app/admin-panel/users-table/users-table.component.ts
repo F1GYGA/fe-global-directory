@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from '../../../api/types/user';
@@ -17,6 +17,7 @@ import { DeactivateUserConfirmationDialogComponent } from '../deactivate-user-co
 import { ActivateUserConfirmationDialogComponent } from '../activate-user-confirmation-dialog/activate-user-confirmation-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../../api/services/user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-table',
@@ -24,6 +25,7 @@ import { UserService } from '../../../api/services/user/user.service';
   styleUrls: ['./users-table.component.css'],
 })
 export class UsersTableComponent implements OnInit, AfterViewInit {
+  @Input() identifier!: string;
   @Input() activeUsers: boolean = true;
   @Input() usersDataSource: MatTableDataSource<User> =
     new MatTableDataSource<User>();
@@ -34,19 +36,49 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   @ViewChild('usersSort') usersSort!: MatSort;
 
   profilePhotoPlaceholder: string = '/assets/profile-photo-placeholder.png';
+  rowsPerPage: number = 5;
+  pageIndex: number = 0;
 
   constructor(
+    private router: Router,
     private _liveAnnouncer: LiveAnnouncer,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private userService: UserService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const storedRowsPerPage = localStorage.getItem(
+      `rowsPerPage-${this.identifier}`
+    );
+    if (storedRowsPerPage !== null) {
+      this.rowsPerPage = +storedRowsPerPage;
+    }
+    const storedPageIndex = localStorage.getItem(
+      `pageIndex-${this.identifier}`
+    );
+    if (storedPageIndex !== null) {
+      this.pageIndex = +storedPageIndex;
+    }
+  }
 
   ngAfterViewInit() {
     this.usersDataSource.paginator = this.usersPaginator;
     this.usersDataSource.sort = this.usersSort;
+  }
+
+  onPaginatorChange(event: PageEvent) {
+    localStorage.setItem(
+      `rowsPerPage-${this.identifier}`,
+      event.pageSize.toString()
+    );
+  }
+
+  onPageChange(event: PageEvent) {
+    localStorage.setItem(
+      `pageIndex-${this.identifier}`,
+      event.pageIndex.toString()
+    );
   }
 
   applyUsersSearch(event: Event) {
@@ -67,7 +99,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   }
 
   viewUser(user: User) {
-    alert(`View ${user.email}`);
+    this.router.navigate(['about', user.id]);
   }
 
   activateUser(user: User) {

@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { RegistrationRequest, User } from '../../../api/types/user';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -44,6 +44,7 @@ import { DatePipe } from '@angular/common';
 export class RegistrationRequestsTableComponent
   implements OnInit, AfterViewInit
 {
+  @Input() identifier!: string;
   @Input() usersDataSource: MatTableDataSource<RegistrationRequest> =
     new MatTableDataSource<RegistrationRequest>();
   @Input() userColumns: string[] = [];
@@ -55,6 +56,8 @@ export class RegistrationRequestsTableComponent
 
   expandedElement: RegistrationRequest | null = null;
   profilePhotoPlaceholder: string = '/assets/profile-photo-placeholder.png';
+  rowsPerPage = 5;
+  pageIndex: number = 0;
 
   constructor(
     private datePipe: DatePipe,
@@ -77,11 +80,38 @@ export class RegistrationRequestsTableComponent
     this.expandedElement = this.expandedElement === element ? null : element;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const storedRowsPerPage = localStorage.getItem(
+      `rowsPerPage-${this.identifier}`
+    );
+    if (storedRowsPerPage !== null) {
+      this.rowsPerPage = +storedRowsPerPage;
+    }
+    const storedPageIndex = localStorage.getItem(
+      `pageIndex-${this.identifier}`
+    );
+    if (storedPageIndex !== null) {
+      this.pageIndex = +storedPageIndex;
+    }
+  }
 
   ngAfterViewInit() {
     this.usersDataSource.paginator = this.registrationRequestsPaginator;
     this.usersDataSource.sort = this.registrationRequestsSort;
+  }
+
+  onPaginatorChange(event: PageEvent) {
+    localStorage.setItem(
+      `rowsPerPage-${this.identifier}`,
+      event.pageSize.toString()
+    );
+  }
+
+  onPageChange(event: PageEvent) {
+    localStorage.setItem(
+      `pageIndex-${this.identifier}`,
+      event.pageIndex.toString()
+    );
   }
 
   applyRegistrationRequestsSearch(event: Event) {

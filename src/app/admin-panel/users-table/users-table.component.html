@@ -56,6 +56,8 @@
       </div>
     </mat-card-content>
   </div>
-  <mat-paginator #usersPaginator [pageSizeOptions]="[5, 25, 50, 100]" class="tab-lower-content"
+  <mat-paginator #usersPaginator (page)="onPaginatorChange($event); onPageChange($event);"
+                 [pageIndex]="pageIndex"
+                 [pageSizeOptions]="[5, 25, 50, 100]" [pageSize]="rowsPerPage" class="tab-lower-content"
                  showFirstLastButtons></mat-paginator>
 </ng-container>

@@ -42,12 +42,17 @@ export class AuthService {
 
   getUserId(): number | null {
     const userId = localStorage.getItem('userId');
-    return userId ? parseInt(userId, 10) : null;
+    return userId ? Number(userId) : null;
   }
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    return token !== null && !this.jwtService.isTokenExpired(token);
+    if (token && this.jwtService.isTokenExpired(token)) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      return false;
+    }
+    return token !== null;
   }
 
   getUserRoles(): string[] | null {
@@ -130,9 +135,11 @@ export class AuthService {
     return this.http.post<any>(`http://localhost:8080/sendEmail`, { email });
   }
 
-  resetPassword(resetPasswordData: ResetPasswordFormData, token: string): Observable<void> {
+  resetPassword(
+    resetPasswordData: ResetPasswordFormData,
+    token: string
+  ): Observable<void> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    console.log(headers);
     return this.http.patch<void>(
       `http://localhost:8080/reset`,
       resetPasswordData,

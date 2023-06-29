@@ -4,31 +4,142 @@
       <div class="empty-container"></div>
       <main class="main-container" role="main">
         <div class="about-container">
-          <mat-card class="example-card" *ngIf="currentUser">
-            <mat-card-header>
-              <div mat-card-avatar class="example-header-image">
-                <img [src]="currentUser.profileImage ? currentUser.profileImage.imageEncoded : profilePhotoPlaceholder" alt="Profile Photo">
-              </div>
-              <mat-card-title>{{ currentUser.firstName }} {{ currentUser.lastName }}</mat-card-title>
-              <mat-card-subtitle>{{ currentUser.department }}</mat-card-subtitle>
-              <mat-card-subtitle>{{ currentUser.team }}</mat-card-subtitle>
-              <mat-card-subtitle>{{ currentUser.jobTitle }}</mat-card-subtitle>
-              <mat-card-subtitle>{{ currentUser.email }}</mat-card-subtitle>
-              <!-- <mat-card-subtitle>
-                {{ currentUser.description }}
-              </mat-card-subtitle> -->
-            </mat-card-header>
+          <mat-card>
             <mat-card-content>
-              <!-- ... -->
+              <ng-container *ngIf="!isLoading">
+                <div class="edit-content">
+                  <ng-container *ngIf="isAuthenticatedUser">
+                    <button (click)="onEdit()" aria-label="Edit Profile"
+                            class="edit-icon-button" mat-icon-button>
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button (click)="onEdit()" aria-label="Edit Profile" class="edit-button"
+                            mat-button>
+                      <mat-icon>edit</mat-icon>
+                      <span
+                        class="edit-button-text">EDIT PROFILE</span>
+                    </button>
+                  </ng-container>
+                </div>
+                <div class="info-container">
+                  <div class="top-content">
+                    <div class="avatar-container">
+                      <img [draggable]="false"
+                           [src]="user.profileImage ? user.profileImage.imageEncoded : profilePhotoPlaceholder"
+                           alt="Profile Photo">
+                    </div>
+                    <div class="name-email">
+                      <div class="activity-chip">
+                        <mat-chip-list selectable="false">
+                          <mat-chip *ngIf="!user.active" aria-label="Inactive Account" class="inactive">
+                            Inactive
+                          </mat-chip>
+                          <mat-chip *ngIf="user.active" aria-label="Active Account" class="active">
+                            Active
+                          </mat-chip>
+                        </mat-chip-list>
+                      </div>
+                      <mat-card-title>{{ user.firstName ? user.firstName : "N/A"  }} {{ user.lastName ? user.lastName : "" }}</mat-card-title>
+                      <mat-card-subtitle>{{ user.email ? user.email : "N/A" }}</mat-card-subtitle>
+                    </div>
+                  </div>
+                  <div class="details-responsive">
+                    <div class="details-content-desktop">
+                      <div class="categories-desktop">
+                        <div class="category-desktop">
+                          <div class="category-title">Department</div>
+                          <div class="category-value">{{user.department ? user.department : "N/A"}}</div>
+                        </div>
+                        <div class="vertical-divider"></div>
+                        <div class="category-desktop">
+                          <div class="category-title">Team</div>
+                          <div
+                            class="category-value">{{user.team ? user.team : "N/A"}}</div>
+                        </div>
+                        <div class="vertical-divider"></div>
+                        <div class="category-desktop">
+                          <div class="category-title">Job title</div>
+                          <div class="category-value">{{user.jobTitle ? user.jobTitle : "N/A"}}</div>
+                        </div>
+                        <div class="vertical-divider"></div>
+                        <div class="category-desktop">
+                          <div class="category-title">Employment date</div>
+                          <div class="category-value">{{formatDate(user.dateOfEmployment)}}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="details-content-mobile">
+                      <div class="description-categories-content-mobile">
+                        <div class="categories-wrapper-mobile">
+                          <div class="category-names-mobile">
+                            <div class="category-title">Department</div>
+                            <div class="category-title">Team</div>
+                            <div class="category-title">Job title</div>
+                            <div class="category-title">Employment date</div>
+                          </div>
+                          <div class="category-values-mobile">
+                            <div class="category-value">{{user.department ? user.department : "N/A"}}</div>
+                            <div class="category-value">{{user.team ? user.team : "N/A"}}</div>
+                            <div class="category-value">{{user.jobTitle ? user.jobTitle : "N/A"}}</div>
+                            <div class="category-value">{{formatDate(user.dateOfEmployment)}}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="category">
+                    <div class="category-title-large">Previous experience</div>
+                    <div>
+                      <ng-container
+                        *ngIf="user.previousExperience && user.previousExperience.length > 0; else noExperience">
+                        <mat-chip-list>
+                          <mat-chip *ngFor="let experience of user.previousExperience" class="custom-chip">
+                            {{ experience }}
+                          </mat-chip>
+                        </mat-chip-list>
+                      </ng-container>
+                      <ng-template #noExperience>
+                        <div class="category-value">N/A</div>
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div class="category">
+                    <div class="category-title-large">Skills</div>
+                    <div>
+                      <ng-container *ngIf="user.skills && user.skills.length > 0; else noSkills">
+                        <mat-chip-list>
+                          <mat-chip *ngFor="let skill of user.skills"
+                                    class="custom-chip">
+                            {{ skill }}
+                          </mat-chip>
+                        </mat-chip-list>
+                      </ng-container>
+                      <ng-template #noSkills>
+                        <div class="category-value">N/A</div>
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div class="category">
+                    <div class="category-title-large">Hobbies</div>
+                    <div>
+                      <ng-container *ngIf="user.hobbies && user.hobbies.length > 0; else noHobbies">
+                        <mat-chip-list>
+                          <mat-chip *ngFor="let hobby of user.hobbies" class="custom-chip">
+                            {{ hobby }}
+                          </mat-chip>
+                        </mat-chip-list>
+                      </ng-container>
+                      <ng-template #noHobbies>
+                        <div class="category-value">N/A</div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <div *ngIf="isLoading" class="loading-container">
+                <mat-spinner></mat-spinner>
+              </div>
             </mat-card-content>
-            <mat-card-actions>
-              <button (click)="onNavigateToLinkedIn()" aria-label="LinkedIn" mat-button matTooltip="LinkedIn" matTooltipPosition="below">
-                <span class="linkedin-button-text">LinkedIn</span>
-              </button>
-              <button mat-button>Git</button>
-              <button mat-button>Mail</button>
-              <button mat-button>Phone</button>
-            </mat-card-actions>
           </mat-card>
         </div>
       </main>

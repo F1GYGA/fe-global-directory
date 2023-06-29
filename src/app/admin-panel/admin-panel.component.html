@@ -5,7 +5,8 @@
       <main class="main-container" role="main">
         <div class="admin-panel-container">
           <mat-card role="table">
-            <mat-tab-group (selectedTabChange)="onTabChanged($event)" mat-align-tabs="center">
+            <mat-tab-group (selectedTabChange)="onTabChanged($event)" [(selectedIndex)]="selectedTabIndex"
+                           mat-align-tabs="center">
               <mat-tab>
                 <ng-template mat-tab-label>Registration Requests</ng-template>
                 <ng-template matTabContent>
@@ -14,7 +15,7 @@
                                                    [setLoadingState]="setLoadingState.bind(this)"
                                                    [userColumns]="registrationRequestsColumns"
                                                    [usersDataSource]="registrationRequestsDataSource"
-                                                   class="table-wrapper">
+                                                   class="table-wrapper" identifier="registrationRequests">
                   </app-registration-requests-table>
                   <div *ngIf="isLoading" class="loading-container">
                     <mat-spinner></mat-spinner>
@@ -31,7 +32,7 @@
                     [setLoadingState]="setLoadingState.bind(this)"
                     [userColumns]="userColumns"
                     [usersDataSource]="activeUsersDataSource"
-                    class="table-wrapper">
+                    class="table-wrapper" identifier="activeUsers">
                   </app-users-table>
                   <div *ngIf="isLoading" class="loading-container">
                     <mat-spinner></mat-spinner>
@@ -47,7 +48,7 @@
                                    [setLoadingState]="setLoadingState.bind(this)"
                                    [userColumns]="userColumns"
                                    [usersDataSource]="inactiveUsersDataSource"
-                                   class="table-wrapper">
+                                   class="table-wrapper" identifier="inactiveUsers">
                   </app-users-table>
                   <div *ngIf="isLoading" class="loading-container">
                     <mat-spinner></mat-spinner>

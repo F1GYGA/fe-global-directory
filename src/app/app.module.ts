@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -40,8 +40,9 @@ import { UserRejectionDialogComponent } from './admin-panel/user-rejection-dialo
 import { RegistrationRequestsTableComponent } from './admin-panel/registration-requests-table/registration-requests-table.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
-import { JwtInterceptor } from '../interceptors/jwt.interceptor';
+import { JwtInterceptor } from '../interceptors/jwt/jwt.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EditProfileDialogComponent } from './about/edit-profile-dialog/edit-profile-dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     UserRejectionDialogComponent,
     RegistrationRequestsTableComponent,
     NewsfeedComponent,
+    EditProfileDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +93,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDialogModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatRippleModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

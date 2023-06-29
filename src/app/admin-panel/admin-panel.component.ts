@@ -129,6 +129,7 @@ export class AdminPanelComponent implements OnInit {
   onTabChanged(event: MatTabChangeEvent) {
     this.selectedTabIndex = event.index;
     this.loadDataBasedOnTab(event.index);
+    localStorage.setItem('selectedTabIndex', event.index.toString());
   }
 
   loadDataBasedOnTab(tabIndex: TabIndexes) {
@@ -146,6 +147,10 @@ export class AdminPanelComponent implements OnInit {
   }
 
   ngOnInit() {
+    const storedTabIndex = localStorage.getItem('selectedTabIndex');
+    if (storedTabIndex !== null) {
+      this.selectedTabIndex = +storedTabIndex;
+    }
     this.loadDataBasedOnTab(this.selectedTabIndex);
     this.breakpointObserver
       .observe(['(max-width: 768px)'])

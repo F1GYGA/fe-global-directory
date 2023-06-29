@@ -71,19 +71,19 @@
                           <div class="category-value">{{user.lastName ? user.lastName : "N/A"}}</div>
                         </div>
                         <div class="category-desktop">
-                          <div class="category-title">Department:</div>
+                          <div class="category-title">Department</div>
                           <div class="category-value">{{user.department ? user.department : "N/A"}}</div>
                         </div>
                         <div class="category-desktop">
-                          <div class="category-title">Team:</div>
+                          <div class="category-title">Team</div>
                           <div class="category-value">{{user.team ? user.team : "N/A"}}</div>
                         </div>
                         <div class="category-desktop">
-                          <div class="category-title">Job Title:</div>
+                          <div class="category-title">Job Title</div>
                           <div class="category-value">{{user.jobTitle ? user.jobTitle : "N/A"}}</div>
                         </div>
                         <div class="category-desktop">
-                          <div class="category-title"> Date of Employment:</div>
+                          <div class="category-title"> Date of Employment</div>
                           <div class="category-value">{{formatDate(user.dateOfEmployment)}}</div>
                         </div>
                       </div>
@@ -92,12 +92,12 @@
                       <div class="description-categories-content-mobile">
                         <div class="categories-wrapper-mobile">
                           <div class="category-names-mobile">
-                            <div>First Name:</div>
-                            <div>Last Name:</div>
-                            <div>Department:</div>
-                            <div>Team:</div>
-                            <div>Job Title:</div>
-                            <div>Date of Employment:</div>
+                            <div class="category-title">First Name</div>
+                            <div class="category-title">Last Name</div>
+                            <div class="category-title">Department</div>
+                            <div class="category-title">Team</div>
+                            <div class="category-title">Job Title</div>
+                            <div class="category-title">Date of Employment</div>
                           </div>
                           <div class="category-values-mobile">
                             <div class="category-value">{{user.firstName ? user.firstName : "N/A"}}</div>
@@ -141,7 +141,8 @@
       </div>
     </mat-card-content>
   </div>
-  <mat-paginator #registrationRequestsPaginator [pageSizeOptions]="[5, 25, 50, 100]"
-                 class="tab-lower-content"
-                 showFirstLastButtons></mat-paginator>
+  <mat-paginator #registrationRequestsPaginator (page)="onPaginatorChange($event); onPageChange($event);"
+                 [pageIndex]="pageIndex"
+                 [pageSizeOptions]="[5, 25, 50, 100]" [pageSize]="rowsPerPage"
+                 class="tab-lower-content" showFirstLastButtons></mat-paginator>
 </ng-container>
