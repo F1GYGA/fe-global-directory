@@ -48,7 +48,7 @@ export class RegistrationRequestsTableComponent
   @Input() usersDataSource: MatTableDataSource<RegistrationRequest> =
     new MatTableDataSource<RegistrationRequest>();
   @Input() userColumns: string[] = [];
-  @Input() setLoadingState?: (state: boolean) => void;
+  @Input() isLoading: boolean = false;
   @Output() refreshData = new EventEmitter<void>();
   @ViewChild('registrationRequestsPaginator')
   registrationRequestsPaginator!: MatPaginator;
@@ -132,7 +132,7 @@ export class RegistrationRequestsTableComponent
   }
 
   approveUser(user: RegistrationRequest) {
-    this.setLoadingState?.(true);
+    this.isLoading = true;
     this.userService.approveUser(user.id).subscribe({
       next: (): void => {
         this.refreshData.emit();
@@ -152,7 +152,7 @@ export class RegistrationRequestsTableComponent
         });
       },
       complete: (): void => {
-        this.setLoadingState?.(false);
+        this.isLoading = false;
       },
     });
   }
@@ -162,7 +162,7 @@ export class RegistrationRequestsTableComponent
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.setLoadingState?.(true);
+        this.isLoading = true;
         const reason = result.reason;
         const description = result.description;
         this.userService.rejectUser(user.id, reason, description).subscribe({
@@ -194,7 +194,7 @@ export class RegistrationRequestsTableComponent
             );
           },
           complete: (): void => {
-            this.setLoadingState?.(false);
+            this.isLoading = false;
           },
         });
       }

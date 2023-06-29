@@ -47,7 +47,7 @@ export class PostService {
         };
       });
     } else {
-      return this.http.post<any>(`${this.apiUrl}`, payload);
+      return this.http.post<any>(`${this.apiUrl}/new`, payload);
     }
   }
 }

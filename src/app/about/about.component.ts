@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/api/types/user';
 import { UserService } from 'src/api/services/user/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../api/services/auth/auth.service';
@@ -21,6 +21,7 @@ export class AboutComponent implements OnInit {
   profilePhotoPlaceholder: string = 'assets/profile-photo-placeholder.png';
 
   constructor(
+    private router: Router,
     private datePipe: DatePipe,
     private route: ActivatedRoute,
     private userService: UserService,
@@ -28,6 +29,40 @@ export class AboutComponent implements OnInit {
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {}
+
+  navigateToPreviousUser(): void {
+    if (this.user && this.user.id) {
+      const previousUserId: number = this.user.id - 1;
+      this.checkAndNavigate(previousUserId, -1);
+    }
+  }
+
+  navigateToNextUser(): void {
+    if (this.user && this.user.id) {
+      const nextUserId: number = this.user.id + 1;
+      this.checkAndNavigate(nextUserId, 1);
+    }
+  }
+
+  checkAndNavigate(userId: number, increment: number): void {
+    this.userService.getUserById(userId).subscribe({
+      next: (userData: User): void => {
+        if (userData.approved && userData.active) {
+          this.router.navigate(['/about', userId]);
+        } else {
+          this.checkAndNavigate(userId + increment, increment);
+        }
+      },
+      error: () => {
+        this.snackBar.open('No more users found.', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: 'error-snackbar',
+        });
+      },
+    });
+  }
 
   formatDate(date: string | null): string {
     if (date) {

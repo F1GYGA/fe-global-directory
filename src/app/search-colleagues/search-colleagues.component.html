@@ -3,15 +3,15 @@
     <div class="page-content">
       <div class="empty-container"></div>
       <main class="main-container" role="main">
-        <div class="login-container">
+        <div class="search-colleagues-container">
           <mat-card role="table">
             <mat-card-header>
               <mat-card-title>
-                <h1>Search a colleague!</h1>
+                <h1>View Colleagues</h1>
               </mat-card-title>
-              <mat-form-field class="filter" class="filter-field">
+              <mat-form-field class="searchbar">
                 <input (keyup)="applyFilter($event)" [formControl]="searchKeywordFilter" matInput
-                       placeholder="You can search by name, department, team...">
+                       placeholder="Search by name, department, team or job">
               </mat-form-field>
             </mat-card-header>
             <mat-card-content>
@@ -23,37 +23,37 @@
                       <th *matHeaderCellDef mat-header-cell>Profile Photo</th>
                       <td *matCellDef="let user" mat-cell>
                         <div class="avatar-container">
-                          <img [src]="user.profilePhotoUrl" alt="Profile Photo" height="40"
-                               width="40">
+                          <img [src]="user.profileImage ? user.profileImage.imageEncoded : profilePhotoPlaceholder"
+                               alt="Profile Photo" height="30"
+                               width="30">
                         </div>
                       </td>
                     </ng-container>
                     <ng-container matColumnDef="firstName">
                       <th *matHeaderCellDef mat-header-cell mat-sort-header>First Name</th>
-                      <td *matCellDef="let user" mat-cell>{{ user.firstName }}</td>
+                      <td *matCellDef="let user" mat-cell>{{ user.firstName ? user.firstName : "N/A" }}</td>
                     </ng-container>
                     <ng-container matColumnDef="lastName">
                       <th *matHeaderCellDef mat-header-cell mat-sort-header>Last Name</th>
-                      <td *matCellDef="let user" mat-cell>{{ user.lastName }}</td>
+                      <td *matCellDef="let user" mat-cell>{{ user.lastName ? user.lastName : "N/A" }}</td>
                     </ng-container>
                     <ng-container matColumnDef="email">
                       <th *matHeaderCellDef mat-header-cell mat-sort-header>Email</th>
-                      <td *matCellDef="let user" mat-cell>{{ user.email }}</td>
+                      <td *matCellDef="let user" mat-cell>{{ user.email ? user.email : "N/A" }}</td>
                     </ng-container>
                     <ng-container matColumnDef="department">
                       <th *matHeaderCellDef mat-header-cell mat-sort-header>Department</th>
-                      <td *matCellDef="let user" mat-cell>{{ user.department }}</td>
+                      <td *matCellDef="let user" mat-cell>{{ user.department ? user.department : "N/A" }}</td>
                     </ng-container>
                     <ng-container matColumnDef="team">
                       <th *matHeaderCellDef mat-header-cell mat-sort-header>Team</th>
-                      <td *matCellDef="let user" mat-cell>{{ user.team }}</td>
+                      <td *matCellDef="let user" mat-cell>{{ user.team ? user.team : "N/A" }}</td>
                     </ng-container>
                     <ng-container matColumnDef="jobTitle">
                       <th *matHeaderCellDef mat-header-cell mat-sort-header>Job Title</th>
-                      <td *matCellDef="let user" mat-cell>{{ user.jobTitle }}</td>
+                      <td *matCellDef="let user" mat-cell>{{ user.jobTitle ? user.jobTitle : "N/A" }}</td>
                     </ng-container>
                     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-                    <!--                    <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>-->
                     <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                   </table>
                 </div>

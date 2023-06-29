@@ -4,6 +4,9 @@
       <div class="empty-container"></div>
       <main class="main-container" role="main">
         <div class="about-container">
+          <button (click)="navigateToPreviousUser()" class="navigation-arrow" mat-icon-button>
+            <mat-icon>chevron_left</mat-icon>
+          </button>
           <mat-card>
             <mat-card-content>
               <ng-container *ngIf="!isLoading">
@@ -141,6 +144,9 @@
               </div>
             </mat-card-content>
           </mat-card>
+          <button (click)="navigateToNextUser()" class="navigation-arrow" mat-icon-button>
+            <mat-icon>chevron_right</mat-icon>
+          </button>
         </div>
       </main>
       <footer class="footer">
