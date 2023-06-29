@@ -13,6 +13,7 @@ import { MyErrorStateMatcher } from '../app.component';
 export class NewsfeedComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
   postImage: string = 'assets/new-post-placeholder.jpeg';
+  profilePhotoPlaceholder: string = '/assets/profile-photo-placeholder.png';
   posts: Post[] = [];
   showPostModal: boolean = false;
   matcher = new MyErrorStateMatcher();
