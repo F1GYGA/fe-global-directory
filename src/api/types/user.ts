@@ -17,6 +17,7 @@ export type RegistrationRequest = {
 };
 
 export type User = {
+  forEach(arg0: (user: any) => void): unknown;
   id: number;
   role: string;
   active: boolean;

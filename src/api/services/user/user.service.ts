@@ -14,6 +14,9 @@ import { UserFilterResult } from '../../../app/search-colleagues/search-colleagu
   providedIn: 'root',
 })
 export class UserService {
+  getUsersByIds(userIds: number[]) {
+    throw new Error('Method not implemented.');
+  }
   getUserProfile() {
     throw new Error('Method not implemented.');
   }

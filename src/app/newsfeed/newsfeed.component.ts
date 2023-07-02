@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../app.component';
 import { UserService } from 'src/api/services/user/user.service';
 import { User } from 'src/api/types/user';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class NewsfeedComponent implements OnInit {
   showPostModal: boolean = false;
   matcher = new MyErrorStateMatcher();
   userId: any;
+  users: { [key: number]: User } = {};
 
   textFormControl = new FormControl('', Validators.required);
   postImageFormControl = new FormControl();
@@ -59,8 +61,16 @@ export class NewsfeedComponent implements OnInit {
   getPosts(): void {
     this.postService.getPosts().subscribe(posts => {
       this.posts = posts;
+      const userIds = this.posts.map(post => post.userId);
+      const userRequests = userIds.map(userId => this.userService.getUserById(userId));
+      forkJoin(userRequests).subscribe((users: User[]) => {
+        users.forEach(user => {
+          this.users[user.id] = user;
+        });
+      });
     });
   }
+  
 
   openPostModal(): void {
     this.showPostModal = true;

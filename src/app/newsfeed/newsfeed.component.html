@@ -69,12 +69,11 @@
             <mat-card-header>
               <div class="avatar-container" mat-card-avatar>
                 <img [draggable]="false"
-                      [src]="userId?.profileImage?.imageEncoded ? userId.profileImage.imageEncoded : profilePhotoPlaceholder"
+                     [src]="users[post.userId]?.profileImage?.imageEncoded ? users[post.userId]?.profileImage?.imageEncoded : profilePhotoPlaceholder"
                      alt="Profile Photo">
               </div>
               <mat-card-title>
-                <button (click)="onNavigateToAboutMe(post.userId)" aria-label="About" mat-button
-                        matTooltip="About Card"
+                <button (click)="onNavigateToAboutMe(post.userId)" aria-label="About" mat-button matTooltip="About Card"
                         matTooltipPosition="below">
                   <span class="about-button-text">{{ post.userFullName }}</span>
                 </button>
