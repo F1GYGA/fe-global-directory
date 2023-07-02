@@ -14,6 +14,9 @@ import { UserFilterResult } from '../../../app/search-colleagues/search-colleagu
   providedIn: 'root',
 })
 export class UserService {
+  getUserProfile() {
+    throw new Error('Method not implemented.');
+  }
   private readonly apiUrl = 'http://localhost:8080/api/users';
 
   constructor(private http: HttpClient) {}

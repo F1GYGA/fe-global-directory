@@ -33,10 +33,12 @@ export class Post {
   postId: number;
   userId: number;
   userFullName: string;
+  profileImage: string | ArrayBuffer;
   timePeriod: string;
   text: string;
   nrOfLikes: number;
   nrOfComments: number;
+  isLikedByCurrentUser: boolean;
   postImage?: {
     base64Img: string;
   };
@@ -45,10 +47,12 @@ export class Post {
     postId: number,
     userId: number,
     userFullName: string,
+    profileImage: string | ArrayBuffer,
     timePeriod: string,
     text: string,
     nrOfLikes: number,
     nrOfComments: number,
+    isLikedByCurrentUser: boolean,
     postImage?: {
       base64Img: string;
     }
@@ -56,10 +60,12 @@ export class Post {
     this.postId = postId;
     this.userId = userId;
     this.userFullName = userFullName;
+    this.profileImage = profileImage;
     this.timePeriod = timePeriod;
     this.text = text;
     this.nrOfLikes = nrOfLikes;
     this.nrOfComments = nrOfComments;
     this.postImage = postImage;
+    this.isLikedByCurrentUser = isLikedByCurrentUser;
   }
 }

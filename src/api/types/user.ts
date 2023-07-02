@@ -1,7 +1,7 @@
 type Image = {
   name: string;
   type: string;
-  imageEncoded: string | ArrayBuffer;
+  imageEncoded?: string | ArrayBuffer;
 };
 
 export type RegistrationRequest = {

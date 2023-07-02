@@ -8,13 +8,24 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class PostService {
+
+  
   private readonly apiUrl = 'http://localhost:8080/api/posts';
+
+  private readonly apiiUrl = 'http://localhost:8080/api/reactions';
 
   constructor(private http: HttpClient) {}
 
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.apiUrl}`);
   }
+
+  likePost(postId: number, userId: number, likeAction: string): Observable<any> {
+    return this.http.post<any>(`${this.apiiUrl}/likes`, { postId, userId, likeAction });
+  }
+  
+  
+  
 
   createPost(formData: PostFormData): Observable<any> {
     const payload: PostPayloadData = {

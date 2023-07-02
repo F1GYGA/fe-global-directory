@@ -69,7 +69,7 @@
             <mat-card-header>
               <div class="avatar-container" mat-card-avatar>
                 <img [draggable]="false"
-                     [src]="profilePhotoPlaceholder"
+                      [src]="userId?.profileImage?.imageEncoded ? userId.profileImage.imageEncoded : profilePhotoPlaceholder"
                      alt="Profile Photo">
               </div>
               <mat-card-title>
@@ -88,7 +88,7 @@
               </div>
             </mat-card-content>
             <mat-card-actions>
-              <button (click)="onLike(post.postId)" aria-label="Like" mat-button matTooltip="Like"
+              <button (click)="onLike(post.userId, post.postId)" aria-label="Like" mat-button matTooltip="Like"
                       matTooltipPosition="below">
                 <mat-icon class="like-icon">thumb_up</mat-icon>
                 <span class="like-button-text">LIKE ({{ post.nrOfLikes }})</span>

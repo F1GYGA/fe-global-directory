@@ -4,6 +4,9 @@ import { Post, PostFormData } from 'src/api/types/post';
 import { PostService } from 'src/api/services/post/post.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../app.component';
+import { UserService } from 'src/api/services/user/user.service';
+import { User } from 'src/api/types/user';
+
 
 @Component({
   selector: 'app-newsfeed',
@@ -17,6 +20,7 @@ export class NewsfeedComponent implements OnInit {
   posts: Post[] = [];
   showPostModal: boolean = false;
   matcher = new MyErrorStateMatcher();
+  userId: any;
 
   textFormControl = new FormControl('', Validators.required);
   postImageFormControl = new FormControl();
@@ -28,12 +32,29 @@ export class NewsfeedComponent implements OnInit {
 
   constructor(
     private postService: PostService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.getPosts();
+
+    this.postService.getPosts().subscribe(
+      (response) => {
+        this.posts = response;
+
+        this.posts.forEach((post) => {
+          post.nrOfLikes = post.nrOfLikes || 0;
+        });
+
+      },
+      (error) => {
+        console.error('Failed to fetch posts:', error);
+      }
+    );
+
   }
+
 
   getPosts(): void {
     this.postService.getPosts().subscribe(posts => {
@@ -85,9 +106,42 @@ export class NewsfeedComponent implements OnInit {
     }
   }
 
-  onLike(postId: number): void {
-    alert('Like clicked for post ID: ' + postId);
+  onLike(userId: number, postId: number): void {
+    const post = this.posts.find((p) => p.postId === postId);
+    if (!post) {
+      return;
+    }
+    const isLiked = post.isLikedByCurrentUser;
+    const likeAction = isLiked ? 'unlike' : 'like';
+    
+    post.isLikedByCurrentUser = !isLiked;
+  
+    this.postService.likePost(postId, userId, likeAction).subscribe(
+      (response) => {
+        // if (response && response.nrOfLikes !== undefined) {
+        //   post.nrOfLikes = response.nrOfLikes;
+        // }
+
+        if (response.message == 'Post unliked successfully') {
+          post.nrOfLikes -= 1;
+        } else {
+          post.nrOfLikes += 1;
+        }
+        console.log(response);
+      },
+      (error) => {
+        console.error('Failed to like/unlike post:', error);
+        this.snackBar.open('Failed to like/unlike post. Please try again.', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: 'error-snackbar',
+        });
+        post.isLikedByCurrentUser = isLiked;
+      }
+    );
   }
+  
 
   onComment(postId: number): void {
     alert('Comment clicked for post ID: ' + postId);
