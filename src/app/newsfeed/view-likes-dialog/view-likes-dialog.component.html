@@ -1,0 +1,33 @@
+<mat-dialog-content class="view-likes-dialog">
+
+  <div class="likes-container">
+    <button (click)="onCloseLikesView()" mat-icon-button matTooltip="Close likes view"
+            matTooltipPosition="left">
+      <mat-icon>close</mat-icon>
+    </button>
+    <ng-container *ngIf="likes && likes.length > 0; else noLikes">
+      <mat-card-title class="center">Likes</mat-card-title>
+      <div class="like-list">
+        <ng-container *ngFor="let like of likes">
+          <div class="user-like">
+            <div class="avatar-container">
+              <img [draggable]="false"
+                   [src]="like.userProfileImage ? like.userProfileImage.base64Img : profilePhotoPlaceholder"
+                   alt="Profile Photo">
+            </div>
+            <div class="user">
+              <mat-card-title>
+                <div (click)="onNavigateToUserProfile(like.userId)" class="view-profile" matTooltip="View Profile"
+                     matTooltipPosition="right">{{ like.userFullName !== "null null" ? like.userFullName : "N/A"}}</div>
+              </mat-card-title>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #noLikes>
+      <mat-card-title>No likes yet.</mat-card-title>
+    </ng-template>
+  </div>
+
+</mat-dialog-content>

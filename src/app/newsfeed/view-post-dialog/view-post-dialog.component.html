@@ -1,0 +1,169 @@
+<mat-dialog-content #postContainer class="view-post-dialog">
+  <div class="post-card">
+    <div class="post-info">
+      <div class="post-user-avatar">
+        <div class="avatar-container">
+          <img [draggable]="false"
+               [src]="data.post.userProfileImage ? data.post.userProfileImage.base64Img : profilePhotoPlaceholder"
+               alt="Profile Photo">
+        </div>
+        <div class="user-time-period">
+          <mat-card-title>
+            <div (click)="onNavigateToUserProfile(data.post.userId)" class="view-profile" matTooltip="View Profile"
+                 matTooltipPosition="below">{{ data.post.userFullName !== "null null" ? data.post.userFullName : "N/A"}}</div>
+          </mat-card-title>
+          <mat-card-subtitle>{{ data.post.timePeriod }}</mat-card-subtitle>
+        </div>
+      </div>
+      <ng-container *ngIf="data.post.userId === authUser?.id || isAdmin; else noMenu">
+        <button [matMenuTriggerFor]="postActions" class="top-post-button" mat-icon-button
+                matTooltip="Actions" matTooltipPosition="below" type="button">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #postActions="matMenu">
+          <button (click)="onClosePostView()" aria-label="Close post view" mat-menu-item>
+            <mat-icon>close</mat-icon>
+            <span>Close</span>
+          </button>
+          <button (click)="onDeletePost(data.post.postId)" *ngIf="data.post.userId === authUser?.id || isAdmin"
+                  aria-label="Delete post" mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </ng-container>
+      <ng-template #noMenu>
+        <button (click)="onClosePostView()" aria-label="Close post view" class="top-post-button" mat-icon-button
+                matTooltip="Close" matTooltipPosition="below" type="button">
+          <mat-icon>close</mat-icon>
+        </button>
+      </ng-template>
+    </div>
+    <p class="post-text">{{ data.post.text }}</p>
+    <div *ngIf="data.post.postImage" class="post-image-background">
+      <div class="post-image-container">
+        <img [draggable]="false" [src]="data.post.postImage.base64Img" alt="Post Image" class="img"/>
+      </div>
+    </div>
+    <div class="likes-comments-container">
+      <div class="likes-comments-number">
+        <mat-icon class="like-comment-icon">thumb_up</mat-icon>
+        <ng-container *ngIf="likedByAuthUser; else defaultLikes">
+          <ng-container *ngIf="data.post.nrOfLikes > 1; else onlyYouLike">
+            Liked by you and {{ data.post.nrOfLikes - 1 }} {{ data.post.nrOfLikes - 1 === 1 ? 'other' : 'others' }}
+          </ng-container>
+          <ng-template #onlyYouLike>Liked by you</ng-template>
+        </ng-container>
+        <ng-template #defaultLikes>
+          {{ data.post.nrOfLikes }} {{ data.post.nrOfLikes === 1 ? 'like' : 'likes' }}
+        </ng-template>
+      </div>
+
+      <div class="likes-comments-number">
+        <mat-icon class="like-comment-icon">comment</mat-icon>
+        {{ data.post.nrOfComments }} {{ data.post.nrOfComments === 1 ? 'comment' : 'comments' }}
+      </div>
+    </div>
+    <div class="bottom-container">
+      <div class="actions-container">
+        <div class="horizontal-divider"></div>
+        <div class="post-action-buttons">
+          <ng-container *ngIf="!likedByAuthUser">
+            <button (click)="onLike()" aria-label="Like" mat-button>
+              <mat-icon
+                class="like-comment-icon not-liked">
+                thumb_up
+              </mat-icon>
+              <span class="like-button-text">Like</span>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="likedByAuthUser">
+            <button (click)="onRemoveLike()" aria-label="Like" mat-button>
+              <mat-icon
+                class="like-comment-icon liked">
+                thumb_up
+              </mat-icon>
+              <span class="like-button-text">Liked</span>
+            </button>
+          </ng-container>
+
+          <button (click)="scrollToCommentInput()" aria-label="View comments" mat-button>
+            <mat-icon class="like-comment-icon">comment</mat-icon>
+            <span class="comment-button-text">Comment</span>
+          </button>
+        </div>
+
+        <div class="comments-container">
+          <div>
+            <div class="horizontal-divider"></div>
+            <div class="comments-content">
+              <div *ngIf="data.post.comments.length > 0" class="comments-list">
+                <ng-container *ngFor="let comment of data.post.comments">
+                  <div *ngIf="comment.userId === data.authUser?.id" class="comment-wrapper auth-user-comment">
+                    <ng-container *ngIf="comment.userId === data.authUser?.id || data.isAdmin">
+                      <button (click)="onDeleteComment(comment.id)" class="delete-comment-button" mat-icon-button
+                              matTooltip="Delete comment" matTooltipPosition="below">
+                        <mat-icon>delete_forever</mat-icon>
+                      </button>
+                    </ng-container>
+                    <app-auth-user-comment [comment]="comment"></app-auth-user-comment>
+                  </div>
+                  <div *ngIf="comment.userId !== data.authUser?.id" class="comment-wrapper">
+                    <app-comment [comment]="comment"></app-comment>
+                    <ng-container *ngIf="comment.userId === data.authUser?.id || data.isAdmin">
+                      <button (click)="onDeleteComment(comment.id)" class="delete-comment-button" mat-icon-button
+                              matTooltip="Delete comment" matTooltipPosition="below">
+                        <mat-icon>delete_forever</mat-icon>
+                      </button>
+                    </ng-container>
+                  </div>
+                  <!--                  <div class="comment-wrapper">-->
+                  <!--                    <app-comment [comment]="comment"></app-comment>-->
+                  <!--                    <ng-container *ngIf="comment.userId === data.authUser?.id || data.isAdmin">-->
+                  <!--                      <button (click)="data.onDeleteComment(comment.id)" class="delete-comment-button" mat-icon-button-->
+                  <!--                              matTooltip="Delete comment" matTooltipPosition="below">-->
+                  <!--                        <mat-icon>delete_forever</mat-icon>-->
+                  <!--                      </button>-->
+                  <!--                    </ng-container>-->
+                  <!--                  </div>-->
+                </ng-container>
+              </div>
+              <ng-container>
+                <div class="comment-container">
+                  <div class="new-comment-avatar-container">
+                    <img [draggable]="false"
+                         [src]="data.authUser?.profileImage ? data.authUser?.profileImage?.imageEncoded : profilePhotoPlaceholder"
+                         alt="Profile Photo">
+                  </div>
+                  <div class="comment-content">
+                    <textarea #newCommentInput
+                              (input)="onCommentInputChange()"
+                              [errorStateMatcher]="matcher"
+                              [formControl]="commentFormControl"
+                              aria-label="Post Description"
+                              aria-required="true"
+                              cdkAutosizeMaxRows="5"
+                              cdkAutosizeMinRows="1"
+                              cdkTextareaAutosize
+                              class="description-textarea"
+                              matInput
+                              matTextareaAutosize
+                              maxlength="1000"
+                              placeholder="Write a new comment..."
+                    ></textarea>
+                    <div class="comment-content-bottom">
+                      <div class="character-counter">{{currentCharacterCount}}/{{maxCharacterCount}}</div>
+                      <mat-icon (click)="onComment()" class="send-icon" matTooltip="Send comment"
+                                matTooltipPosition="above">send
+                      </mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

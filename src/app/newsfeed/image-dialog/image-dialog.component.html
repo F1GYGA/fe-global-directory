@@ -1,0 +1,7 @@
+<div *ngIf="data.image" class="fullscreeen-image-dialog">
+  <img [draggable]="false" [src]="data.image" alt="Post Image">
+  <button (click)="onCloseImageView()" mat-icon-button matTooltip="Clear Image"
+          matTooltipPosition="below">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

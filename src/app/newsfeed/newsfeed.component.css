@@ -38,6 +38,9 @@
 
 .newsfeed-container {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .footer {
@@ -54,146 +57,146 @@
   opacity: 0.8;
 }
 
-mat-card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(100px);
-  margin: auto;
-  max-height: 900px;
-  max-width: 600px;
-  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
+.modal-closed {
+  margin-bottom: 0;
+}
+
+.modal-open {
   margin-bottom: 10px;
 }
 
-section {
-  display: table;
-  margin: auto;
-}
-
-.mat-card-actions {
-  margin: auto;
-}
-
-.mat-card-avatar {
-  width: 80px;
-  height: 80px;
-}
-
-.mat-card-title {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.mat-card-subtitle {
-  padding-left: 16px;
-}
-
-
-.example-card {
-  width: 1500px;
-  height: 1000px;
-  margin: auto;
+.new-post-button-container {
   margin-bottom: 10px;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(100px);
-  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  overflow: hidden;
-  padding: 25px;
-}
-
-.example-card .card-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.example-card .post-image-container {
-  margin: 10px 0;
-  display: flex;
-  justify-content: center;
-  height: 700px;
-  overflow: hidden;
-  position: relative;
-}
-
-.example-card .post-image-container img {
-  width: 100%;
-  object-fit: contain;
-  border-radius: 5px;
-}
-
-.example-card .card-actions {
-  /* Stil pt like si comment to be implement */
-  /* margin-top: 10px;  */
-}
-
-.avatar-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-}
-
-.avatar-container img {
-  height: 75px;
-  width: 75px;
-  object-fit: cover;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.mat-icon-button {
-  width: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.like-icon {
-  color: #3e51b5;
-  padding-right: 8px;
-}
-
-.comment-icon {
-  color: #3e51b5;
-  padding-right: 8px;
-}
-
-
-.about-button-text {
-  font-size: 20px;
-}
-
-.mat-card-image {
-  border-radius: 15px;
-  width: 400px;
-  margin: auto;
-  margin-top: 9px;
-  margin-bottom: 25px;
-}
-
-p {
-  text-align: center;
 }
 
 .new-post-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.mat-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(100px);
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: auto;
+}
+
+.upper-content {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.form-container {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  padding: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f5f5f5;
+  gap: 10px;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  max-width: 100%;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 500px;
+  margin: 0 auto;
+  object-fit: contain;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-container:hover .overlay {
+  opacity: 1;
+}
+
+.image-container button {
+  width: 44px;
+  height: 44px;
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.hidden {
+  display: none;
+}
+
+.image-container button:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.description-textarea::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.description-textarea::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.description-textarea::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.description-textarea::-webkit-scrollbar-thumb {
+  background: rgba(63, 81, 181, 0.75);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.description-textarea::-webkit-scrollbar-thumb:hover {
+  background: rgba(63, 81, 181, 1);
+}
+
+.posts-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.full-width-container {
+  width: 100%;
 }
 
 .new-post-textarea {
   flex: 1;
   min-height: 100px;
-  padding: 8px;
+  padding: 10px;
   margin-bottom: 8px;
   resize: none;
   border: 1px solid #ccc;
@@ -201,46 +204,16 @@ p {
   font-size: 14px;
 }
 
-.new-post-button {
-  align-self: flex-end;
-}
-
-.create-post-button-container {
+.new-post-button-container {
   display: flex;
   justify-content: center;
 }
 
-.create-post-button {
-  margin-bottom: 10px;
-}
-
-.post-modal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.post-modal .mat-form-field {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.post-modal .buttons-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  width: 100%;
-}
-
-
-.post-modal .buttons-container button {
-  margin-left: 10px;
-}
-
 .whats-new-container {
+  width: 100%;
   font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: center;
 }
 
 .post-modal-buttons {
@@ -249,37 +222,4 @@ p {
   flex-direction: row;
   justify-content: center;
   gap: 10px;
-}
-
-.photo-container {
-  margin: 0 auto 20px auto;
-  width: 100%;
-  height: 100px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-}
-
-.image-container {
-  width: 100%;
-  height: 100px;
-  border-radius: 12px;
-  position: relative;
-  cursor: pointer;
-}
-
-.img {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  object-fit: cover;
-}
-
-.post-text {
-  font-size: 70px;
-  line-height: 70px;
 }

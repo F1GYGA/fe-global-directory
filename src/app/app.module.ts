@@ -44,6 +44,12 @@ import { JwtInterceptor } from '../interceptors/jwt/jwt.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EditProfileDialogComponent } from './about/edit-profile-dialog/edit-profile-dialog.component';
 import { SearchColleaguesComponent } from './search-colleagues/search-colleagues.component';
+import { PostCardComponent } from './newsfeed/post-card/post-card.component';
+import { CommentComponent } from './newsfeed/comment/comment.component';
+import { ViewPostDialogComponent } from './newsfeed/view-post-dialog/view-post-dialog.component';
+import { ImageDialogComponent } from './newsfeed/image-dialog/image-dialog.component';
+import { AuthUserCommentComponent } from './newsfeed/auth-user-comment/auth-user-comment.component';
+import { ViewLikesDialogComponent } from './newsfeed/view-likes-dialog/view-likes-dialog.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +70,12 @@ import { SearchColleaguesComponent } from './search-colleagues/search-colleagues
     NewsfeedComponent,
     EditProfileDialogComponent,
     SearchColleaguesComponent,
+    PostCardComponent,
+    CommentComponent,
+    ViewPostDialogComponent,
+    ImageDialogComponent,
+    AuthUserCommentComponent,
+    ViewLikesDialogComponent,
   ],
   imports: [
     BrowserModule,
