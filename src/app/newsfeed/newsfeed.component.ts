@@ -7,6 +7,7 @@ import { MyErrorStateMatcher } from '../app.component';
 import { UserService } from 'src/api/services/user/user.service';
 import { User } from 'src/api/types/user';
 import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class NewsfeedComponent implements OnInit {
   constructor(
     private postService: PostService,
     private snackBar: MatSnackBar,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -158,7 +160,7 @@ export class NewsfeedComponent implements OnInit {
   }
 
   onNavigateToAboutMe(userId: number): void {
-    alert('Navigate to About Me clicked for user ID: ' + userId);
+    this.router.navigate(['/about', userId]);
   }
 
   onFileUpload(event: Event) {

@@ -68,15 +68,17 @@
           <div *ngFor="let post of posts" class="example-card">
             <mat-card-header>
               <div class="avatar-container" mat-card-avatar>
+                <a [routerLink]="['/about', post.userId]">
                 <img [draggable]="false"
                      [src]="users[post.userId]?.profileImage?.imageEncoded ? users[post.userId]?.profileImage?.imageEncoded : profilePhotoPlaceholder"
                      alt="Profile Photo">
+                </a>
               </div>
               <mat-card-title>
-                <button (click)="onNavigateToAboutMe(post.userId)" aria-label="About" mat-button matTooltip="About Card"
-                        matTooltipPosition="below">
+                <button [routerLink]="['/about', post.userId]" aria-label="About" mat-button matTooltip="About Card" matTooltipPosition="below">
                   <span class="about-button-text">{{ post.userFullName }}</span>
                 </button>
+                
               </mat-card-title>
               <mat-card-subtitle>{{ post.timePeriod }}</mat-card-subtitle>
             </mat-card-header>
