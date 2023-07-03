@@ -1,0 +1,163 @@
+<mat-card class="post-card">
+  <mat-card-content>
+    <div class="post-info">
+      <div class="post-user-avatar">
+        <div class="avatar-container">
+          <img [draggable]="false"
+               [src]="post.userProfileImage ? post.userProfileImage.base64Img : profilePhotoPlaceholder"
+               alt="Profile Photo">
+        </div>
+        <div class="user-time-period">
+          <mat-card-title>
+            <div (click)="onNavigateToUserProfile(post.userId)" class="view-profile" matTooltip="View Profile"
+                 matTooltipPosition="below">{{ post.userFullName !== "null null" ? post.userFullName : "N/A"}}</div>
+          </mat-card-title>
+          <mat-card-subtitle>{{ post.timePeriod }}</mat-card-subtitle>
+        </div>
+      </div>
+      <ng-container *ngIf="post.userId === authUser?.id || isAdmin">
+        <button [matMenuTriggerFor]="postActions" class="actions-post-button" mat-icon-button
+                matTooltip="Actions" matTooltipPosition="below" type="button">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #postActions="matMenu">
+          <button (click)="onDeletePost(post.postId)" *ngIf="post.userId === authUser?.id || isAdmin"
+                  aria-label="Delete post" mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </ng-container>
+    </div>
+    <p class="post-text">{{ post.text }}</p>
+    <div *ngIf="post.postImage" class="post-image-background">
+      <div class="post-image-container">
+        <img [draggable]="false" [src]="post.postImage.base64Img" alt="Post Image"
+             class="img"/>
+        <div (click)="openImageDialog(post)" class="overlay">
+          <mat-icon>zoom_out_map</mat-icon>
+          Expand Image
+        </div>
+      </div>
+    </div>
+    <div class="likes-comments-container">
+      <div class="likes-comments-number">
+        <mat-icon class="like-comment-icon">thumb_up</mat-icon>
+        <div (click)="openViewLikesDialog()" class="count">
+          <ng-container *ngIf="likedByAuthUser; else defaultLikes">
+            <ng-container *ngIf="post.nrOfLikes > 1; else onlyYouLike">
+              Liked by you and {{ post.nrOfLikes - 1 }} {{ post.nrOfLikes - 1 === 1 ? 'other' : 'others' }}
+            </ng-container>
+            <ng-template #onlyYouLike>Liked by you</ng-template>
+          </ng-container>
+          <ng-template #defaultLikes>
+            {{ post.nrOfLikes }} {{ post.nrOfLikes === 1 ? 'like' : 'likes' }}
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="likes-comments-number">
+        <mat-icon class="like-comment-icon">comment</mat-icon>
+        <div (click)="openViewPostDialog(post)"
+             class="count">{{ post.nrOfComments }} {{ post.nrOfComments === 1 ? 'comment' : 'comments' }}</div>
+      </div>
+    </div>
+    <div class="bottom-container">
+      <div class="actions-container">
+        <div class="horizontal-divider"></div>
+        <div class="post-action-buttons">
+          <ng-container *ngIf="!likedByAuthUser">
+            <button (click)="onLike()" aria-label="Like" mat-button>
+              <mat-icon
+                class="like-comment-icon not-liked">
+                thumb_up
+              </mat-icon>
+              <span class="like-button-text">Like</span>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="likedByAuthUser">
+            <button (click)="onRemoveLike()" aria-label="Like" mat-button>
+              <mat-icon
+                class="like-comment-icon liked">
+                thumb_up
+              </mat-icon>
+              <span class="like-button-text">Liked</span>
+            </button>
+          </ng-container>
+
+          <button (click)="openNewCommentForm()" aria-label="View comments" mat-button>
+            <mat-icon class="like-comment-icon">comment</mat-icon>
+            <span class="comment-button-text">Comment</span>
+          </button>
+        </div>
+
+        <div [@detailOpen]="commentsViewState" class="comments-container">
+          <div>
+            <div class="horizontal-divider"></div>
+            <div class="comments-content">
+              <div *ngIf="post.comments.length > 0" class="comments-list">
+                <ng-container *ngFor="let comment of post.comments | slice: -3">
+                  <div *ngIf="comment.userId === authUser?.id" class="comment-wrapper auth-user-comment">
+                    <ng-container *ngIf="comment.userId === authUser?.id || isAdmin">
+                      <button (click)="onDeleteComment(comment.id)" class="delete-comment-button" mat-icon-button
+                              matTooltip="Delete comment" matTooltipPosition="below">
+                        <mat-icon>delete_forever</mat-icon>
+                      </button>
+                    </ng-container>
+                    <app-auth-user-comment [comment]="comment"></app-auth-user-comment>
+                  </div>
+                  <div *ngIf="comment.userId !== authUser?.id" class="comment-wrapper">
+                    <app-comment [comment]="comment"></app-comment>
+                    <ng-container *ngIf="comment.userId === authUser?.id || isAdmin">
+                      <button (click)="onDeleteComment(comment.id)" class="delete-comment-button" mat-icon-button
+                              matTooltip="Delete comment" matTooltipPosition="below">
+                        <mat-icon>delete_forever</mat-icon>
+                      </button>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </div>
+              <div *ngIf="post.comments.length > 3" class="view-more-button-container">
+                <div (click)="openViewPostDialog(post)" class="view-more-button">View all comments</div>
+              </div>
+              <ng-container>
+                <div class="comment-container">
+                  <div class="new-comment-avatar-container">
+                    <img [draggable]="false"
+                         [src]="authUser?.profileImage ? authUser?.profileImage?.imageEncoded : profilePhotoPlaceholder"
+                         alt="Profile Photo">
+                  </div>
+                  <div class="comment-content">
+                    <textarea
+                      (input)="onCommentInputChange()"
+                      [errorStateMatcher]="matcher"
+                      [formControl]="commentFormControl"
+                      aria-label="Post Description"
+                      aria-required="true"
+                      cdkAutosizeMaxRows="5"
+                      cdkAutosizeMinRows="1"
+                      cdkTextareaAutosize
+                      class="description-textarea"
+                      matInput
+                      matTextareaAutosize
+                      maxlength="1000"
+                      placeholder="Write a new comment..."
+                    ></textarea>
+                    <div class="comment-content-bottom">
+                      <div class="character-counter">{{currentCharacterCount}}/{{maxCharacterCount}}</div>
+                      <mat-icon (click)="onComment()" class="send-icon" matTooltip="Send comment"
+                                matTooltipPosition="above">send
+                      </mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+

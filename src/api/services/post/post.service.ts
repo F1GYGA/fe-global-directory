@@ -16,6 +16,10 @@ export class PostService {
     return this.http.get<Post[]>(`${this.apiUrl}`);
   }
 
+  deletePost(id: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`);
+  }
+
   createPost(formData: PostFormData): Observable<any> {
     const payload: PostPayloadData = {
       text: formData.text,

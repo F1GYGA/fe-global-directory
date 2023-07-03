@@ -4,103 +4,87 @@
       <div class="empty-container"></div>
       <main class="main-container" role="main">
         <div class="newsfeed-container">
-          <div class="create-post-button-container">
-            <button (click)="openPostModal()" class="create-post-button" color="primary" mat-raised-button>Create Post
-            </button>
-          </div>
-          <div *ngIf="showPostModal" class="post-modal">
-            <mat-card>
-              <mat-card-content>
-                <form
-                  (ngSubmit)="sharePost()"
-                  [formGroup]="newPostForm"
-                  aria-label="New Post Form"
-                  class="form-container">
-                  <div class="photo-container">
-                    <div (click)="fileInput.click()" class="image-container">
-                      <img
-                        [draggable]="false"
-                        [src]="postImage"
-                        alt="Post Image"
-                        class="img"/>
-                    </div>
-                    <input
-                      #fileInput
-                      (change)="onFileUpload($event)"
-                      accept="image/*"
-                      aria-label="Post Image"
-                      hidden
-                      type="file"/>
-                  </div>
-                  <mat-form-field appearance="fill">
-                    <mat-label>Text</mat-label>
-                    <textarea
-                      [formControl]="textFormControl"
-                      aria-label="Text"
-                      aria-required="true"
-                      matInput
-                      rows="5"></textarea>
-                    <mat-error
-                      *ngIf="textFormControl.hasError('required')">
-                      Text is required
-                    </mat-error>
-                  </mat-form-field>
-                  <div class="post-modal-buttons">
-                    <button (click)="clearPostForm()" color="warn" mat-flat-button>Cancel</button>
-                    <button
-                      aria-label="Share Post"
-                      class="submit-button"
-                      color="primary"
-                      mat-flat-button
-                      type="submit">
-                      Share
-                    </button>
-                  </div>
-                </form>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <mat-card>
-            <mat-card-content>
-              <p class="whats-new-container">What's New?</p>
-            </mat-card-content>
-          </mat-card>
-          <div *ngFor="let post of posts" class="example-card">
-            <mat-card-header>
-              <div class="avatar-container" mat-card-avatar>
-                <img [draggable]="false"
-                     [src]="profilePhotoPlaceholder"
-                     alt="Profile Photo">
-              </div>
-              <mat-card-title>
-                <button (click)="onNavigateToAboutMe(post.userId)" aria-label="About" mat-button
-                        matTooltip="About Card"
-                        matTooltipPosition="below">
-                  <span class="about-button-text">{{ post.userFullName }}</span>
-                </button>
-              </mat-card-title>
-              <mat-card-subtitle>{{ post.timePeriod }}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <p class="post-text">{{ post.text }}</p>
-              <div *ngIf="post.postImage" class="post-image-container">
-                <img [src]="post.postImage.base64Img" alt="Post Image" class="img"/>
-              </div>
-            </mat-card-content>
-            <mat-card-actions>
-              <button (click)="onLike(post.postId)" aria-label="Like" mat-button matTooltip="Like"
-                      matTooltipPosition="below">
-                <mat-icon class="like-icon">thumb_up</mat-icon>
-                <span class="like-button-text">LIKE ({{ post.nrOfLikes }})</span>
+          <div class="upper-content">
+            <div class="new-post-button-container">
+              <button (click)="openNewPostForm()" color="primary" mat-raised-button>New Post
               </button>
-              <button (click)="onComment(post.postId)" aria-label="Comment" mat-button matTooltip="Comment"
-                      matTooltipPosition="below">
-                <mat-icon class="comment-icon">comment</mat-icon>
-                <span class="comment-button-text">COMMENT ({{ post.nrOfComments }})</span>
-              </button>
-            </mat-card-actions>
+            </div>
+            <div [ngClass]="formState === 'open' ? 'modal-open' : 'modal-closed'">
+              <div [@detailOpen]="formState" class="full-width-container new-post-container">
+                <mat-card>
+                  <mat-card-content>
+                    <form
+                      (ngSubmit)="sharePost()"
+                      [formGroup]="newPostForm"
+                      aria-label="New Post Form"
+                      class="form-container">
+                      <ng-container>
+                        <input #fileInput (change)="onFileUpload($event)" hidden type="file">
+                        <div *ngIf="postImage" class="image-container">
+                          <img [draggable]="false" [src]="postImage" alt="Post Image">
+                          <button (click)="clearImage()" mat-icon-button matTooltip="Clear Image"
+                                  matTooltipPosition="below">
+                            <mat-icon>close</mat-icon>
+                          </button>
+                          <div (click)="fileInput.click()" class="overlay">
+                            <mat-icon>add_to_photos</mat-icon>
+                            Upload New Image
+                          </div>
+                        </div>
+                        <button (click)="fileInput.click()" *ngIf="!postImage" color="primary" mat-raised-button
+                                type="button">
+                          <mat-icon>add_to_photos</mat-icon>
+                          Upload Image
+                        </button>
+                      </ng-container>
+                      <mat-form-field appearance="fill">
+                        <mat-label>What's on your mind?</mat-label>
+                        <textarea
+                          [errorStateMatcher]="matcher"
+                          [formControl]="textFormControl"
+                          aria-label="Post Description"
+                          aria-required="true"
+                          cdkAutosizeMaxRows="5"
+                          cdkAutosizeMinRows="1"
+                          cdkTextareaAutosize
+                          class="description-textarea"
+                          matInput
+                          matTextareaAutosize
+                        ></textarea>
+                        <mat-error
+                          *ngIf="textFormControl.hasError('required')">
+                          This field is required
+                        </mat-error>
+                      </mat-form-field>
+                      <div class="post-modal-buttons">
+                        <button (click)="closeNewPostForm()" color="warn" mat-flat-button type="button">Cancel</button>
+                        <button
+                          aria-label="Share Post"
+                          class="submit-button"
+                          color="primary"
+                          mat-flat-button
+                          type="submit">
+                          Share
+                        </button>
+                      </div>
+                    </form>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+            <div class="full-width-container">
+              <mat-card>
+                <div class="whats-new-container">What's New?</div>
+              </mat-card>
+            </div>
           </div>
-
+          <div class="posts-container">
+            <ng-container *ngFor="let post of posts">
+              <app-post-card (postDeleted)="getPosts()" [authUser]="authUser" [isAdmin]="isAdmin"
+                             [likedByAuthUser]="post.liked"
+                             [post]="post"></app-post-card>
+            </ng-container>
+          </div>
         </div>
       </main>
       <footer class="footer">

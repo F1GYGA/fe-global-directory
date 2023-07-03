@@ -1,0 +1,16 @@
+<div class="comment-container">
+  <div class="comment-content">
+    <div class="comment-content-top">
+      <div class="full-name">{{comment.userFullName}}</div>
+      <div class="time-passed">{{comment.timePassed}}</div>
+    </div>
+    <div class="text">{{comment.text}}</div>
+  </div>
+  <div class="avatar-container">
+    <img [draggable]="false"
+         [src]="comment.userProfileImage ? comment.userProfileImage.base64Img : profilePhotoPlaceholder"
+         alt="Profile Photo">
+  </div>
+</div>
+
+

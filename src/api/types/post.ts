@@ -1,3 +1,5 @@
+import { PostComment } from './reaction';
+
 export type PostFormData = {
   text: string;
   postImage: File | null;
@@ -29,37 +31,24 @@ export type PostRequest = {
   postImage: Image | null;
 };
 
-export class Post {
+export type Post = {
   postId: number;
   userId: number;
   userFullName: string;
+  userProfileImage: Image;
   timePeriod: string;
+  type: 'JOINING_POST' | 'ANNIVERSARY_POST' | 'PROMOTION_POST' | 'MANUAL_POST';
   text: string;
+  postImage: Image;
+  liked: boolean;
   nrOfLikes: number;
   nrOfComments: number;
-  postImage?: {
-    base64Img: string;
-  };
+  comments: PostComment[];
+};
 
-  constructor(
-    postId: number,
-    userId: number,
-    userFullName: string,
-    timePeriod: string,
-    text: string,
-    nrOfLikes: number,
-    nrOfComments: number,
-    postImage?: {
-      base64Img: string;
-    }
-  ) {
-    this.postId = postId;
-    this.userId = userId;
-    this.userFullName = userFullName;
-    this.timePeriod = timePeriod;
-    this.text = text;
-    this.nrOfLikes = nrOfLikes;
-    this.nrOfComments = nrOfComments;
-    this.postImage = postImage;
-  }
-}
+export type PostStats = {
+  postId: number;
+  liked: boolean;
+  nrLikes: number;
+  nrCommentaries: number;
+};
