@@ -50,6 +50,8 @@ import { ViewPostDialogComponent } from './newsfeed/view-post-dialog/view-post-d
 import { ImageDialogComponent } from './newsfeed/image-dialog/image-dialog.component';
 import { AuthUserCommentComponent } from './newsfeed/auth-user-comment/auth-user-comment.component';
 import { ViewLikesDialogComponent } from './newsfeed/view-likes-dialog/view-likes-dialog.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { PostSkeletonComponent } from './newsfeed/post-skeleton/post-skeleton.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +78,7 @@ import { ViewLikesDialogComponent } from './newsfeed/view-likes-dialog/view-like
     ImageDialogComponent,
     AuthUserCommentComponent,
     ViewLikesDialogComponent,
+    PostSkeletonComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +111,7 @@ import { ViewLikesDialogComponent } from './newsfeed/view-likes-dialog/view-like
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatRippleModule,
+    MatButtonToggleModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

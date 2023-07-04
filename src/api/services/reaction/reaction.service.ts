@@ -26,15 +26,11 @@ export class ReactionService {
     });
   }
 
-  getAllLikes(postId: number): Observable<Like[]> {
+  getLikes(postId: number, userId?: number): Observable<Like[]> {
     return this.http.get<Like[]>(`${this.apiUrl}/likes`, {
-      params: { pid: postId.toString() },
-    });
-  }
-
-  getLikesOfUser(userId: number, postId: number): Observable<Like[]> {
-    return this.http.get<Like[]>(`${this.apiUrl}/likes`, {
-      params: { uid: userId.toString(), pid: postId.toString() },
+      params: userId
+        ? { uid: userId.toString(), pid: postId.toString() }
+        : { pid: postId.toString() },
     });
   }
 

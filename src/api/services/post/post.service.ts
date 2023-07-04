@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
 import { Post, PostFormData, PostPayloadData } from '../../types/post';
 import { tap } from 'rxjs/operators';
+import { Like } from '../../types/reaction';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,18 @@ export class PostService {
 
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.apiUrl}`);
+  }
+
+  getPostsByUser(userId: number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}`, {
+      params: { uid: userId.toString() },
+    });
+  }
+
+  getPostsByType(type: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}`, {
+      params: { post_type: type },
+    });
   }
 
   deletePost(id: number): Observable<{ message: string }> {

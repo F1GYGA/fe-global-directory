@@ -54,6 +54,7 @@ export class NewsfeedComponent implements OnInit {
   postImageFormControl = new FormControl();
   authUser!: User;
   isAdmin: boolean = false;
+  isLoading: boolean = false;
 
   newPostForm = new FormGroup({
     text: this.textFormControl,
@@ -98,7 +99,22 @@ export class NewsfeedComponent implements OnInit {
     }
   }
 
+  onFilterChange(
+    filter?: 'personal' | 'manual' | 'joining' | 'promotion' | 'anniversary'
+  ): void {
+    if (filter) {
+      if (filter === 'personal') {
+        this.getPostsByUser();
+      } else {
+        this.getPostsByType(filter);
+      }
+    } else {
+      this.getPosts();
+    }
+  }
+
   getPosts(): void {
+    this.isLoading = true;
     this.postService.getPosts().subscribe({
       next: (posts: Post[]): void => {
         this.posts = posts;
@@ -114,6 +130,59 @@ export class NewsfeedComponent implements OnInit {
             panelClass: 'error-snackbar',
           }
         );
+      },
+      complete: (): void => {
+        this.isLoading = false;
+      },
+    });
+  }
+
+  getPostsByUser(): void {
+    this.isLoading = true;
+    const localStorageUserId = localStorage.getItem('userId');
+    const userId = Number(localStorageUserId);
+    this.postService.getPostsByUser(userId).subscribe({
+      next: (postsByUser: Post[]): void => {
+        this.posts = postsByUser;
+      },
+      error: (): void => {
+        this.snackBar.open(
+          `There was an error while loading data from the server.`,
+          'Close',
+          {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: 'error-snackbar',
+          }
+        );
+      },
+      complete: (): void => {
+        this.isLoading = false;
+      },
+    });
+  }
+
+  getPostsByType(type: string): void {
+    this.isLoading = true;
+    this.postService.getPostsByType(type).subscribe({
+      next: (postsByType: Post[]): void => {
+        this.posts = postsByType;
+      },
+      error: (): void => {
+        this.snackBar.open(
+          `There was an error while loading data from the server.`,
+          'Close',
+          {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: 'error-snackbar',
+          }
+        );
+      },
+      complete: (): void => {
+        this.isLoading = false;
       },
     });
   }

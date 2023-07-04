@@ -254,7 +254,7 @@ export class PostCardComponent implements OnInit {
     const postId = this.post.postId;
 
     if (userId !== undefined) {
-      this.reactionService.getLikesOfUser(userId, postId).subscribe({
+      this.reactionService.getLikes(postId, userId).subscribe({
         next: (likes: Like[]): void => {
           const likeId = likes.find(
             like => like.userId === userId && like.postId === postId
@@ -361,7 +361,7 @@ export class PostCardComponent implements OnInit {
     const userId = this.authUser?.id;
     const postId = this.post.postId;
     if (userId !== undefined) {
-      this.reactionService.getAllLikes(postId).subscribe({
+      this.reactionService.getLikes(postId).subscribe({
         next: (likes: Like[]): void => {
           this.likes = likes;
           this.dialog.open(ViewLikesDialogComponent, {
