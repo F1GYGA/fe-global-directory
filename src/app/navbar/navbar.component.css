@@ -1,5 +1,5 @@
 .navigation-container {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 1);
   backdrop-filter: blur(12px);
   position: fixed;
   min-width: 320px;

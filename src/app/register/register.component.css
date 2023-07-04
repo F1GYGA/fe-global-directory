@@ -51,7 +51,7 @@
 
 .mat-card {
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 1);
   backdrop-filter: blur(100px);
   margin: auto;
   max-width: 700px;
