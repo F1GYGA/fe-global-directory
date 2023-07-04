@@ -1,8 +1,8 @@
 <div class="container">
   <div class="blur-container">
     <div class="page-content">
-      <div class="empty-container"></div>
-      <main class="main-container" role="main">
+      <main [ngClass]="!isLoading && posts.length > 0 ? '' : 'max-height'" class="main-container"
+            role="main">
         <div class="newsfeed-container">
           <div class="upper-content">
             <div class="new-post-button-container">
@@ -19,7 +19,8 @@
                       aria-label="New Post Form"
                       class="form-container">
                       <ng-container>
-                        <input #fileInput (change)="onFileUpload($event)" hidden type="file">
+                        <input #fileInput (change)="onFileUpload($event)"
+                               accept="image/*" aria-label="Post image file input" hidden type="file">
                         <div *ngIf="postImage" class="image-container">
                           <img [draggable]="false" [src]="postImage" alt="Post Image">
                           <button (click)="clearImage()" mat-icon-button matTooltip="Clear Image"
@@ -73,18 +74,34 @@
               </div>
             </div>
             <div class="full-width-container">
-              <mat-card>
-                <div class="whats-new-container">What's New?</div>
-              </mat-card>
+              <mat-button-toggle-group (change)="onFilterChange($event.value)" aria-label="Posts type" name="postsType">
+                <mat-button-toggle value="">All</mat-button-toggle>
+                <mat-button-toggle value="personal">Personal</mat-button-toggle>
+                <mat-button-toggle value="manual">Manual</mat-button-toggle>
+                <mat-button-toggle value="joining">Joining</mat-button-toggle>
+                <mat-button-toggle value="promotion">Promotion</mat-button-toggle>
+                <mat-button-toggle value="anniversary">Anniversary</mat-button-toggle>
+              </mat-button-toggle-group>
             </div>
           </div>
-          <div class="posts-container">
+          <div *ngIf="!isLoading && posts.length > 0" class="posts-container">
             <ng-container *ngFor="let post of posts">
               <app-post-card (postDeleted)="getPosts()" [authUser]="authUser" [isAdmin]="isAdmin"
                              [likedByAuthUser]="post.liked"
                              [post]="post"></app-post-card>
             </ng-container>
           </div>
+          <ng-container *ngIf="!isLoading && posts.length === 0">
+            <mat-card>
+              <div class="no-data-container">
+                <mat-icon class="no-data-icon" svgIcon="no-data"></mat-icon>
+                <div class="no-data-text">No posts found!</div>
+              </div>
+            </mat-card>
+          </ng-container>
+          <mat-card *ngIf="isLoading">
+            <app-post-skeleton class="skeleton"></app-post-skeleton>
+          </mat-card>
         </div>
       </main>
       <footer class="footer">

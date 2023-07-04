@@ -14,7 +14,7 @@ body {
 }
 
 .avatar-menu.mat-menu-panel {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 1);
   backdrop-filter: blur(12px);
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
   z-index: 1;
@@ -25,7 +25,7 @@ body {
 }
 
 .main-menu.mat-menu-panel {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 1);
   backdrop-filter: blur(12px);
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
 }
@@ -87,16 +87,6 @@ body {
   background: rgba(63, 81, 181, 1);
 }
 
-/*.mat-dialog-container {*/
-/*  padding: 0 8px 0 0 !important;*/
-/*  overflow: hidden !important;*/
-/*  min-width: 256px;*/
-/*  background: rgba(255, 255, 255, 0.8);*/
-/*  backdrop-filter: blur(12px);*/
-/*  border-radius: 10px !important;*/
-/*  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;*/
-/*}*/
-
 .mat-dialog-container:has(.fullscreeen-image-dialog) {
   padding: 0 !important;
   border-radius: 0 !important;
@@ -108,7 +98,7 @@ body {
   padding: 0 8px 0 0 !important;
   overflow: hidden !important;
   min-width: 256px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 1);
   backdrop-filter: blur(12px);
   border-radius: 10px !important;
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
@@ -118,7 +108,7 @@ body {
   padding: 0 8px 0 0 !important;
   overflow: hidden !important;
   min-width: 256px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 1);
   backdrop-filter: blur(12px);
   border-radius: 10px !important;
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
@@ -129,7 +119,7 @@ body {
     padding: 0 8px 0 0 !important;
     overflow: hidden !important;
     min-width: 256px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 1);
     backdrop-filter: blur(12px);
     border-radius: 0 !important;
     box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
@@ -141,7 +131,7 @@ body {
     padding: 0 8px 0 0 !important;
     overflow: hidden !important;
     min-width: 256px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 1);
     backdrop-filter: blur(12px);
     border-radius: 0 !important;
     box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;

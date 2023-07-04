@@ -149,7 +149,7 @@
   <ng-container *ngIf="!isLoading && usersDataSource.data.length === 0">
     <div class="table-center-container">
       <mat-icon class="no-data-icon" svgIcon="no-data"></mat-icon>
-      <div class="no-data-text">No data found!</div>
+      <div class="no-data-text">No registration requests found!</div>
     </div>
   </ng-container>
   <mat-paginator #registrationRequestsPaginator (page)="onPaginatorChange($event); onPageChange($event);"
