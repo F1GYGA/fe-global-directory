@@ -57,6 +57,11 @@ export class PostCardComponent implements OnInit {
   currentCharacterCount: number = 0;
   maxCharacterCount: number = 1000;
   commentsViewState: string = 'closed';
+  welcomePostImagePlaceholder: string = '/assets/welcome-post-placeholder.png';
+  promotionPostImagePlaceholder: string =
+    '/assets/promotion-post-placeholder.png';
+  anniversaryPostImagePlaceholder: string =
+    '/assets/anniversary-post-placeholder.png';
   profilePhotoPlaceholder: string = '/assets/profile-photo-placeholder.png';
   matcher = new MyErrorStateMatcher();
   commentFormControl = new FormControl('', [

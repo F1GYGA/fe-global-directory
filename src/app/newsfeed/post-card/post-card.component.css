@@ -189,6 +189,13 @@ p {
 }
 
 .post-image-container img {
+  max-height: 250px;
+  margin: 0 auto;
+  object-fit: contain;
+  position: relative;
+}
+
+.post-image-container.manual-post img {
   max-width: 700px;
   max-height: 500px;
   margin: 0 auto;

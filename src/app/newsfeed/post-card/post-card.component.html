@@ -30,16 +30,36 @@
       </ng-container>
     </div>
     <p class="post-text">{{ post.text }}</p>
-    <div *ngIf="post.postImage" class="post-image-background">
+    <ng-container *ngIf="post.type === 'JOINING_POST'">
       <div class="post-image-container">
-        <img [draggable]="false" [src]="post.postImage.base64Img" alt="Post Image"
+        <img [draggable]="false" [src]="welcomePostImagePlaceholder" alt="Welcome Post Image"
              class="img"/>
-        <div (click)="openImageDialog(post)" class="overlay">
-          <mat-icon>zoom_out_map</mat-icon>
-          Expand Image
+      </div>
+    </ng-container>
+    <ng-container *ngIf="post.type === 'PROMOTION_POST'">
+      <div class="post-image-container">
+        <img [draggable]="false" [src]="promotionPostImagePlaceholder" alt="Promotion Post Image"
+             class="img"/>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="post.type === 'ANNIVERSARY_POST'">
+      <div class="post-image-container">
+        <img [draggable]="false" [src]="anniversaryPostImagePlaceholder" alt="Anniversary Post Image"
+             class="img"/>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="post.type === 'MANUAL_POST'">
+      <div *ngIf="post.postImage" class="post-image-background">
+        <div class="post-image-container manual-post">
+          <img [draggable]="false" [src]="post.postImage.base64Img" alt="Post Image"
+               class="img"/>
+          <div (click)="openImageDialog(post)" class="overlay">
+            <mat-icon>zoom_out_map</mat-icon>
+            Expand Image
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
     <div class="likes-comments-container">
       <div class="likes-comments-number">
         <mat-icon class="like-comment-icon">thumb_up</mat-icon>
