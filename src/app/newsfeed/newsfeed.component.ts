@@ -86,8 +86,22 @@ export class NewsfeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPosts();
     this.getCurrentUserAndRole();
+
+    const storedFilterValue = localStorage.getItem('postFilterValue');
+    if (storedFilterValue) {
+      this.defaultFilterValue = storedFilterValue;
+      this.onFilterChange(
+        storedFilterValue as
+          | 'personal'
+          | 'manual'
+          | 'joining'
+          | 'promotion'
+          | 'anniversary'
+      );
+    } else {
+      this.getPosts();
+    }
   }
 
   getCurrentUserAndRole(): void {
@@ -103,6 +117,8 @@ export class NewsfeedComponent implements OnInit {
   onFilterChange(
     filter?: 'personal' | 'manual' | 'joining' | 'promotion' | 'anniversary'
   ): void {
+    localStorage.setItem('postFilterValue', filter || '');
+
     if (filter) {
       if (filter === 'personal') {
         this.getPostsByUser();

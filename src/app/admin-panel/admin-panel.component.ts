@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserService } from '../../api/services/user/user.service';
@@ -47,11 +47,20 @@ export class AdminPanelComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
+  sortByIdAscending(data: any[]): any[] {
+    return data.sort((a, b) => a.id - b.id);
+  }
+
+  sortByIdDescending(data: any[]): any[] {
+    return data.sort((a, b) => b.id - a.id);
+  }
+
   loadRegistrationRequests() {
     this.isLoading = true;
     this.userService.getRegistrationRequests().subscribe({
       next: data => {
-        this.registrationRequestsDataSource.data = data;
+        this.registrationRequestsDataSource.data =
+          this.sortByIdDescending(data);
       },
       error: () => {
         this.snackBar.open(
@@ -75,7 +84,7 @@ export class AdminPanelComponent implements OnInit {
     this.isLoading = true;
     this.userService.getActiveUsers().subscribe({
       next: data => {
-        this.activeUsersDataSource.data = data;
+        this.activeUsersDataSource.data = this.sortByIdAscending(data);
       },
       error: () => {
         this.snackBar.open(
@@ -99,7 +108,7 @@ export class AdminPanelComponent implements OnInit {
     this.isLoading = true;
     this.userService.getInactiveUsers().subscribe({
       next: data => {
-        this.inactiveUsersDataSource.data = data;
+        this.inactiveUsersDataSource.data = this.sortByIdAscending(data);
       },
       error: () => {
         this.snackBar.open(
