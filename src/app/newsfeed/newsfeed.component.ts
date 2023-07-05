@@ -55,6 +55,7 @@ export class NewsfeedComponent implements OnInit {
   authUser!: User;
   isAdmin: boolean = false;
   isLoading: boolean = false;
+  defaultFilterValue: string = '';
 
   newPostForm = new FormGroup({
     text: this.textFormControl,

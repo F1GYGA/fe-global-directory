@@ -46,7 +46,11 @@ export class NavbarComponent {
   }
 
   onNavigateToNewsFeed(): void {
-    this.router.navigate(['']);
+    if (this.isOnDashboardPage) {
+      window.location.reload();
+    } else {
+      this.router.navigate(['']);
+    }
   }
 
   onNavigateToSearchColleagues(): void {

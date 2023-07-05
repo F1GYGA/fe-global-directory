@@ -74,7 +74,8 @@
               </div>
             </div>
             <div class="full-width-container">
-              <mat-button-toggle-group (change)="onFilterChange($event.value)" aria-label="Posts type" name="postsType">
+              <mat-button-toggle-group (change)="onFilterChange($event.value)" [value]="defaultFilterValue"
+                                       aria-label="Posts type" name="postsType">
                 <mat-button-toggle value="">All</mat-button-toggle>
                 <mat-button-toggle value="personal">Personal</mat-button-toggle>
                 <mat-button-toggle value="manual">Manual</mat-button-toggle>
