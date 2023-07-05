@@ -34,10 +34,11 @@
                     <div class="name-email">
                       <div class="activity-chip">
                         <mat-chip-list selectable="false">
-                          <mat-chip *ngIf="!user.active" aria-label="Inactive Account" class="inactive">
+                          <mat-chip *ngIf="!user.active" aria-label="Inactive Account" class="inactive"
+                                    disableRipple="true">
                             Inactive
                           </mat-chip>
-                          <mat-chip *ngIf="user.active" aria-label="Active Account" class="active">
+                          <mat-chip *ngIf="user.active" aria-label="Active Account" class="active" disableRipple="true">
                             Active
                           </mat-chip>
                         </mat-chip-list>
@@ -96,7 +97,9 @@
                       <ng-container
                         *ngIf="user.previousExperience && user.previousExperience.length > 0; else noExperience">
                         <mat-chip-list>
-                          <mat-chip *ngFor="let experience of user.previousExperience" class="custom-chip">
+                          <mat-chip *ngFor="let experience of user.previousExperience"
+                                    class="custom-chip" disableRipple="true"
+                          >
                             {{ experience }}
                           </mat-chip>
                         </mat-chip-list>
@@ -112,7 +115,7 @@
                       <ng-container *ngIf="user.skills && user.skills.length > 0; else noSkills">
                         <mat-chip-list>
                           <mat-chip *ngFor="let skill of user.skills"
-                                    class="custom-chip">
+                                    class="custom-chip" disableRipple="true">
                             {{ skill }}
                           </mat-chip>
                         </mat-chip-list>
@@ -127,7 +130,7 @@
                     <div>
                       <ng-container *ngIf="user.hobbies && user.hobbies.length > 0; else noHobbies">
                         <mat-chip-list>
-                          <mat-chip *ngFor="let hobby of user.hobbies" class="custom-chip">
+                          <mat-chip *ngFor="let hobby of user.hobbies" class="custom-chip" disableRipple="true">
                             {{ hobby }}
                           </mat-chip>
                         </mat-chip-list>

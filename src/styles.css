@@ -94,6 +94,17 @@ body {
   box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f !important;
 }
 
+.mat-dialog-container:has(.edit-profile-dialog) {
+  height: unset;
+  padding: 0 12px 0 0 !important;
+  overflow: hidden !important;
+  min-width: 256px;
+  background: rgba(255, 255, 255, 1);
+  backdrop-filter: blur(12px);
+  border-radius: 10px !important;
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+
 .mat-dialog-container:has(.view-post-dialog) {
   padding: 0 8px 0 0 !important;
   overflow: hidden !important;

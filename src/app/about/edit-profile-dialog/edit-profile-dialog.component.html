@@ -1,200 +1,206 @@
-<h2 mat-dialog-title>Edit Profile</h2>
-<div class="dialog-wrapper">
-  <form (ngSubmit)="onUpdateProfile()"
-        [formGroup]="editProfileForm"
-        aria-label="Register Form"
-        class="form-container">
-    <div class="photo-container">
-      <div (click)="fileInput.click()" class="image-container">
-        <img
-          [draggable]="false"
-          [src]="profilePhoto"
-          alt="Profile Photo"
-          class="img"/>
-        <div class="overlay">Upload</div>
+<mat-dialog-content class="edit-profile-dialog">
+  <div class="test">
+    <div class="dialog-wrapper">
+      <h2 mat-dialog-title>Edit Profile</h2>
+      <div class="edit-profile-content">
+        <form (ngSubmit)="onUpdateProfile()"
+              [formGroup]="editProfileForm"
+              aria-label="Register Form"
+              class="form-container">
+          <div class="photo-container">
+            <div (click)="fileInput.click()" class="image-container">
+              <img
+                [draggable]="false"
+                [src]="profilePhoto"
+                alt="Profile Photo"
+                class="img"/>
+              <div class="overlay">Upload</div>
+            </div>
+            <input
+              #fileInput
+              (change)="onFileUpload($event)"
+              accept="image/*"
+              aria-label="Profile photo"
+              hidden
+              type="file"/>
+          </div>
+          <div class="row-container">
+            <mat-form-field appearance="fill">
+              <mat-label>First name</mat-label>
+              <input
+                [errorStateMatcher]="matcher"
+                [formControl]="firstNameFormControl"
+                aria-label="First name"
+                aria-required="true"
+                autocomplete="given-name"
+                matInput
+                type="text"/>
+              <mat-error
+                *ngIf="firstNameFormControl.hasError('required')">
+                First name is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Last name</mat-label>
+              <input
+                [errorStateMatcher]="matcher"
+                [formControl]="lastNameFormControl"
+                aria-label="Last name"
+                aria-required="true"
+                autocomplete="family-name"
+                matInput
+                type="text"/>
+              <mat-error *ngIf="lastNameFormControl.hasError('required')">
+                Last name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row-container">
+            <mat-form-field appearance="fill">
+              <mat-label>Department</mat-label>
+              <input
+                [errorStateMatcher]="matcher"
+                [formControl]="departmentFormControl"
+                [matAutocomplete]="auto"
+                aria-label="Department"
+                aria-required="true"
+                matInput
+                type="text"/>
+              <mat-error
+                *ngIf="departmentFormControl.hasError('required')">
+                Department is required
+              </mat-error>
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let department of filteredDepartments | async"
+                  [value]="department">
+                  {{ department }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Team</mat-label>
+              <input
+                [errorStateMatcher]="matcher"
+                [formControl]="teamFormControl"
+                [matAutocomplete]="teamAuto"
+                aria-label="Team"
+                aria-required="true"
+                matInput
+                type="text"/>
+              <mat-error *ngIf="teamFormControl.hasError('required')">
+                Team is required
+              </mat-error>
+              <mat-autocomplete #teamAuto="matAutocomplete">
+                <ng-container
+                  *ngIf="teamsByDepartment.length > 0; else noTeams">
+                  <mat-option
+                    *ngFor="let team of filteredTeams | async"
+                    [value]="team">
+                    {{ team }}
+                  </mat-option>
+                </ng-container>
+                <ng-template #noTeams>
+                  <mat-option disabled>No department selected</mat-option>
+                </ng-template>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Job title</mat-label>
+              <input
+                [errorStateMatcher]="matcher"
+                [formControl]="jobTitleFormControl"
+                [matAutocomplete]="jobTitleAuto"
+                aria-label="Job title"
+                aria-required="true"
+                matInput
+                type="text"/>
+              <mat-error *ngIf="jobTitleFormControl.hasError('required')">
+                Job title is required
+              </mat-error>
+              <mat-autocomplete #jobTitleAuto="matAutocomplete">
+                <ng-container
+                  *ngIf="jobTitlesByTeam.length > 0; else noJobTitles">
+                  <mat-option
+                    *ngFor="let jobTitle of filteredJobTitles | async"
+                    [value]="jobTitle">
+                    {{ jobTitle }}
+                  </mat-option>
+                </ng-container>
+                <ng-template #noJobTitles>
+                  <mat-option disabled>No team selected</mat-option>
+                </ng-template>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="row-container">
+            <mat-form-field appearance="fill">
+              <mat-label>Previous experience</mat-label>
+              <mat-chip-list #previousExperienceList aria-label="Previous experience">
+                <mat-chip (removed)="removePreviousExperience(previousExperience)"
+                          *ngFor="let previousExperience of previousExperienceFormControl.value">
+                  {{previousExperience}}
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+                <input (matChipInputTokenEnd)="addPreviousExperience($event)"
+                       [matChipInputAddOnBlur]="addOnBlur"
+                       [matChipInputFor]="previousExperienceList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       placeholder="New previous experience...">
+              </mat-chip-list>
+            </mat-form-field>
+          </div>
+          <div class="row-container">
+            <mat-form-field appearance="fill">
+              <mat-label>Skills</mat-label>
+              <mat-chip-list #skillList aria-label="Skills">
+                <mat-chip (removed)="removeSkill(skill)" *ngFor="let skill of skillsFormControl.value">
+                  {{skill}}
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+                <input (matChipInputTokenEnd)="addSkill($event)"
+                       [matChipInputAddOnBlur]="addOnBlur"
+                       [matChipInputFor]="skillList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       placeholder="New skill...">
+              </mat-chip-list>
+            </mat-form-field>
+          </div>
+          <div class="row-container">
+            <mat-form-field appearance="fill">
+              <mat-label>Hobbies</mat-label>
+              <mat-chip-list #hobbyList aria-label="Skills">
+                <mat-chip (removed)="removeHobby(hobby)" *ngFor="let hobby of hobbiesFormControl.value">
+                  {{hobby}}
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+                <input (matChipInputTokenEnd)="addHobby($event)"
+                       [matChipInputAddOnBlur]="addOnBlur"
+                       [matChipInputFor]="hobbyList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       placeholder="New hobby...">
+              </mat-chip-list>
+            </mat-form-field>
+          </div>
+          <div class="row-container">
+            <button (click)="onCancel()" class="action-button cancel" mat-button type="button">Cancel</button>
+            <button
+              aria-label="Save"
+              class="action-button"
+              color="primary"
+              mat-flat-button
+              type="submit">
+              Save
+            </button>
+          </div>
+        </form>
       </div>
-      <input
-        #fileInput
-        (change)="onFileUpload($event)"
-        accept="image/*"
-        aria-label="Profile photo"
-        hidden
-        type="file"/>
     </div>
-    <div class="row-container">
-      <mat-form-field appearance="fill">
-        <mat-label>First name</mat-label>
-        <input
-          [errorStateMatcher]="matcher"
-          [formControl]="firstNameFormControl"
-          aria-label="First name"
-          aria-required="true"
-          autocomplete="given-name"
-          matInput
-          type="text"/>
-        <mat-error
-          *ngIf="firstNameFormControl.hasError('required')">
-          First name is required
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Last name</mat-label>
-        <input
-          [errorStateMatcher]="matcher"
-          [formControl]="lastNameFormControl"
-          aria-label="Last name"
-          aria-required="true"
-          autocomplete="family-name"
-          matInput
-          type="text"/>
-        <mat-error *ngIf="lastNameFormControl.hasError('required')">
-          Last name is required
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="row-container">
-      <mat-form-field appearance="fill">
-        <mat-label>Department</mat-label>
-        <input
-          [errorStateMatcher]="matcher"
-          [formControl]="departmentFormControl"
-          [matAutocomplete]="auto"
-          aria-label="Department"
-          aria-required="true"
-          matInput
-          type="text"/>
-        <mat-error
-          *ngIf="departmentFormControl.hasError('required')">
-          Department is required
-        </mat-error>
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option
-            *ngFor="let department of filteredDepartments | async"
-            [value]="department">
-            {{ department }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Team</mat-label>
-        <input
-          [errorStateMatcher]="matcher"
-          [formControl]="teamFormControl"
-          [matAutocomplete]="teamAuto"
-          aria-label="Team"
-          aria-required="true"
-          matInput
-          type="text"/>
-        <mat-error *ngIf="teamFormControl.hasError('required')">
-          Team is required
-        </mat-error>
-        <mat-autocomplete #teamAuto="matAutocomplete">
-          <ng-container
-            *ngIf="teamsByDepartment.length > 0; else noTeams">
-            <mat-option
-              *ngFor="let team of filteredTeams | async"
-              [value]="team">
-              {{ team }}
-            </mat-option>
-          </ng-container>
-          <ng-template #noTeams>
-            <mat-option disabled>No department selected</mat-option>
-          </ng-template>
-        </mat-autocomplete>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Job title</mat-label>
-        <input
-          [errorStateMatcher]="matcher"
-          [formControl]="jobTitleFormControl"
-          [matAutocomplete]="jobTitleAuto"
-          aria-label="Job title"
-          aria-required="true"
-          matInput
-          type="text"/>
-        <mat-error *ngIf="jobTitleFormControl.hasError('required')">
-          Job title is required
-        </mat-error>
-        <mat-autocomplete #jobTitleAuto="matAutocomplete">
-          <ng-container
-            *ngIf="jobTitlesByTeam.length > 0; else noJobTitles">
-            <mat-option
-              *ngFor="let jobTitle of filteredJobTitles | async"
-              [value]="jobTitle">
-              {{ jobTitle }}
-            </mat-option>
-          </ng-container>
-          <ng-template #noJobTitles>
-            <mat-option disabled>No team selected</mat-option>
-          </ng-template>
-        </mat-autocomplete>
-      </mat-form-field>
-    </div>
-    <div class="row-container">
-      <mat-form-field appearance="fill">
-        <mat-label>Previous experience</mat-label>
-        <mat-chip-list #previousExperienceList aria-label="Previous experience">
-          <mat-chip (removed)="removePreviousExperience(previousExperience)"
-                    *ngFor="let previousExperience of previousExperienceFormControl.value">
-            {{previousExperience}}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-          <input (matChipInputTokenEnd)="addPreviousExperience($event)"
-                 [matChipInputAddOnBlur]="addOnBlur"
-                 [matChipInputFor]="previousExperienceList"
-                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                 placeholder="New previous experience...">
-        </mat-chip-list>
-      </mat-form-field>
-    </div>
-    <div class="row-container">
-      <mat-form-field appearance="fill">
-        <mat-label>Skills</mat-label>
-        <mat-chip-list #skillList aria-label="Skills">
-          <mat-chip (removed)="removeSkill(skill)" *ngFor="let skill of skillsFormControl.value">
-            {{skill}}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-          <input (matChipInputTokenEnd)="addSkill($event)"
-                 [matChipInputAddOnBlur]="addOnBlur"
-                 [matChipInputFor]="skillList"
-                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                 placeholder="New skill...">
-        </mat-chip-list>
-      </mat-form-field>
-    </div>
-    <div class="row-container">
-      <mat-form-field appearance="fill">
-        <mat-label>Hobbies</mat-label>
-        <mat-chip-list #hobbyList aria-label="Skills">
-          <mat-chip (removed)="removeHobby(hobby)" *ngFor="let hobby of hobbiesFormControl.value">
-            {{hobby}}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-          <input (matChipInputTokenEnd)="addHobby($event)"
-                 [matChipInputAddOnBlur]="addOnBlur"
-                 [matChipInputFor]="hobbyList"
-                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                 placeholder="New hobby...">
-        </mat-chip-list>
-      </mat-form-field>
-    </div>
-    <div class="row-container">
-      <button (click)="onCancel()" class="action-button cancel" mat-button type="button">Cancel</button>
-      <button
-        aria-label="Save"
-        class="action-button"
-        color="primary"
-        mat-flat-button
-        type="submit">
-        Save
-      </button>
-    </div>
-  </form>
-</div>
+  </div>
+</mat-dialog-content>
