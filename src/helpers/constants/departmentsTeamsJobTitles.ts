@@ -1,6 +1,15 @@
 export const DEPARTMENTS_TEAMS_JOBS: {
   [key: string]: { [key: string]: string[] };
 } = {
+  'Intern':{
+    'Global Directory':[
+      'Frontend Developer',
+      'Backend Developer',
+      'Fullstack Developer',
+      'Business Analyst',
+      'Quality Assurance',
+    ],
+  },
   'Corporate Bank': {
     'Cash Management': [
       'Cash Manager',
