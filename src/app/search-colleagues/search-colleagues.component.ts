@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { FormControl } from '@angular/forms';
@@ -36,10 +36,11 @@ export class SearchColleaguesComponent implements AfterViewInit {
   data: User[] = [];
   profilePhotoPlaceholder: string = '/assets/profile-photo-placeholder.png';
   searchKeywordFilter = new FormControl();
-  pageSizes = [10, 30, 50];
+  pageSizes = [5, 10, 25, 50, 100];
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
+  pageEvent!: PageEvent;
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
@@ -47,35 +48,33 @@ export class SearchColleaguesComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-    merge(
-      this.searchKeywordFilter.valueChanges,
-      this.sort.sortChange,
-      this.paginator.page
-    )
+    this.searchKeywordFilter.valueChanges.subscribe(() =>
+      this.paginator.firstPage()
+    );
+    merge(this.searchKeywordFilter.valueChanges, this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          var filterValue =
+          const filterValue =
             this.searchKeywordFilter.value == null
               ? ''
               : this.searchKeywordFilter.value;
           return this.userService
-            .getFilteredUsers(filterValue, 10, this.paginator.pageIndex)
+            .getFilteredUsers(
+              filterValue,
+              this.pageEvent ? this.pageEvent.pageSize : 5,
+              this.pageEvent
+                ? this.pageEvent.pageIndex * this.pageEvent.pageSize
+                : 0
+            )
             .pipe(catchError(() => observableOf(null)));
         })
       )
       .subscribe(data => {
-        console.log(data?.userProfileDTOS);
         this.data = data?.userProfileDTOS ? data.userProfileDTOS : [];
         this.resultsLength = data?.size ? data.size : 0;
       });
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   announceSortChange(sortState: Sort) {

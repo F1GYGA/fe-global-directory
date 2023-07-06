@@ -10,7 +10,7 @@
                 <h1>View Colleagues</h1>
               </mat-card-title>
               <mat-form-field class="searchbar">
-                <input (keyup)="applyFilter($event)" [formControl]="searchKeywordFilter" matInput
+                <input [formControl]="searchKeywordFilter" matInput
                        placeholder="Search by name, department, team or job">
               </mat-form-field>
             </mat-card-header>
@@ -59,7 +59,8 @@
                 </div>
               </div>
             </mat-card-content>
-            <mat-paginator [length]="resultsLength" [pageSizeOptions]="pageSizes" showFirstLastButtons></mat-paginator>
+            <mat-paginator (page)="pageEvent = $event" [length]="resultsLength" [pageSizeOptions]="pageSizes"
+                           showFirstLastButtons></mat-paginator>
           </mat-card>
         </div>
       </main>
